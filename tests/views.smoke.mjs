@@ -1,0 +1,97 @@
+/*
+ * Runs EVERY view this realm ships against a LIVE appliance and fails on any the engine refuses,
+ * any that returns no rows with its defaults, and any case below whose rows lack what they must.
+ * A view that has never returned rows in front of you does not exist yet.
+ *
+ *   EMBABEL_USER=… EMBABEL_PASSWORD=… node tests/views.smoke.mjs            (APPLIANCE_URL defaults to localhost:11043)
+ *
+ * Every view here reads stored rows — no model, no external source — so the whole run is seconds
+ * and anything over SLOW_MS (2000 by default: the app's first-paint budget) is flagged.
+ * Exits non-zero if any check failed.
+ */
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const base = process.env.APPLIANCE_URL ?? 'http://localhost:11043';
+const user = process.env.EMBABEL_USER ?? process.env.APPLIANCE_USER;
+const password = process.env.EMBABEL_PASSWORD ?? process.env.APPLIANCE_PASSWORD;
+if (!user || !password) { console.error('Set EMBABEL_USER and EMBABEL_PASSWORD.'); process.exit(2); }
+const SLOW_MS = Number(process.env.SLOW_MS ?? 2000);
+
+/* [view, params, a pattern the rows must contain (null for "some rows")] */
+const CASES = [
+  ['CountyTable', { season: 2025, stage: 2 }, /Derbyshire|Glamorgan|Leicestershire/],
+  ['CountyTable', { season: 2021, stage: 3 }, /played/],
+  ['TeamSeasons', { team: 'Yorkshire' }, /"season":2014/],
+  ['TeamResults', { team: 'Kent', season: 2024, limit: 50 }, /opponent/],
+  ['HeadToHead', { teamA: 'Lancashire', teamB: 'Yorkshire' }, /Old Trafford|Headingley/],
+  ['SeasonBatting', { season: 2025, stage: 1, minInnings: 10, limit: 10 }, /average/],
+  ['SeasonBatting', { season: 2016, team: 'Durham', limit: 5 }, /Jennings|Stoneman|Borthwick/],
+  ['SeasonBowling', { season: 2024, minWickets: 30, limit: 10 }, /economy/],
+  ['SeasonBowling', { season: 2019, stage: 2, team: 'Essex', limit: 5 }, /"wickets":0|"wickets":[1-9]/],
+  ['HighestScores', { season: 2023, limit: 5 }, /notOut/],
+  ['HighestScores', { team: 'Somerset', limit: 5 }, /Somerset/],
+  ['BestBowling', { season: 2022, limit: 5 }, /"wickets":[6-9]|"wickets":10/],
+  ['PlayerSearch', { name: 'madsen' }, /Madsen/],
+  ['PlayerBatting', { playerId: '86e0f3f0' }, /Derbyshire/],
+  ['PlayerBowling', { playerId: '5b6d248a' }, /Essex/],
+  ['PlayerInnings', { playerId: '86e0f3f0', limit: 20 }, /dismissal/],
+  ['PlayerSpells', { playerId: '5b6d248a', limit: 20 }, /maidens/],
+  ['MatchSummary', { matchId: '947089' }, /Gloucestershire/],
+  ['MatchInnings', { matchId: '947089' }, /"declared":true/],
+  ['MatchBatting', { matchId: '947089' }, /Roderick/],
+  ['MatchBowling', { matchId: '947089' }, /Magoffin/],
+];
+/* Parameters that MUST yield nothing: the empty case has to be an empty rows array, loudly — never an error. */
+const EMPTY_CASES = [
+  ['CountyTable', { season: 2020, stage: 1 }],
+  ['PlayerSearch', { name: 'zzzz-nobody' }],
+  ['MatchSummary', { matchId: '0' }],
+];
+
+const auth = 'Basic ' + Buffer.from(`${user}:${password}`).toString('base64');
+async function invoke(name, args) {
+  const started = Date.now();
+  const res = await fetch(`${base}/api/v1/views/${encodeURIComponent(name)}/invoke`, {
+    method: 'POST', headers: { Authorization: auth, 'Content-Type': 'application/json' }, body: JSON.stringify({ args }),
+  });
+  const body = await res.json().catch(() => ({}));
+  return { http: res.status, ms: Date.now() - started, body };
+}
+
+const viewsDir = new URL('../views/', import.meta.url).pathname;
+const names = readdirSync(viewsDir).filter(f => f.endsWith('.yml')).sort()
+  .flatMap(f => [...readFileSync(join(viewsDir, f), 'utf8').matchAll(/^- name:\s*(\S+)/gm)].map(m => m[1]));
+
+let failures = 0;
+const report = (ok, line) => { if (!ok) failures++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${line}`); };
+const problemOf = (http, body) => http !== 200 || body.status !== 'SUCCEEDED'
+  ? `${http} ${body.status ?? ''} ${body.error?.message?.slice(0, 160) ?? ''}` : null;
+
+console.log(`== every view, with its defaults (${names.length})`);
+for (const name of names) {
+  const { http, ms, body } = await invoke(name, {});
+  const rows = body.data?.length ?? 0;
+  const problem = problemOf(http, body) ?? (rows === 0 ? 'no rows with its defaults' : null);
+  report(!problem, `${name.padEnd(18)} ${String(rows).padStart(4)} rows ${String(ms).padStart(6)}ms${ms > SLOW_MS ? ' SLOW' : ''}${problem ? '  ' + problem : ''}`);
+}
+
+console.log(`\n== cases (${CASES.length})`);
+for (const [name, args, pattern] of CASES) {
+  const { http, ms, body } = await invoke(name, args);
+  const rows = body.data ?? [];
+  const text = JSON.stringify(rows);
+  const problem = problemOf(http, body) ?? (rows.length === 0 ? 'no rows' : pattern && !pattern.test(text) ? `rows lack ${pattern}` : null);
+  report(!problem, `${name.padEnd(18)} ${JSON.stringify(args).slice(0, 58).padEnd(58)} ${String(ms).padStart(6)}ms${ms > SLOW_MS ? ' SLOW' : ''}${problem ? '  ' + problem : ''}`);
+}
+
+console.log(`\n== must be empty (${EMPTY_CASES.length})`);
+for (const [name, args] of EMPTY_CASES) {
+  const { http, ms, body } = await invoke(name, args);
+  const rows = body.data ?? [];
+  const problem = problemOf(http, body) ?? (rows.length !== 0 ? `${rows.length} rows where none were expected` : null);
+  report(!problem, `${name.padEnd(18)} ${JSON.stringify(args).padEnd(58)} ${String(ms).padStart(6)}ms${problem ? '  ' + problem : ''}`);
+}
+
+console.log(failures ? `\n${failures} check(s) failed` : '\nall passed');
+process.exit(failures ? 1 : 0);

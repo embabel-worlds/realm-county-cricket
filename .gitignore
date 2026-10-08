@@ -1,0 +1,5 @@
+# Downloaded by scripts/build_reference.py; regenerable, and Cricsheet's to redistribute, not ours.
+data/source/
+node_modules/
+tests/fixtures/_page.html
+test-results/

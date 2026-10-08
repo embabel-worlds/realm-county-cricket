@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>County Cricket</title>
+<meta name="description" content="County Championship stats since 2014 from Cricsheet's ball-by-ball record: season tables, leading run-scorers and wicket-takers, every county's results and head-to-heads, player careers innings by innings, records, and the full scorecard of any match.">
+<link rel="stylesheet" href="/api/v1/apps-runtime/v1/theme.css">
+<script src="/api/v1/apps-runtime/v1/embabel.js"></script>
+<script type="application/embabel-app+json">
+{"version":1,"name":"county-cricket","requires":{"lenses":[],"views":["CountySeasons","CountyTeams","CountyTable","TeamSeasons","TeamResults","HeadToHead","SeasonBatting","SeasonBowling","HighestScores","BestBowling","PlayerSearch","PlayerBatting","PlayerBowling","PlayerInnings","PlayerSpells","MatchSummary","MatchInnings","MatchBatting","MatchBowling"],"realms":["county-cricket"],"namespaces":[]}}
+</script>
+<style>
+:root{
+  --bg:#0b0d0b; --bg2:#101410; --surface:#151a15; --surface2:#1b221c; --line:#263128; --line2:#324236;
+  --ink:#ece6d4; --ink2:#c9c3b3; --muted:#8f998f; --dim:#5f6a60;
+  --pitch:#5fd68a; --pitch2:#2f8f55; --gold:#e3b341; --ball:#ef6a5a; --draw:#8d9bb0;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  --mono:"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --embabel-bg:var(--bg); --embabel-surface:var(--surface); --embabel-border:var(--line); --embabel-text:var(--ink); --embabel-dim:var(--muted); --embabel-accent:var(--pitch);
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:
+  radial-gradient(1200px 500px at 50% -200px, rgba(95,214,138,.10), transparent 70%),
+  var(--bg);color:var(--ink);font:15px/1.5 var(--sans);padding-bottom:64px;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--pitch);text-decoration:none}
+a:hover{text-decoration:underline}
+.num,td.n,th.n,.stat b,.hb-v,.col b,.sc td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+/* masthead */
+.mast{padding:28px 20px 0;max-width:1240px;margin:0 auto}
+.mast .kicker{font:600 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--pitch);display:flex;gap:12px;align-items:center}
+.mast .kicker:before{content:"";display:inline-block;width:28px;height:2px;background:var(--pitch);border-radius:1px}
+.mast h1{font:400 44px/1.05 var(--serif);margin:10px 0 4px;letter-spacing:-.01em}
+.mast h1 em{font-style:italic;color:var(--gold)}
+.mast p.lede{margin:0 0 18px;color:var(--muted);max-width:760px}
+.seasons{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none;-ms-overflow-style:none}
+.seasons::-webkit-scrollbar{display:none}
+.seasons a{flex:0 0 auto;padding:7px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink2);font:600 13px/1 var(--mono);background:var(--bg2)}
+.seasons a:hover{border-color:var(--line2);text-decoration:none}
+.seasons a.on{background:var(--pitch);border-color:var(--pitch);color:#06110a}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-top:6px;overflow-x:auto;scrollbar-width:none}
+.tabs a{padding:12px 16px;color:var(--muted);font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs a:hover{color:var(--ink);text-decoration:none}
+.tabs a.on{color:var(--ink);border-bottom-color:var(--gold)}
+/* layout */
+main{max-width:1240px;margin:0 auto;padding:22px 20px 40px}
+.grid{display:grid;gap:18px}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0;position:relative}
+.card h2{font:400 22px/1.2 var(--serif);margin:0 0 4px}
+.card h2 small{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+.card .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.card .sub a{color:var(--ink2);text-decoration:underline;text-decoration-color:var(--line2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.stat:after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pitch);opacity:.9}
+.stat.gold:after{background:var(--gold)} .stat.ball:after{background:var(--ball)}
+.stat small{display:block;font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.stat b{display:block;font-size:30px;line-height:1;font-weight:500}
+.stat span{display:block;color:var(--ink2);font-size:13px;margin-top:6px}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font:600 11px/1.2 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;user-select:none}
+th.n,td.n{text-align:right}
+th[data-sort]{cursor:pointer} th[data-sort]:hover{color:var(--ink)} th.sorted{color:var(--gold)}
+th.sorted:after{content:" \25BE";font-size:10px} th.sorted.asc:after{content:" \25B4"}
+tr.row{cursor:pointer} tr.row:hover td{background:rgba(95,214,138,.06)}
+td.who{font-weight:600;white-space:nowrap} td.who a{color:var(--ink)}
+td.team,td.dim{color:var(--muted);font-size:13px}
+tr.hl td{background:rgba(227,179,65,.08)}
+.rank{color:var(--dim);font-family:var(--mono);width:28px}
+.pos{color:var(--dim);font-family:var(--mono);width:28px;text-align:right}
+/* W D L */
+.wdl{display:flex;gap:2px;height:8px;border-radius:4px;overflow:hidden;background:var(--line);min-width:90px}
+.wdl i{display:block;height:100%} .wdl .w{background:var(--pitch)} .wdl .d{background:var(--draw)} .wdl .l{background:var(--ball)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin:8px 0 2px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:5px}
+.chip{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;font:700 12px/22px var(--mono);color:#06110a;margin-right:3px}
+.chip.W{background:var(--pitch)} .chip.D{background:var(--draw)} .chip.L{background:var(--ball)} .chip.T{background:var(--gold)}
+.form{white-space:nowrap}
+/* horizontal bars */
+.hb{display:grid;grid-template-columns:minmax(170px,1.6fr) 2.4fr 64px;gap:10px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.hb:hover{text-decoration:none;background:rgba(95,214,138,.05)}
+.hb-l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;font-size:14px}
+.hb-l small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.hb-t{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.hb-t i{display:block;height:100%;background:linear-gradient(90deg,var(--pitch2),var(--pitch));border-radius:0 5px 5px 0}
+.hb.gold .hb-t i{background:linear-gradient(90deg,#8a6a1f,var(--gold))}
+.hb.ball .hb-t i{background:linear-gradient(90deg,#8c3a30,var(--ball))}
+.hb-v{text-align:right;font-weight:600}
+/* columns */
+.cols{display:flex;align-items:flex-end;gap:6px;height:150px;padding-top:22px;border-bottom:1px solid var(--line2)}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0;position:relative}
+.col i{display:block;width:100%;max-width:38px;background:linear-gradient(180deg,var(--pitch),var(--pitch2));border-radius:4px 4px 0 0;min-height:2px}
+.col.ball i{background:linear-gradient(180deg,var(--ball),#8c3a30)}
+.col b{position:absolute;top:-20px;font-size:12px;font-weight:600;color:var(--ink2)}
+.col s{text-decoration:none;font:11px/1 var(--mono);color:var(--muted);margin-top:6px}
+/* innings strip */
+.strip{display:flex;align-items:flex-end;gap:1px;height:90px;border-bottom:1px solid var(--line2);padding-top:4px}
+.strip i{flex:1 1 2px;min-width:2px;max-width:8px;display:block;background:var(--dim);border-radius:1px 1px 0 0;min-height:1px}
+.strip i.fifty{background:var(--pitch)} .strip i.ton{background:var(--gold)} .strip i:hover{outline:1px solid var(--ink)}
+.strip-cap{display:flex;justify-content:space-between;font:11px/1 var(--mono);color:var(--muted);margin-top:6px}
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:0 0 14px}
+.controls label{display:flex;flex-direction:column;gap:4px;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+select,input[type=text],input[type=search],input[type=number],button{font:14px var(--sans);color:var(--ink);background:var(--surface2);border:1px solid var(--line2);border-radius:8px;padding:8px 10px;outline:none}
+select:focus,input:focus{border-color:var(--pitch)}
+button{cursor:pointer} button:hover{border-color:var(--pitch)}
+button.primary{background:var(--pitch);color:#06110a;border-color:var(--pitch);font-weight:700}
+input[type=search]{min-width:260px}
+/* states */
+.state{padding:26px 10px;text-align:center;color:var(--muted);font-size:14px}
+.state.error{color:var(--ball)} .state.error button{margin-left:10px}
+.state.loading{color:var(--dim)} .state.loading:after{content:"";display:block;margin:12px auto 0;width:140px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--line),var(--pitch2),var(--line));background-size:200% 100%;animation:sh 1.2s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.warn{background:rgba(227,179,65,.08);border:1px solid rgba(227,179,65,.35);color:var(--gold);border-radius:8px;padding:8px 12px;font-size:13px;margin:0 0 12px}
+.banner-miss{margin:20px;padding:16px;border:1px solid var(--ball);border-radius:12px;color:var(--ball)}
+embabel-operation-state:empty{display:none}
+/* match page */
+.mh{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between}
+.mh h2{font:400 34px/1.1 var(--serif);margin:0}
+.mh .res{font:500 18px/1.3 var(--serif);color:var(--gold)}
+.inns{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:16px 0}
+.inn{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.inn small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.inn b{font:500 26px/1.1 var(--mono);display:block;margin:4px 0 2px}
+.inn span{color:var(--ink2);font-size:13px}
+.sc{margin-top:18px} .sc h3{font:400 20px/1.2 var(--serif);margin:0 0 2px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sc h3 b{font:500 20px var(--mono)} .sc .sub{margin-bottom:8px}
+.sc td.how{color:var(--muted);font-size:13px}
+.sc tr.tot td{font-weight:700;border-bottom:2px solid var(--line2)}
+.sc tr.ext td{color:var(--muted);font-size:13px}
+/* team cards */
+.tcard{display:block;color:var(--ink);background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tcard:hover{text-decoration:none;border-color:var(--pitch2)}
+.tcard h3{font:400 20px/1.2 var(--serif);margin:0 0 2px} .tcard .rec{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin:6px 0}
+/* player hits */
+.hit{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line);color:var(--ink)}
+.hit:hover{text-decoration:none;background:rgba(95,214,138,.05)} .hit b{font-size:16px} .hit span{color:var(--muted);font-size:13px}
+/* footer / how it works */
+footer{max-width:1240px;margin:0 auto;padding:0 20px 20px;color:var(--dim);font-size:12px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+footer a{color:var(--muted)}
+#how{display:none} #how.show{display:block}
+#how pre{background:#070907;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font:12px/1.5 var(--mono);color:var(--ink2);max-height:360px}
+#how details{border-bottom:1px solid var(--line);padding:8px 0} #how summary{cursor:pointer;font-weight:600}
+#how summary code{color:var(--gold);font-family:var(--mono)} #how h3{font:400 22px/1.2 var(--serif);margin:22px 0 8px}
+#how dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px} #how dt{color:var(--gold);font-family:var(--mono)}
+#tip{position:fixed;z-index:50;pointer-events:none;background:#070907;border:1px solid var(--line2);color:var(--ink);font:12px/1.45 var(--sans);padding:8px 10px;border-radius:8px;white-space:pre;display:none;max-width:320px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.tr{text-align:right} .nowrap{white-space:nowrap}
+@media (max-width:640px){.mast h1{font-size:32px} .hb{grid-template-columns:minmax(120px,1.3fr) 1.6fr 54px} th,td{padding:6px 5px;font-size:13px}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="kicker">County Championship · 2014 to date · Cricsheet ball-by-ball</div>
+  <h1>County <em>Cricket</em></h1>
+  <p class="lede">Every first-class county season since 2014, reduced to scorecards: tables, leaders, careers and the figures behind them. Pick a season, or go straight to a county, a player or a match.</p>
+  <nav class="seasons" id="seasons" aria-label="Seasons"></nav>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+</header>
+<main id="main"></main>
+<section id="how" class="mast">
+  <div class="card">
+    <h2><small>Under the bonnet</small>How it works</h2>
+    <h3>1. The data</h3>
+    <p>Everything on this page is read from the <b>county-cricket</b> realm, which stores the County Championship as six record types: <code>CountyTeam</code> (18), <code>CricketPlayer</code> (1,080), <code>CountyMatch</code> (1,483), <code>TeamInnings</code> (5,220), <code>BattingInnings</code> (51,173) and <code>BowlingInnings</code> (29,542). They are seeded from the realm's <code>reference/</code> files, which <code>scripts/build_reference.py</code> builds by reducing every delivery in Cricsheet's County Championship archive (<a href="https://cricsheet.org/downloads/" target="_blank" rel="noopener noreferrer">cricsheet.org/downloads</a>, ODC-By) to scorecard lines. Nothing is fetched at query time, so a figure here is exactly as fresh as the last rebuild: seasons 2014 to 2026, no 2020 (that year's Bob Willis Trophy is not held), and the current season as far as Cricsheet had recorded it when the realm was built. Cricsheet's archive is not complete for every season: 2022 onwards hold all 126 fixtures, but 2014 to 2019 hold between 111 and 135 of the 144 played, so a county's "played" column in those seasons counts the matches held, not the matches it played.</p>
+    <p>The conventions the figures follow: a batter's balls faced exclude wides; a bowler is credited with caught, bowled, lbw, stumped, hit wicket and caught-and-bowled, and is charged runs off the bat plus wides and no balls (never byes or leg byes); a maiden is a complete over by one bowler conceding none of those; retired hurt and retired not out are not dismissals; a batting average is runs divided by dismissals, a bowling average runs conceded divided by wickets, economy runs per six legal balls, a batter's strike rate runs per hundred balls and a bowler's balls per wicket.</p>
+    <h3>2. The questions</h3>
+    <p>The page never writes a query. Each panel invokes a named view through the app runtime (<code>embabel.views.invoke</code>) with the parameters shown; the Cypher below is each view's saved definition, copied from <code>views/cricket.yml</code> at build time by <code>scripts/inject_how_it_works.py</code>.</p>
+    <!-- VIEWS:BEGIN -->
+<details data-view="CountySeasons"><summary><code>CountySeasons</code> — Every County Championship season the realm holds (2014 to 2026, no 2020), newest first, with how many matches, teams and divisions (groups in 2021) each has, the date span, and how many matches were decided or drawn. The first call an app makes, to know what can be asked.</summary><p class="sub">Parameters: no parameters</p><pre>MATCH (m:CountyMatch)
+RETURN m.season AS season, count(m) AS matches, count(DISTINCT m.team1) AS teams,
+       count(DISTINCT m.stage) AS stages, min(m.startDate) AS firstMatch, max(m.endDate) AS lastMatch,
+       sum(CASE WHEN m.result = &#x27;won&#x27; THEN 1 ELSE 0 END) AS decided,
+       sum(CASE WHEN m.result = &#x27;draw&#x27; THEN 1 ELSE 0 END) AS drawn
+ORDER BY season DESC</pre></details>
+<details data-view="CountyTeams"><summary><code>CountyTeams</code> — The 18 first-class counties with their all-time County Championship record in the data (2014 onwards) - matches, wins, draws, losses - and the seasons they span.</summary><p class="sub">Parameters: no parameters</p><pre>MATCH (t:CountyTeam)
+OPTIONAL MATCH (m:CountyMatch)-[:TEAM]-&gt;(t)
+WITH t, count(m) AS played,
+     sum(CASE WHEN m.winner = t.name THEN 1 ELSE 0 END) AS won,
+     sum(CASE WHEN m.result = &#x27;draw&#x27; THEN 1 ELSE 0 END) AS drawn,
+     sum(CASE WHEN m.loser = t.name THEN 1 ELSE 0 END) AS lost
+RETURN t.name AS team, t.firstSeason AS firstSeason, t.lastSeason AS lastSeason,
+       played, won, drawn, lost
+ORDER BY team</pre></details>
+<details data-view="CountyTable"><summary><code>CountyTable</code> — The County Championship table for one season and division (a group in 2021) as results - played, won, drawn, lost, tied, wins by an innings - ordered by wins then draws. NOT the official points table: no points, bonus points or deductions exist in this realm, so a question about points has no answer here and must not be approximated from wins.</summary><p class="sub">Parameters: season: int = 2026, stage: int = 1</p><pre>MATCH (m:CountyMatch {season: $season, stage: $stage})
+UNWIND [m.team1, m.team2] AS team
+WITH team, m
+WITH team, count(m) AS played,
+     sum(CASE WHEN m.winner = team THEN 1 ELSE 0 END) AS won,
+     sum(CASE WHEN m.result = &#x27;draw&#x27; THEN 1 ELSE 0 END) AS drawn,
+     sum(CASE WHEN m.loser = team THEN 1 ELSE 0 END) AS lost,
+     sum(CASE WHEN m.result = &#x27;tie&#x27; THEN 1 ELSE 0 END) AS tied,
+     sum(CASE WHEN m.winner = team AND m.byInnings THEN 1 ELSE 0 END) AS wonByInnings
+RETURN team, played, won, drawn, lost, tied, wonByInnings
+ORDER BY won DESC, drawn DESC, lost ASC, team</pre></details>
+<details data-view="TeamSeasons"><summary><code>TeamSeasons</code> — One county&#x27;s County Championship record season by season - which division (or 2021 group) it was in and its played, won, drawn, lost - newest season first.</summary><p class="sub">Parameters: team: string = &#x27;Surrey&#x27;</p><pre>MATCH (m:CountyMatch)
+WHERE m.team1 = $team OR m.team2 = $team
+WITH m.season AS season, m.stage AS stage, m.stageName AS stageName, count(m) AS played,
+     sum(CASE WHEN m.winner = $team THEN 1 ELSE 0 END) AS won,
+     sum(CASE WHEN m.result = &#x27;draw&#x27; THEN 1 ELSE 0 END) AS drawn,
+     sum(CASE WHEN m.loser = $team THEN 1 ELSE 0 END) AS lost,
+     sum(CASE WHEN m.result = &#x27;tie&#x27; THEN 1 ELSE 0 END) AS tied
+RETURN season, stage, stageName, played, won, drawn, lost, tied
+ORDER BY season DESC</pre></details>
+<details data-view="TeamResults"><summary><code>TeamResults</code> — One county&#x27;s County Championship matches - opponent, venue, date, whether it won, lost, drew or tied, and the margin - newest first, optionally for one season. Each row carries the match id for the scorecard and a link to ESPNcricinfo.</summary><p class="sub">Parameters: team: string = &#x27;Surrey&#x27;, season: int = 0, limit: int = 200</p><pre>MATCH (m:CountyMatch)
+WHERE (m.team1 = $team OR m.team2 = $team) AND ($season = 0 OR m.season = $season)
+RETURN m.matchId AS matchId, m.season AS season, m.stageName AS stage, m.startDate AS date,
+       m.venue AS venue, m.city AS city,
+       CASE WHEN m.team1 = $team THEN m.team2 ELSE m.team1 END AS opponent,
+       m.team1 = $team AS listedFirst,
+       CASE WHEN m.winner = $team THEN &#x27;won&#x27; WHEN m.loser = $team THEN &#x27;lost&#x27;
+            WHEN m.result = &#x27;tie&#x27; THEN &#x27;tied&#x27; ELSE &#x27;drawn&#x27; END AS outcome,
+       m.margin AS margin, m.winner AS winner, m.url AS url
+ORDER BY date DESC
+LIMIT $limit</pre></details>
+<details data-view="HeadToHead"><summary><code>HeadToHead</code> — Every County Championship match between two counties since 2014, newest first, with the result and margin - for &quot;how have Yorkshire done against Lancashire&quot; questions. Tally the rows for the head-to-head record.</summary><p class="sub">Parameters: teamA: string = &#x27;Yorkshire&#x27;, teamB: string = &#x27;Lancashire&#x27;</p><pre>MATCH (m:CountyMatch)
+WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
+RETURN m.matchId AS matchId, m.season AS season, m.stageName AS stage, m.startDate AS date,
+       m.venue AS venue, m.city AS city, m.team1 AS team1, m.team2 AS team2,
+       m.result AS result, m.winner AS winner, m.margin AS margin, m.url AS url
+ORDER BY date DESC
+LIMIT 200</pre></details>
+<details data-view="SeasonBatting"><summary><code>SeasonBatting</code> — The leading run-scorers of a County Championship season - matches, innings, not outs, runs, highest score, average, balls faced, strike rate, fours, sixes, hundreds and fifties - optionally within one division (2021 group) or one county, with a minimum innings. Answers &quot;who scored the most runs in 2025&quot;, &quot;best batting average for Surrey&quot;, &quot;most hundreds in Division 2&quot;.</summary><p class="sub">Parameters: season: int = 2026, stage: int = 0, team: string = &#x27;&#x27;, minInnings: int = 1, limit: int = 25</p><pre>MATCH (b:BattingInnings {season: $season})
+WHERE ($stage = 0 OR b.stage = $stage) AND ($team = &#x27;&#x27; OR b.team = $team)
+WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams,
+     count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+     sum(CASE WHEN b.notOut THEN 1 ELSE 0 END) AS notOuts,
+     sum(b.runs) AS runs, max(b.runs) AS highScore,
+     max(CASE WHEN b.notOut THEN b.runs ELSE -1 END) AS highNotOut,
+     sum(b.balls) AS balls, sum(b.fours) AS fours, sum(b.sixes) AS sixes,
+     sum(CASE WHEN b.runs &gt;= 100 THEN 1 ELSE 0 END) AS hundreds,
+     sum(CASE WHEN b.runs &gt;= 50 AND b.runs &lt; 100 THEN 1 ELSE 0 END) AS fifties
+WHERE innings &gt;= $minInnings
+RETURN playerId, player, teams, matches, innings, notOuts, runs, highScore,
+       highNotOut = highScore AS highScoreNotOut,
+       CASE WHEN innings - notOuts &gt; 0 THEN round(100.0 * runs / (innings - notOuts)) / 100.0 ELSE null END AS average,
+       balls,
+       CASE WHEN balls &gt; 0 THEN round(10000.0 * runs / balls) / 100.0 ELSE null END AS strikeRate,
+       fours, sixes, hundreds, fifties
+ORDER BY runs DESC, average DESC
+LIMIT $limit</pre></details>
+<details data-view="SeasonBowling"><summary><code>SeasonBowling</code> — The leading wicket-takers of a County Championship season - matches, innings bowled, overs, maidens, runs conceded, wickets, best figures, average, economy, strike rate and five-wicket hauls - optionally within one division (2021 group) or one county, with a minimum wickets. Answers &quot;who took the most wickets in 2024&quot;, &quot;best bowling average for Essex&quot;, &quot;most five-fors&quot;.</summary><p class="sub">Parameters: season: int = 2026, stage: int = 0, team: string = &#x27;&#x27;, minWickets: int = 1, limit: int = 25</p><pre>MATCH (b:BowlingInnings {season: $season})
+WHERE ($stage = 0 OR b.stage = $stage) AND ($team = &#x27;&#x27; OR b.team = $team)
+WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams,
+     count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+     sum(b.balls) AS balls, sum(b.maidens) AS maidens, sum(b.runs) AS runs, sum(b.wickets) AS wickets,
+     sum(CASE WHEN b.wickets &gt;= 5 THEN 1 ELSE 0 END) AS fiveFors,
+     max(b.wickets * 1000 - b.runs) AS bestCode
+WHERE wickets &gt;= $minWickets
+WITH playerId, player, teams, matches, innings, balls, maidens, runs, wickets, fiveFors, bestCode,
+     toInteger(floor((bestCode + 999) / 1000.0)) AS bestWickets
+RETURN playerId, player, teams, matches, innings, balls,
+       toString(balls / 6) + &#x27;.&#x27; + toString(balls % 6) AS overs,
+       maidens, runs, wickets, bestWickets, bestWickets * 1000 - bestCode AS bestRuns,
+       CASE WHEN wickets &gt; 0 THEN round(100.0 * runs / wickets) / 100.0 ELSE null END AS average,
+       CASE WHEN balls &gt; 0 THEN round(100.0 * runs * 6 / balls) / 100.0 ELSE null END AS economy,
+       CASE WHEN wickets &gt; 0 THEN round(10.0 * balls / wickets) / 10.0 ELSE null END AS strikeRate,
+       fiveFors
+ORDER BY wickets DESC, average ASC
+LIMIT $limit</pre></details>
+<details data-view="HighestScores"><summary><code>HighestScores</code> — The highest individual County Championship innings in the data - batter, team, opponent, runs, balls, boundaries, whether not out, date and venue - for one season or all, optionally for one county. Answers &quot;highest score in 2023&quot;, &quot;biggest innings for Kent&quot;.</summary><p class="sub">Parameters: season: int = 0, team: string = &#x27;&#x27;, limit: int = 25</p><pre>MATCH (b:BattingInnings)
+WHERE ($season = 0 OR b.season = $season) AND ($team = &#x27;&#x27; OR b.team = $team)
+RETURN b.player AS player, b.playerId AS playerId, b.team AS team, b.opponent AS opponent,
+       b.runs AS runs, b.balls AS balls, b.fours AS fours, b.sixes AS sixes, b.notOut AS notOut,
+       b.season AS season, b.date AS date, b.venue AS venue, b.matchId AS matchId
+ORDER BY runs DESC, balls ASC
+LIMIT $limit</pre></details>
+<details data-view="BestBowling"><summary><code>BestBowling</code> — The best bowling figures in an innings in the data - bowler, team, opponent, overs, maidens, runs, wickets, date and venue - for one season or all, optionally for one county. Answers &quot;best bowling figures in 2022&quot;, &quot;most wickets in an innings for Durham&quot;.</summary><p class="sub">Parameters: season: int = 0, team: string = &#x27;&#x27;, limit: int = 25</p><pre>MATCH (b:BowlingInnings)
+WHERE ($season = 0 OR b.season = $season) AND ($team = &#x27;&#x27; OR b.team = $team)
+RETURN b.player AS player, b.playerId AS playerId, b.team AS team, b.opponent AS opponent,
+       b.overs AS overs, b.maidens AS maidens, b.runs AS runs, b.wickets AS wickets,
+       b.season AS season, b.date AS date, b.venue AS venue, b.matchId AS matchId
+ORDER BY wickets DESC, runs ASC
+LIMIT $limit</pre></details>
+<details data-view="PlayerSearch"><summary><code>PlayerSearch</code> — Find County Championship cricketers by part of a name (case-insensitive) - their Cricsheet id, the counties they have played for, first and last seasons and matches. Names are as printed in scorecards (JE Root), so search by surname.</summary><p class="sub">Parameters: name: string = &#x27;Root&#x27;</p><pre>MATCH (p:CricketPlayer)
+WHERE toLower(p.name) CONTAINS toLower($name)
+RETURN p.playerId AS playerId, p.name AS name, p.teams AS teams, p.firstSeason AS firstSeason,
+       p.lastSeason AS lastSeason, p.matches AS matches
+ORDER BY matches DESC, name
+LIMIT 25</pre></details>
+<details data-view="PlayerBatting"><summary><code>PlayerBatting</code> — One cricketer&#x27;s County Championship batting season by season - matches, innings, not outs, runs, highest score, average, strike rate, hundreds and fifties - by Cricsheet player id (find it with PlayerSearch).</summary><p class="sub">Parameters: playerId: string = &#x27;86e0f3f0&#x27;</p><pre>MATCH (p:CricketPlayer {playerId: $playerId})&lt;-[:BY]-(b:BattingInnings)
+WITH p, b.season AS season, collect(DISTINCT b.team) AS teams,
+     count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+     sum(CASE WHEN b.notOut THEN 1 ELSE 0 END) AS notOuts,
+     sum(b.runs) AS runs, max(b.runs) AS highScore,
+     max(CASE WHEN b.notOut THEN b.runs ELSE -1 END) AS highNotOut,
+     sum(b.balls) AS balls, sum(b.fours) AS fours, sum(b.sixes) AS sixes,
+     sum(CASE WHEN b.runs &gt;= 100 THEN 1 ELSE 0 END) AS hundreds,
+     sum(CASE WHEN b.runs &gt;= 50 AND b.runs &lt; 100 THEN 1 ELSE 0 END) AS fifties
+RETURN p.playerId AS playerId, p.name AS player, season, teams, matches, innings, notOuts, runs, highScore,
+       highNotOut = highScore AS highScoreNotOut,
+       CASE WHEN innings - notOuts &gt; 0 THEN round(100.0 * runs / (innings - notOuts)) / 100.0 ELSE null END AS average,
+       balls,
+       CASE WHEN balls &gt; 0 THEN round(10000.0 * runs / balls) / 100.0 ELSE null END AS strikeRate,
+       fours, sixes, hundreds, fifties
+ORDER BY season</pre></details>
+<details data-view="PlayerBowling"><summary><code>PlayerBowling</code> — One cricketer&#x27;s County Championship bowling season by season - matches, innings bowled, overs, maidens, runs, wickets, best figures, average, economy, strike rate and five-fors - by Cricsheet player id (find it with PlayerSearch).</summary><p class="sub">Parameters: playerId: string = &#x27;5b6d248a&#x27;</p><pre>MATCH (p:CricketPlayer {playerId: $playerId})&lt;-[:BY]-(b:BowlingInnings)
+WITH p, b.season AS season, collect(DISTINCT b.team) AS teams,
+     count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+     sum(b.balls) AS balls, sum(b.maidens) AS maidens, sum(b.runs) AS runs, sum(b.wickets) AS wickets,
+     sum(CASE WHEN b.wickets &gt;= 5 THEN 1 ELSE 0 END) AS fiveFors,
+     max(b.wickets * 1000 - b.runs) AS bestCode
+WITH p, season, teams, matches, innings, balls, maidens, runs, wickets, fiveFors, bestCode,
+     toInteger(floor((bestCode + 999) / 1000.0)) AS bestWickets
+RETURN p.playerId AS playerId, p.name AS player, season, teams, matches, innings, balls,
+       toString(balls / 6) + &#x27;.&#x27; + toString(balls % 6) AS overs,
+       maidens, runs, wickets, bestWickets, bestWickets * 1000 - bestCode AS bestRuns,
+       CASE WHEN wickets &gt; 0 THEN round(100.0 * runs / wickets) / 100.0 ELSE null END AS average,
+       CASE WHEN balls &gt; 0 THEN round(100.0 * runs * 6 / balls) / 100.0 ELSE null END AS economy,
+       CASE WHEN wickets &gt; 0 THEN round(10.0 * balls / wickets) / 10.0 ELSE null END AS strikeRate,
+       fiveFors
+ORDER BY season</pre></details>
+<details data-view="PlayerInnings"><summary><code>PlayerInnings</code> — Every County Championship innings one cricketer has batted, newest first - date, opponent, venue, runs, balls, how out and by whom, and the match&#x27;s result - by Cricsheet player id.</summary><p class="sub">Parameters: playerId: string = &#x27;86e0f3f0&#x27;, limit: int = 300</p><pre>MATCH (p:CricketPlayer {playerId: $playerId})&lt;-[:BY]-(b:BattingInnings)-[:IN_MATCH]-&gt;(m:CountyMatch)
+RETURN b.date AS date, b.season AS season, b.team AS team, b.opponent AS opponent, b.venue AS venue,
+       b.inningsNo AS inningsNo, b.position AS position, b.runs AS runs, b.balls AS balls,
+       b.fours AS fours, b.sixes AS sixes, b.notOut AS notOut, b.dismissal AS dismissal,
+       b.bowler AS bowler, b.fielders AS fielders, m.matchId AS matchId, m.result AS result,
+       m.winner AS winner, m.margin AS margin, m.url AS url
+ORDER BY date DESC, inningsNo DESC
+LIMIT $limit</pre></details>
+<details data-view="PlayerSpells"><summary><code>PlayerSpells</code> — Every County Championship innings one cricketer has bowled in, newest first - date, opponent, venue, overs, maidens, runs, wickets, and the match&#x27;s result - by Cricsheet player id.</summary><p class="sub">Parameters: playerId: string = &#x27;5b6d248a&#x27;, limit: int = 300</p><pre>MATCH (p:CricketPlayer {playerId: $playerId})&lt;-[:BY]-(b:BowlingInnings)-[:IN_MATCH]-&gt;(m:CountyMatch)
+RETURN b.date AS date, b.season AS season, b.team AS team, b.opponent AS opponent, b.venue AS venue,
+       b.inningsNo AS inningsNo, b.overs AS overs, b.maidens AS maidens, b.runs AS runs,
+       b.wickets AS wickets, b.dots AS dots, m.matchId AS matchId, m.result AS result,
+       m.winner AS winner, m.margin AS margin, m.url AS url
+ORDER BY date DESC, inningsNo DESC
+LIMIT $limit</pre></details>
+<details data-view="MatchSummary"><summary><code>MatchSummary</code> — One County Championship match by id - teams, season, division, dates, venue, toss, result, winner and margin, with the ESPNcricinfo link.</summary><p class="sub">Parameters: matchId: string = &#x27;1513450&#x27;</p><pre>MATCH (m:CountyMatch {matchId: $matchId})
+RETURN m.matchId AS matchId, m.season AS season, m.stage AS stage, m.stageName AS stageName,
+       m.competition AS competition, m.startDate AS startDate, m.endDate AS endDate, m.days AS days,
+       m.venue AS venue, m.city AS city, m.team1 AS team1, m.team2 AS team2,
+       m.tossWinner AS tossWinner, m.tossDecision AS tossDecision, m.tossUncontested AS tossUncontested,
+       m.result AS result, m.winner AS winner, m.loser AS loser, m.margin AS margin,
+       m.marginRuns AS marginRuns, m.marginWickets AS marginWickets, m.byInnings AS byInnings, m.url AS url
+LIMIT 1</pre></details>
+<details data-view="MatchInnings"><summary><code>MatchInnings</code> — The four (or fewer) team innings of one County Championship match in order - team, total, wickets, overs, declared or forfeited, extras.</summary><p class="sub">Parameters: matchId: string = &#x27;1513450&#x27;</p><pre>MATCH (m:CountyMatch {matchId: $matchId})&lt;-[:IN_MATCH]-(t:TeamInnings)
+RETURN t.inningsNo AS inningsNo, t.team AS team, t.bowlingTeam AS bowlingTeam, t.runs AS runs,
+       t.wickets AS wickets, t.overs AS overs, t.balls AS balls, t.declared AS declared,
+       t.forfeited AS forfeited, t.allOut AS allOut, t.extras AS extras, t.byes AS byes,
+       t.legbyes AS legbyes, t.wides AS wides, t.noballs AS noballs, t.penalty AS penalty
+ORDER BY inningsNo
+LIMIT 4</pre></details>
+<details data-view="MatchBatting"><summary><code>MatchBatting</code> — The batting scorecard of one County Championship match - every batter of every innings in batting order, with runs, balls, boundaries and dismissal.</summary><p class="sub">Parameters: matchId: string = &#x27;1513450&#x27;</p><pre>MATCH (m:CountyMatch {matchId: $matchId})&lt;-[:IN_MATCH]-(b:BattingInnings)
+RETURN b.inningsNo AS inningsNo, b.team AS team, b.position AS position, b.playerId AS playerId,
+       b.player AS player, b.runs AS runs, b.balls AS balls, b.fours AS fours, b.sixes AS sixes,
+       b.notOut AS notOut, b.dismissal AS dismissal, b.bowler AS bowler, b.fielders AS fielders
+ORDER BY inningsNo, position
+LIMIT 100</pre></details>
+<details data-view="MatchBowling"><summary><code>MatchBowling</code> — The bowling scorecard of one County Championship match - every bowler of every innings in bowling order, with overs, maidens, runs and wickets.</summary><p class="sub">Parameters: matchId: string = &#x27;1513450&#x27;</p><pre>MATCH (m:CountyMatch {matchId: $matchId})&lt;-[:IN_MATCH]-(b:BowlingInnings)
+RETURN b.inningsNo AS inningsNo, b.team AS team, b.opponent AS opponent, b.bowlOrder AS bowlOrder,
+       b.playerId AS playerId, b.player AS player, b.overs AS overs, b.balls AS balls,
+       b.maidens AS maidens, b.runs AS runs, b.wickets AS wickets, b.dots AS dots,
+       b.wides AS wides, b.noballs AS noballs
+ORDER BY inningsNo, bowlOrder
+LIMIT 100</pre></details>
+<!-- VIEWS:END -->
+    <h3>3. When it looks wrong</h3>
+    <dl>
+      <dt>A table is missing a team, or a county has played fewer matches than it should</dt><dd>Each division's table is built from the matches that season carries; a county appears once it has played. Cricsheet's archive is incomplete for 2014 to 2019 (see section 1), and early in a season the newest fixtures may not yet be in it, so a "played" column can be short of the fixture list.</dd>
+      <dt>There is no points column</dt><dd>Deliberate. Championship points need batting and bowling bonus points (which depend on where the first 110 overs ended) and over-rate deductions the umpires apply; neither is in the ball-by-ball record, so a computed points column would be wrong often enough to mislead. The table ranks by wins then draws, which is not the official order.</dd>
+      <dt>A leaders list is empty</dt><dd>The season has no innings matching the filters: the division or county chosen did not play that season (2021 had three groups, not two divisions), or the minimum innings is above what anyone reached.</dd>
+      <dt>A player has two entries</dt><dd>Players are keyed by Cricsheet's registry id, not by name, so two entries are two people who share a printed name. Their county list and seasons tell them apart.</dd>
+      <dt>An average shows a dash</dt><dd>No dismissals (batting) or no wickets (bowling): the average is undefined, not zero.</dd>
+      <dt>A panel says it could not load</dt><dd>The view call failed or the realm is not installed; the message names which. A panel that is genuinely empty says "no" something, never a blank.</dd>
+      <dt>The figures differ from ESPNcricinfo</dt><dd>Each match links to its ESPNcricinfo page. Cricsheet transcribes from the same scorecards, and a handful of innings in the archive are marked with miscounted overs or absent players; the realm's tests reconcile every season total against the raw files, not against the website.</dd>
+    </dl>
+    <h3>4. What made this possible</h3>
+    <p>The whole statistical layer is nineteen saved queries over records the realm seeds itself. There is no backend to deploy for this app, no database to administer and no nightly aggregation job: a season's leading run-scorers are summed from fifty thousand innings rows inside the query that fetches them (see <code>SeasonBatting</code> above), the same rows that feed a player's career and a match's scorecard, so a number shown twice is computed once. The page asks the world by view name when it loads; the same views answer the appliance's natural-language questions, which the realm's <code>tests/questions.yml</code> battery checks against these figures.</p>
+  </div>
+</section>
+<footer>
+  <span>Data: <a href="https://cricsheet.org/" target="_blank" rel="noopener noreferrer">Cricsheet</a> (ODC-By). Match pages link to <a href="https://www.espncricinfo.com/" target="_blank" rel="noopener noreferrer">ESPNcricinfo</a>. Championship points are not shown: bonus points and penalties are not in the record.</span>
+  <a href="#/how-it-works" id="how-link">How it works</a>
+</footer>
+<div id="tip" role="tooltip"></div>
+<div id="embabel-badge" style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:6px 0;background:rgba(10,10,15,0.9);border-top:1px solid rgba(99,192,245,0.2);font-size:0.75rem;color:#6b7280;z-index:9999;pointer-events:none;">
+  Created with <a href="https://worlds.embabel.com" target="_blank" rel="noopener noreferrer" style="color:#63c0f5;text-decoration:none;pointer-events:auto;">Embabel Worlds</a>
+</div>
+<script>
+(() => {
+'use strict';
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (v) => (window.embabel && embabel.html && embabel.html.escape) ? embabel.html.escape(String(v ?? '')) :
+  String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (n) => (n == null || n === '') ? '—' : Number(n).toLocaleString('en-GB');
+const dec = (n, d = 2) => (n == null || n === '' || Number.isNaN(Number(n))) ? '—' : Number(n).toFixed(d);
+const dateFmt = (iso) => { if (!iso) return ''; const d = new Date(iso + 'T00:00:00Z'); return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); };
+const hs = (runs, notOut) => `${fmt(runs)}${notOut ? '*' : ''}`;
+const figs = (w, r) => (w == null || r == null) ? '—' : `${w}-${r}`;
+const stageLabel = (season, stage) => `${Number(season) === 2021 ? 'Group' : 'Division'} ${stage}`;
+
+/* ---------- the world: one promise per (view, args), cached for the life of the page ---------- */
+const cache = new Map();
+const keyOf = (name, args) => name + ':' + JSON.stringify(Object.fromEntries(Object.entries(args || {}).sort()));
+async function view(name, args = {}, opts = {}) {
+  const k = keyOf(name, args);
+  if (!cache.has(k)) {
+    const p = (async () => {
+      const env = await embabel.views.invoke(name, args, opts);
+      if (env && env.status === 'FAILED') throw new Error((env.error && env.error.message) || 'The query failed.');
+      return { rows: Array.isArray(env && env.data) ? env.data : [], warnings: (env && env.warnings) || [], status: env && env.status };
+    })();
+    cache.set(k, p);
+    p.catch(() => cache.delete(k));
+  }
+  return cache.get(k);
+}
+
+/* ---------- navigation: a generation counter so a slow answer never paints over a newer page ---------- */
+let gen = 0;
+let aborter = null;
+const app = { seasons: null, teams: null, latest: null };
+const main = $('#main');
+
+function route() {
+  const raw = location.hash.replace(/^#\/?/, '');
+  const parts = raw.split('/').filter(Boolean).map(p => { try { return decodeURIComponent(p); } catch { return ''; } });
+  const seasonOk = (s) => /^\d{4}$/.test(s || '') && app.seasons && app.seasons.some(x => String(x.season) === s);
+  const idOk = (s) => /^[A-Za-z0-9_-]{1,32}$/.test(s || '');
+  const nameOk = (s) => /^[A-Za-z][A-Za-z .'-]{1,40}$/.test(s || '');
+  const [a, b, c, d] = parts;
+  if (!a) return { page: 'season', season: app.latest, sub: 'summary' };
+  if (a === 'season' && seasonOk(b)) return { page: 'season', season: Number(b), sub: ['batting', 'bowling'].includes(c) ? c : 'summary' };
+  if (a === 'teams') return { page: 'teams' };
+  if (a === 'team' && nameOk(b)) { const season = /^\d{4}$/.test(c || '') ? Number(c) : null; const opp = season ? d : c; return { page: 'team', team: b, season, opp: nameOk(opp) ? opp : null }; }
+  if (a === 'players') return { page: 'players', q: nameOk(b) ? b : '' };
+  if (a === 'player' && idOk(b)) return { page: 'player', id: b };
+  if (a === 'records') return { page: 'records', season: /^\d{4}$/.test(b || '') ? Number(b) : 0 };
+  if (a === 'match' && idOk(b)) return { page: 'match', id: b };
+  if (a === 'how-it-works') return { page: 'how' };
+  return { page: 'season', season: app.latest, sub: 'summary', unknown: true };
+}
+
+function nav() {
+  const r = route();
+  const my = ++gen;
+  if (aborter) { try { aborter.abort(); } catch {} }
+  aborter = new AbortController();
+  const signal = aborter.signal;
+  const alive = () => my === gen;
+  $('#how').classList.toggle('show', r.page === 'how');
+  main.style.display = r.page === 'how' ? 'none' : '';
+  paintSeasons(r);
+  paintTabs(r);
+  window.scrollTo(0, 0);
+  const pages = { season: pageSeason, teams: pageTeams, team: pageTeam, players: pagePlayers, player: pagePlayer, records: pageRecords, match: pageMatch, how: async () => {} };
+  pages[r.page](r, { alive, signal }).catch(e => { if (alive()) main.innerHTML = errorBox(e); });
+}
+
+function paintSeasons(r) {
+  const cur = r.page === 'season' ? r.season : null;
+  $('#seasons').innerHTML = (app.seasons || []).slice().sort((a, b) => a.season - b.season)
+    .map(s => `<a href="#/season/${s.season}" data-season-pill="${s.season}" class="${s.season === cur ? 'on' : ''}" title="${s.matches} matches">${s.season}</a>`).join('');
+}
+function paintTabs(r) {
+  const season = r.page === 'season' ? r.season : app.latest;
+  const tabs = [
+    ['summary', `#/season/${season}`, 'Season'],
+    ['batting', `#/season/${season}/batting`, 'Batting'],
+    ['bowling', `#/season/${season}/bowling`, 'Bowling'],
+    ['teams', '#/teams', 'Counties'],
+    ['players', '#/players', 'Players'],
+    ['records', '#/records', 'Records'],
+  ];
+  const on = r.page === 'season' ? r.sub : (r.page === 'team' ? 'teams' : r.page === 'player' ? 'players' : r.page);
+  $('#tabs').innerHTML = tabs.map(([k, h, l]) => `<a href="${h}" data-tab="${k}" class="${k === on ? 'on' : ''}">${l}</a>`).join('');
+}
+
+/* ---------- state boxes: loading, empty and error are three different sentences ---------- */
+const loadingBox = (what) => `<div class="state loading" data-state="loading">Asking the world for ${esc(what)}…</div>`;
+const emptyBox = (why) => `<div class="state empty" data-state="empty">${esc(why)}</div>`;
+const errorBox = (e) => `<div class="state error" data-state="error">Could not load: ${esc(e && e.message ? e.message : e)} <button onclick="location.reload()">Retry</button></div>`;
+const warnBox = (w) => w && w.length ? `<div class="warn" data-state="warning">${esc([...new Set(w)].join(' '))}</div>` : '';
+
+/* ---------- pieces ---------- */
+const wdl = (w, d, l, t = 0) => {
+  const n = (w + d + l + t) || 1;
+  return `<div class="wdl" data-tip="Won ${w} · Drawn ${d} · Lost ${l}${t ? ' · Tied ' + t : ''}"><i class="w" style="flex:${w / n}"></i><i class="d" style="flex:${(d + t) / n}"></i><i class="l" style="flex:${l / n}"></i></div>`;
+};
+const legendWDL = `<div class="legend"><span><i style="background:var(--pitch)"></i>Won</span><span><i style="background:var(--draw)"></i>Drawn</span><span><i style="background:var(--ball)"></i>Lost</span></div>`;
+function hbars(rows, { value, label, sub, href, tip, cls = '', attr = '' }) {
+  const max = Math.max(1, ...rows.map(r => Number(r[value]) || 0));
+  return rows.map((r, i) => `<a class="hb ${cls}" href="${href(r)}" ${attr ? `${attr}="${esc(r[attr.replace('data-', '')] ?? i)}"` : ''} data-tip="${esc(tip ? tip(r) : '')}">
+    <span class="hb-l"><span class="rank">${i + 1}</span> ${esc(label(r))}${sub ? `<small>${esc(sub(r))}</small>` : ''}</span>
+    <span class="hb-t"><i style="width:${(100 * (Number(r[value]) || 0) / max).toFixed(1)}%"></i></span>
+    <span class="hb-v">${fmt(r[value])}</span></a>`).join('');
+}
+function columns(rows, { value, label, tip, cls = '' }) {
+  const max = Math.max(1, ...rows.map(r => Number(r[value]) || 0));
+  return `<div class="cols">${rows.map(r => `<div class="col ${cls}" data-tip="${esc(tip ? tip(r) : '')}"><b>${fmt(r[value])}</b><i style="height:${(100 * (Number(r[value]) || 0) / max).toFixed(1)}%"></i><s>${esc(label(r))}</s></div>`).join('')}</div>`;
+}
+function strip(inns) {
+  const max = Math.max(50, ...inns.map(i => i.runs));
+  return `<div class="strip" data-innings-strip>${inns.map(i => `<i class="${i.runs >= 100 ? 'ton' : i.runs >= 50 ? 'fifty' : ''}" style="height:${(100 * i.runs / max).toFixed(1)}%" data-tip="${esc(`${hs(i.runs, i.notOut)} (${i.balls}) v ${i.opponent}\n${dateFmt(i.date)} · ${i.venue}\n${dismissalText(i)}`)}"></i>`).join('')}</div>
+  <div class="strip-cap"><span>${inns.length ? dateFmt(inns[0].date) : ''}</span><span>${inns.length} innings · <span style="color:var(--gold)">■</span> 100+ <span style="color:var(--pitch)">■</span> 50+</span><span>${inns.length ? dateFmt(inns[inns.length - 1].date) : ''}</span></div>`;
+}
+function dismissalText(b) {
+  const k = b.dismissal, bw = b.bowler ? `b ${b.bowler}` : '', f = b.fielders || '';
+  switch (k) {
+    case 'not out': return 'not out';
+    case 'caught': return `c ${f} ${bw}`;
+    case 'caught and bowled': return `c & ${bw}`;
+    case 'bowled': return bw;
+    case 'lbw': return `lbw ${bw}`;
+    case 'stumped': return `st ${f} ${bw}`;
+    case 'hit wicket': return `hit wicket ${bw}`;
+    case 'run out': return `run out${f ? ` (${f})` : ''}`;
+    default: return k || '';
+  }
+}
+function sortable(container, rows, render, defaultKey, defaultDir = -1) {
+  let key = defaultKey, dir = defaultDir;
+  const paint = () => {
+    const sorted = rows.slice().sort((a, b) => {
+      const x = a[key], y = b[key];
+      if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1;
+      return (typeof x === 'number' && typeof y === 'number') ? dir * (x - y) : dir * String(x).localeCompare(String(y));
+    });
+    container.innerHTML = render(sorted);
+    container.querySelectorAll('th[data-sort]').forEach(th => {
+      if (th.dataset.sort === key) { th.classList.add('sorted'); if (dir === 1) th.classList.add('asc'); }
+      th.addEventListener('click', () => { if (key === th.dataset.sort) dir = -dir; else { key = th.dataset.sort; dir = th.dataset.dir === 'asc' ? 1 : -1; } paint(); });
+    });
+  };
+  paint();
+}
+const resultChip = (o) => `<span class="chip ${o === 'won' ? 'W' : o === 'lost' ? 'L' : o === 'tied' ? 'T' : 'D'}">${o === 'won' ? 'W' : o === 'lost' ? 'L' : o === 'tied' ? 'T' : 'D'}</span>`;
+const teamLink = (t) => `<a href="#/team/${encodeURIComponent(t)}">${esc(t)}</a>`;
+const playerLink = (id, name) => `<a href="#/player/${encodeURIComponent(id)}">${esc(name)}</a>`;
+const matchLink = (id, text) => `<a href="#/match/${encodeURIComponent(id)}">${text}</a>`;
+const extLink = (url) => url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" title="On ESPNcricinfo">↗</a>` : '';
+
+/* ---------- pages ---------- */
+async function pageSeason(r, { alive, signal }) {
+  const season = r.season;
+  const info = app.seasons.find(s => s.season === season);
+  const stages = Array.from({ length: info.stages }, (_, i) => i + 1);
+  if (r.sub === 'batting') return pageLeaders(r, { alive, signal }, 'batting');
+  if (r.sub === 'bowling') return pageLeaders(r, { alive, signal }, 'bowling');
+  main.innerHTML = `${r.unknown ? emptyBox('That link did not point at anything here, so this is the latest season.') : ''}
+    <div class="stats" id="stats">${loadingBox(`the ${season} season`)}</div>
+    <div class="grid two" id="tables">${stages.map(st => `<div class="card" data-table="${st}"><h2><small>${esc(stageLabel(season, st))}</small>Results table</h2>${loadingBox('the table')}</div>`).join('')}</div>
+    <div class="grid two" style="margin-top:18px">
+      <div class="card" id="topbat"><h2><small>Batting</small>Leading run-scorers</h2><p class="sub">Top ten by runs across both divisions. <a href="#/season/${season}/batting">Full list, with averages and filters</a></p>${loadingBox('the leading run-scorers')}</div>
+      <div class="card" id="topbowl"><h2><small>Bowling</small>Leading wicket-takers</h2><p class="sub">Top ten by wickets. <a href="#/season/${season}/bowling">Full list, with averages and filters</a></p>${loadingBox('the leading wicket-takers')}</div>
+    </div>
+    <div class="card" id="tophs" style="margin-top:18px"><h2><small>Innings of the season</small>Highest scores</h2>${loadingBox('the highest scores')}</div>`;
+  const opts = { signal };
+  const jobs = [
+    ...stages.map(st => view('CountyTable', { season, stage: st }, opts).then(res => {
+      if (!alive()) return;
+      const el = main.querySelector(`[data-table="${st}"]`);
+      el.innerHTML = `<h2><small>${esc(stageLabel(season, st))}</small>Results table</h2>${warnBox(res.warnings)}` + (res.rows.length === 0
+        ? emptyBox(`No ${stageLabel(season, st)} matches are held for ${season}.`)
+        : `<p class="sub">Ranked by wins, then draws. Not the official points table: bonus points and over-rate penalties are not in the data.</p>
+           <table><thead><tr><th></th><th>County</th><th class="n">P</th><th class="n">W</th><th class="n">D</th><th class="n">L</th>${res.rows.some(x => x.tied) ? '<th class="n">T</th>' : ''}<th class="n" title="Wins by an innings">Inns</th><th>Record</th></tr></thead><tbody>
+           ${res.rows.map((t, i) => `<tr class="row" data-table-row="${esc(t.team)}" onclick="location.hash='#/team/${encodeURIComponent(t.team)}/${season}'"><td class="rank">${i + 1}</td><td class="who">${teamLink(t.team)}</td><td class="n">${t.played}</td><td class="n">${t.won}</td><td class="n">${t.drawn}</td><td class="n">${t.lost}</td>${res.rows.some(x => x.tied) ? `<td class="n">${t.tied}</td>` : ''}<td class="n dim">${t.wonByInnings}</td><td>${wdl(t.won, t.drawn, t.lost, t.tied)}</td></tr>`).join('')}
+           </tbody></table>${legendWDL}`);
+    })),
+    view('SeasonBatting', { season, limit: 10 }, opts).then(res => {
+      if (!alive()) return;
+      const box = $('#topbat');
+      box.innerHTML = `<h2><small>Batting</small>Leading run-scorers</h2><p class="sub">Top ten by runs across the whole season. <a href="#/season/${season}/batting">Full list, with averages and filters</a></p>${warnBox(res.warnings)}` +
+        (res.rows.length ? hbars(res.rows, { value: 'runs', label: r => r.player, sub: r => `${r.teams.join(', ')} · ${r.innings} inns · avg ${dec(r.average)} · ${r.hundreds}×100`, href: r => `#/player/${encodeURIComponent(r.playerId)}`, attr: 'data-playerId', tip: r => `${r.runs} runs in ${r.innings} innings (${r.notOuts} not out)\nAverage ${dec(r.average)} · SR ${dec(r.strikeRate)}\nHS ${hs(r.highScore, r.highScoreNotOut)} · ${r.hundreds} hundreds, ${r.fifties} fifties` }) : emptyBox(`No batting innings are held for ${season}.`));
+      $('#stats').dataset.topbat = JSON.stringify(res.rows[0] || null); paintStats(season, info);
+    }),
+    view('SeasonBowling', { season, limit: 10 }, opts).then(res => {
+      if (!alive()) return;
+      const box = $('#topbowl');
+      box.innerHTML = `<h2><small>Bowling</small>Leading wicket-takers</h2><p class="sub">Top ten by wickets across the whole season. <a href="#/season/${season}/bowling">Full list, with averages and filters</a></p>${warnBox(res.warnings)}` +
+        (res.rows.length ? hbars(res.rows, { value: 'wickets', cls: 'ball', label: r => r.player, sub: r => `${r.teams.join(', ')} · ${r.overs} ov · avg ${dec(r.average)} · best ${figs(r.bestWickets, r.bestRuns)}`, href: r => `#/player/${encodeURIComponent(r.playerId)}`, attr: 'data-playerId', tip: r => `${r.wickets} wickets at ${dec(r.average)}\n${r.overs} overs, ${r.maidens} maidens, ${r.runs} runs\nEconomy ${dec(r.economy)} · SR ${dec(r.strikeRate, 1)} · ${r.fiveFors} five-fors` }) : emptyBox(`No bowling is held for ${season}.`));
+      $('#stats').dataset.topbowl = JSON.stringify(res.rows[0] || null); paintStats(season, info);
+    }),
+    view('HighestScores', { season, limit: 8 }, opts).then(res => {
+      if (!alive()) return;
+      $('#tophs').innerHTML = `<h2><small>Innings of the season</small>Highest scores</h2>${warnBox(res.warnings)}` + (res.rows.length ? `<table><thead><tr><th></th><th>Batter</th><th>For</th><th>Against</th><th class="n">Runs</th><th class="n">Balls</th><th class="n">4s</th><th class="n">6s</th><th>Date</th><th>Venue</th></tr></thead><tbody>
+        ${res.rows.map((b, i) => `<tr data-hs-row="${esc(b.matchId)}"><td class="rank">${i + 1}</td><td class="who">${playerLink(b.playerId, b.player)}</td><td class="team">${teamLink(b.team)}</td><td class="team">${esc(b.opponent)}</td><td class="n"><b>${hs(b.runs, b.notOut)}</b></td><td class="n">${b.balls}</td><td class="n">${b.fours}</td><td class="n">${b.sixes}</td><td class="dim nowrap">${matchLink(b.matchId, dateFmt(b.date))}</td><td class="dim">${esc(b.venue)}</td></tr>`).join('')}</tbody></table>` : emptyBox(`No innings are held for ${season}.`));
+      $('#stats').dataset.hs = JSON.stringify(res.rows[0] || null); paintStats(season, info);
+    }),
+  ];
+  await Promise.all(jobs.map((job, i) => job.catch(e => {
+    if (!alive()) return;
+    const el = i < stages.length ? main.querySelector(`[data-table="${stages[i]}"]`) : [$('#topbat'), $('#topbowl'), $('#tophs')][i - stages.length];
+    if (el) el.innerHTML = (el.querySelector('h2') ? el.querySelector('h2').outerHTML : '') + errorBox(e);
+  })));
+}
+function paintStats(season, info) {
+  const st = $('#stats'); if (!st) return;
+  const tb = JSON.parse(st.dataset.topbat || 'null'), tw = JSON.parse(st.dataset.topbowl || 'null'), hsr = JSON.parse(st.dataset.hs || 'null');
+  if (!('topbat' in st.dataset) || !('topbowl' in st.dataset) || !('hs' in st.dataset)) return;
+  st.innerHTML = '';
+  st.innerHTML = `
+    <div class="stat"><small>${season} season</small><b>${fmt(info.matches)}</b><span>matches · ${info.decided} decided, ${info.drawn} drawn · ${dateFmt(info.firstMatch)} to ${dateFmt(info.lastMatch)}</span></div>
+    <div class="stat gold"><small>Most runs</small><b>${tb ? fmt(tb.runs) : '—'}</b><span>${tb ? `${playerLink(tb.playerId, tb.player)} · ${esc(tb.teams.join(', '))} · avg ${dec(tb.average)}` : 'no batting held'}</span></div>
+    <div class="stat ball"><small>Most wickets</small><b>${tw ? fmt(tw.wickets) : '—'}</b><span>${tw ? `${playerLink(tw.playerId, tw.player)} · ${esc(tw.teams.join(', '))} · avg ${dec(tw.average)}` : 'no bowling held'}</span></div>
+    <div class="stat"><small>Highest score</small><b>${hsr ? hs(hsr.runs, hsr.notOut) : '—'}</b><span>${hsr ? `${playerLink(hsr.playerId, hsr.player)} v ${esc(hsr.opponent)}, ${dateFmt(hsr.date)}` : 'no innings held'}</span></div>`;
+}
+
+async function pageLeaders(r, { alive, signal }, kind) {
+  const season = r.season;
+  const info = app.seasons.find(s => s.season === season);
+  const stages = Array.from({ length: info.stages }, (_, i) => i + 1);
+  const teams = await ensureTeams(signal);
+  if (!alive()) return;
+  const bat = kind === 'batting';
+  main.innerHTML = `<div class="card"><h2><small>${season} · ${bat ? 'Batting' : 'Bowling'}</small>${bat ? 'Leading run-scorers' : 'Leading wicket-takers'}</h2>
+    <p class="sub">${bat ? 'Runs, innings, not outs, highest score, average, balls faced, strike rate, boundaries, hundreds and fifties. Averages divide runs by dismissals; raise the minimum innings before ranking by average.' : 'Overs, maidens, runs conceded, wickets, best figures, average, economy, strike rate and five-wicket hauls. Wickets are those credited to the bowler; raise the minimum before ranking by average.'} Click a heading to sort, a name for the career.</p>
+    <form class="controls" id="filters" onsubmit="return false">
+      <label>${Number(season) === 2021 ? 'Group' : 'Division'}<select name="stage" data-filter="stage"><option value="0">All</option>${stages.map(s => `<option value="${s}">${esc(stageLabel(season, s))}</option>`).join('')}</select></label>
+      <label>County<select name="team" data-filter="team"><option value="">All counties</option>${teams.map(t => `<option value="${esc(t.team)}">${esc(t.team)}</option>`).join('')}</select></label>
+      <label>${bat ? 'Min innings' : 'Min wickets'}<input type="number" name="min" data-filter="min" min="1" max="50" value="${bat ? 5 : 5}" style="width:90px"></label>
+      <label>Show<select name="limit" data-filter="limit"><option value="25">Top 25</option><option value="50" selected>Top 50</option><option value="100">Top 100</option></select></label>
+      <button class="primary" type="submit" data-apply>Apply</button>
+    </form>
+    <div id="leaders">${loadingBox(bat ? 'the run-scorers' : 'the wicket-takers')}</div></div>`;
+  const form = $('#filters');
+  const run = async () => {
+    const my = ++leadersGen;
+    const stage = Number(form.stage.value), team = form.team.value, min = Math.max(1, Number(form.min.value) || 1), limit = Number(form.limit.value);
+    const box = $('#leaders'); box.innerHTML = loadingBox(bat ? 'the run-scorers' : 'the wicket-takers');
+    try {
+      const res = await view(bat ? 'SeasonBatting' : 'SeasonBowling', bat ? { season, stage, team, minInnings: min, limit } : { season, stage, team, minWickets: min, limit }, { signal });
+      if (!alive() || my !== leadersGen) return;
+      if (!res.rows.length) { box.innerHTML = warnBox(res.warnings) + emptyBox(`No ${bat ? 'batter' : 'bowler'} matches those filters in ${season}: ${team ? team + ' may not have played in that division, or ' : ''}nobody reached ${min} ${bat ? 'innings' : 'wickets'}.`); return; }
+      box.innerHTML = warnBox(res.warnings) + '<div data-leaders-table></div>';
+      const h = (k, l, dir, title) => `<th class="n" data-sort="${k}" data-dir="${dir || 'desc'}" ${title ? `title="${title}"` : ''}>${l}</th>`;
+      sortable(box.querySelector('[data-leaders-table]'), res.rows, rows => `<table><thead><tr><th></th><th data-sort="player" data-dir="asc">Player</th><th>County</th>
+        ${bat ? h('matches', 'M') + h('innings', 'I') + h('notOuts', 'NO') + h('runs', 'Runs') + h('highScore', 'HS') + h('average', 'Avg') + h('balls', 'BF') + h('strikeRate', 'SR') + h('fours', '4s') + h('sixes', '6s') + h('hundreds', '100') + h('fifties', '50')
+             : h('matches', 'M') + h('innings', 'I') + h('balls', 'Overs') + h('maidens', 'Mdns') + h('runs', 'Runs') + h('wickets', 'Wkts') + h('bestWickets', 'BB') + h('average', 'Avg', 'asc') + h('economy', 'Econ', 'asc') + h('strikeRate', 'SR', 'asc') + h('fiveFors', '5w')}
+        </tr></thead><tbody>${rows.map((p, i) => `<tr class="row" data-${bat ? 'bat' : 'bowl'}-row="${esc(p.playerId)}" onclick="location.hash='#/player/${encodeURIComponent(p.playerId)}'"><td class="rank">${i + 1}</td><td class="who">${playerLink(p.playerId, p.player)}</td><td class="team">${esc(p.teams.join(', '))}</td>
+        ${bat ? `<td class="n">${p.matches}</td><td class="n">${p.innings}</td><td class="n">${p.notOuts}</td><td class="n"><b>${fmt(p.runs)}</b></td><td class="n">${hs(p.highScore, p.highScoreNotOut)}</td><td class="n">${dec(p.average)}</td><td class="n">${fmt(p.balls)}</td><td class="n">${dec(p.strikeRate)}</td><td class="n">${p.fours}</td><td class="n">${p.sixes}</td><td class="n">${p.hundreds}</td><td class="n">${p.fifties}</td>`
+              : `<td class="n">${p.matches}</td><td class="n">${p.innings}</td><td class="n">${p.overs}</td><td class="n">${p.maidens}</td><td class="n">${fmt(p.runs)}</td><td class="n"><b>${p.wickets}</b></td><td class="n">${figs(p.bestWickets, p.bestRuns)}</td><td class="n">${dec(p.average)}</td><td class="n">${dec(p.economy)}</td><td class="n">${dec(p.strikeRate, 1)}</td><td class="n">${p.fiveFors}</td>`}
+        </tr>`).join('')}</tbody></table>`, bat ? 'runs' : 'wickets');
+    } catch (e) { if (alive() && my === leadersGen) box.innerHTML = errorBox(e); }
+  };
+  form.addEventListener('submit', run);
+  form.querySelectorAll('select').forEach(s => s.addEventListener('change', run));
+  await run();
+}
+let leadersGen = 0;
+
+async function ensureTeams(signal) {
+  if (app.teams) return app.teams;
+  const res = await view('CountyTeams', {}, { signal });
+  app.teams = res.rows;
+  return app.teams;
+}
+
+async function pageTeams(r, { alive, signal }) {
+  main.innerHTML = `<div class="card"><h2><small>Since 2014</small>The eighteen counties</h2><p class="sub">Each county's County Championship record across every season held, as wins, draws and losses. Open a county for its seasons, results and head-to-heads.</p><div id="teams">${loadingBox('the counties')}</div></div>`;
+  const res = await view('CountyTeams', {}, { signal });
+  if (!alive()) return;
+  app.teams = res.rows;
+  $('#teams').innerHTML = warnBox(res.warnings) + (res.rows.length ? `<div class="grid three">${res.rows.map(t => `<a class="tcard" href="#/team/${encodeURIComponent(t.team)}" data-team-card="${esc(t.team)}"><h3>${esc(t.team)}</h3><div class="rec"><span>${t.firstSeason}–${t.lastSeason} · ${t.played} matches</span><span class="num">${t.won}–${t.drawn}–${t.lost}</span></div>${wdl(t.won, t.drawn, t.lost)}</a>`).join('')}</div>${legendWDL}` : emptyBox('No counties are held: the county-cricket realm has no data yet.'));
+}
+
+async function pageTeam(r, { alive, signal }) {
+  const team = r.team;
+  main.innerHTML = `<div class="grid two">
+    <div class="card" id="tseasons"><h2><small>County</small>${esc(team)}</h2>${loadingBox(`${team}'s seasons`)}</div>
+    <div class="card" id="h2h"><h2><small>Head to head</small>Against another county</h2>${loadingBox('the counties')}</div></div>
+    <div class="card" id="tresults" style="margin-top:18px"><h2><small>Results</small>Match by match</h2>${loadingBox(`${team}'s results`)}</div>`;
+  const [seasons, teams] = await Promise.all([view('TeamSeasons', { team }, { signal }), ensureTeams(signal)]);
+  if (!alive()) return;
+  if (!seasons.rows.length) { $('#tseasons').innerHTML = `<h2><small>County</small>${esc(team)}</h2>` + emptyBox(`No matches are held for "${team}". Counties are spelled as on the Counties page.`); $('#tresults').innerHTML = ''; $('#h2h').innerHTML = ''; return; }
+  const tot = seasons.rows.reduce((a, s) => ({ played: a.played + s.played, won: a.won + s.won, drawn: a.drawn + s.drawn, lost: a.lost + s.lost, tied: a.tied + s.tied }), { played: 0, won: 0, drawn: 0, lost: 0, tied: 0 });
+  $('#tseasons').innerHTML = `<h2><small>County</small>${esc(team)}</h2><p class="sub">${tot.played} matches since ${seasons.rows[seasons.rows.length - 1].season}: won ${tot.won}, drawn ${tot.drawn}, lost ${tot.lost}${tot.tied ? `, tied ${tot.tied}` : ''}.</p>${wdl(tot.won, tot.drawn, tot.lost, tot.tied)}${legendWDL}
+    <table style="margin-top:10px"><thead><tr><th>Season</th><th>Level</th><th class="n">P</th><th class="n">W</th><th class="n">D</th><th class="n">L</th><th>Record</th></tr></thead><tbody>
+    ${seasons.rows.map(s => `<tr class="row" data-team-season="${s.season}" onclick="location.hash='#/team/${encodeURIComponent(team)}/${s.season}'"><td class="num">${s.season}</td><td class="dim">${esc(s.stageName)}</td><td class="n">${s.played}</td><td class="n">${s.won}</td><td class="n">${s.drawn}</td><td class="n">${s.lost}</td><td>${wdl(s.won, s.drawn, s.lost, s.tied)}</td></tr>`).join('')}</tbody></table>`;
+  const others = teams.filter(t => t.team !== team);
+  $('#h2h').innerHTML = `<h2><small>Head to head</small>Against another county</h2><p class="sub">Every Championship meeting since 2014.</p>
+    <div class="controls"><label>Opponent<select data-h2h-select><option value="">Choose a county</option>${others.map(t => `<option value="${esc(t.team)}" ${t.team === r.opp ? 'selected' : ''}>${esc(t.team)}</option>`).join('')}</select></label></div><div id="h2hbody"></div>`;
+  const sel = $('[data-h2h-select]');
+  sel.addEventListener('change', () => { location.hash = '#/' + ['team', encodeURIComponent(team), r.season, sel.value ? encodeURIComponent(sel.value) : ''].filter(Boolean).join('/'); });
+  if (r.opp) {
+    $('#h2hbody').innerHTML = loadingBox('the head-to-head');
+    view('HeadToHead', { teamA: team, teamB: r.opp }, { signal }).then(res => {
+      if (!alive()) return;
+      const tally = { won: 0, lost: 0, drawn: 0, tied: 0 };
+      res.rows.forEach(m => { if (m.winner === team) tally.won++; else if (m.winner) tally.lost++; else if (m.result === 'tie') tally.tied++; else tally.drawn++; });
+      $('#h2hbody').innerHTML = warnBox(res.warnings) + (res.rows.length ? `<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><small>${esc(team)} won</small><b>${tally.won}</b></div><div class="stat" style="--pitch:var(--draw)"><small>Drawn${tally.tied ? ' / tied' : ''}</small><b>${tally.drawn + tally.tied}</b></div><div class="stat ball"><small>${esc(r.opp)} won</small><b>${tally.lost}</b></div></div>
+        <table><thead><tr><th>Date</th><th>Venue</th><th>Result</th></tr></thead><tbody>${res.rows.map(m => `<tr data-h2h-row="${esc(m.matchId)}"><td class="nowrap">${matchLink(m.matchId, dateFmt(m.date))}</td><td class="dim">${esc(m.city)}</td><td>${m.winner ? `${esc(m.winner)} by ${esc(m.margin)}` : (m.result === 'tie' ? 'Tied' : 'Drawn')} ${extLink(m.url)}</td></tr>`).join('')}</tbody></table>` : emptyBox(`${team} and ${r.opp} have not met in the Championship since 2014 in the data: they were in different divisions.`));
+    }).catch(e => { if (alive()) $('#h2hbody').innerHTML = errorBox(e); });
+  }
+  const season = r.season && seasons.rows.some(s => s.season === r.season) ? r.season : seasons.rows[0].season;
+  const results = await view('TeamResults', { team, season, limit: 50 }, { signal });
+  if (!alive()) return;
+  $('#tresults').innerHTML = `<h2><small>Results</small>Match by match</h2>
+    <div class="controls"><label>Season<select data-results-season>${seasons.rows.map(s => `<option value="${s.season}" ${s.season === season ? 'selected' : ''}>${s.season} · ${esc(s.stageName)}</option>`).join('')}</select></label>
+    <div class="form" style="align-self:center" data-form>${results.rows.slice().reverse().map(m => resultChip(m.outcome)).join('')}</div></div>${warnBox(results.warnings)}` +
+    (results.rows.length ? `<table><thead><tr><th></th><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th></th></tr></thead><tbody>
+      ${results.rows.map(m => `<tr class="row" data-result-row="${esc(m.matchId)}" onclick="location.hash='#/match/${encodeURIComponent(m.matchId)}'"><td>${resultChip(m.outcome)}</td><td class="nowrap">${dateFmt(m.date)}</td><td class="who">${teamLink(m.opponent)}</td><td class="dim">${esc(m.venue)}</td><td>${m.outcome === 'drawn' ? 'Match drawn' : m.outcome === 'tied' ? 'Match tied' : `${m.outcome === 'won' ? esc(team) : esc(m.opponent)} won by ${esc(m.margin)}`}</td><td>${matchLink(m.matchId, 'Scorecard')} ${extLink(m.url)}</td></tr>`).join('')}</tbody></table>` : emptyBox(`No ${season} matches are held for ${team}.`));
+  $('[data-results-season]').addEventListener('change', e => { location.hash = `#/team/${encodeURIComponent(team)}/${e.target.value}${r.opp ? '/' + encodeURIComponent(r.opp) : ''}`; });
+}
+
+async function pagePlayers(r, { alive, signal }) {
+  main.innerHTML = `<div class="card"><h2><small>Players</small>Find a cricketer</h2><p class="sub">Names are as printed in scorecards (JE Root, SA Northeast), so search by surname. Two entries with one name are two people.</p>
+    <form class="controls" onsubmit="return false"><label>Name<input type="search" data-player-search placeholder="e.g. Madsen" value="${esc(r.q)}" autocomplete="off"></label><button class="primary" type="submit">Search</button></form><div id="hits">${r.q ? loadingBox('players') : emptyBox('Type part of a name to search 1,080 players.')}</div></div>`;
+  const input = $('[data-player-search]');
+  let t = null;
+  const go = () => { const q = input.value.trim(); if (q.length >= 2) location.hash = `#/players/${encodeURIComponent(q)}`; };
+  input.addEventListener('input', () => { clearTimeout(t); t = setTimeout(go, 350); });
+  input.form.addEventListener('submit', go);
+  if (r.q) input.focus();
+  if (!r.q) return;
+  const res = await view('PlayerSearch', { name: r.q }, { signal });
+  if (!alive()) return;
+  $('#hits').innerHTML = warnBox(res.warnings) + (res.rows.length ? res.rows.map(p => `<a class="hit" href="#/player/${encodeURIComponent(p.playerId)}" data-player-hit="${esc(p.playerId)}"><span><b>${esc(p.name)}</b><br><span>${esc(p.teams.join(', '))}</span></span><span class="num">${p.firstSeason}–${p.lastSeason} · ${p.matches} matches</span></a>`).join('') : emptyBox(`No player's name contains "${r.q}".`));
+}
+
+async function pagePlayer(r, { alive, signal }) {
+  main.innerHTML = `<div class="card" id="phead">${loadingBox('the player')}</div>
+    <div class="grid two" style="margin-top:18px"><div class="card" id="pbat"></div><div class="card" id="pbowl"></div></div>
+    <div class="card" id="pinns" style="margin-top:18px"></div><div class="card" id="pspells" style="margin-top:18px"></div>`;
+  const [bat, bowl, inns, spells] = await Promise.all(['PlayerBatting', 'PlayerBowling', 'PlayerInnings', 'PlayerSpells'].map(v => view(v, { playerId: r.id }, { signal })));
+  if (!alive()) return;
+  const any = bat.rows[0] || bowl.rows[0];
+  if (!any) { $('#phead').innerHTML = emptyBox(`No player with id "${r.id}" has batted or bowled in a Championship match held here.`); return; }
+  const teams = [...new Set([...bat.rows, ...bowl.rows].flatMap(s => s.teams))];
+  const seasonsPlayed = [...new Set([...bat.rows, ...bowl.rows].map(s => s.season))].sort();
+  const sum = (rows, k) => rows.reduce((a, s) => a + (Number(s[k]) || 0), 0);
+  const bt = { innings: sum(bat.rows, 'innings'), notOuts: sum(bat.rows, 'notOuts'), runs: sum(bat.rows, 'runs'), balls: sum(bat.rows, 'balls'), hundreds: sum(bat.rows, 'hundreds'), fifties: sum(bat.rows, 'fifties'), matches: sum(bat.rows, 'matches') };
+  const hsRow = bat.rows.reduce((a, s) => (!a || s.highScore > a.highScore) ? s : a, null);
+  const bw = { wickets: sum(bowl.rows, 'wickets'), runs: sum(bowl.rows, 'runs'), balls: sum(bowl.rows, 'balls'), maidens: sum(bowl.rows, 'maidens'), fiveFors: sum(bowl.rows, 'fiveFors') };
+  const bbRow = bowl.rows.reduce((a, s) => (!a || s.bestWickets > a.bestWickets || (s.bestWickets === a.bestWickets && s.bestRuns < a.bestRuns)) ? s : a, null);
+  const bavg = bt.innings - bt.notOuts > 0 ? bt.runs / (bt.innings - bt.notOuts) : null;
+  const wavg = bw.wickets > 0 ? bw.runs / bw.wickets : null;
+  $('#phead').innerHTML = `<h2><small>${esc(teams.join(' · '))} · ${seasonsPlayed[0]}–${seasonsPlayed[seasonsPlayed.length - 1]}</small>${esc(any.player)}</h2>${warnBox([...bat.warnings, ...bowl.warnings])}
+    <div class="stats" style="margin-top:14px">
+      <div class="stat gold"><small>Runs</small><b>${fmt(bt.runs)}</b><span>${bt.innings} innings, ${bt.notOuts} not out · avg ${dec(bavg)} · SR ${bt.balls ? dec(100 * bt.runs / bt.balls) : '—'}</span></div>
+      <div class="stat"><small>Hundreds / fifties</small><b>${bt.hundreds} / ${bt.fifties}</b><span>highest ${hsRow ? hs(hsRow.highScore, hsRow.highScoreNotOut) : '—'}${hsRow ? ' in ' + hsRow.season : ''}</span></div>
+      <div class="stat ball"><small>Wickets</small><b>${fmt(bw.wickets)}</b><span>${bw.balls ? `${Math.floor(bw.balls / 6)}.${bw.balls % 6} overs · avg ${dec(wavg)} · econ ${dec(6 * bw.runs / bw.balls)}` : 'did not bowl'}</span></div>
+      <div class="stat"><small>Best bowling / 5w</small><b>${bbRow ? figs(bbRow.bestWickets, bbRow.bestRuns) : '—'}</b><span>${bw.fiveFors} five-wicket hauls${bbRow ? ' · best in ' + bbRow.season : ''}</span></div>
+    </div>`;
+  $('#pbat').innerHTML = `<h2><small>Batting</small>Season by season</h2>` + (bat.rows.length ? columns(bat.rows, { value: 'runs', label: s => s.season, tip: s => `${s.season} · ${s.teams.join(', ')}\n${s.runs} runs in ${s.innings} inns at ${dec(s.average)}\nHS ${hs(s.highScore, s.highScoreNotOut)} · ${s.hundreds}×100, ${s.fifties}×50` }) +
+    `<table style="margin-top:12px"><thead><tr><th>Season</th><th>County</th><th class="n">M</th><th class="n">I</th><th class="n">NO</th><th class="n">Runs</th><th class="n">HS</th><th class="n">Avg</th><th class="n">SR</th><th class="n">100</th><th class="n">50</th></tr></thead><tbody>
+    ${bat.rows.map(s => `<tr data-bat-season="${s.season}"><td class="num">${s.season}</td><td class="team">${esc(s.teams.join(', '))}</td><td class="n">${s.matches}</td><td class="n">${s.innings}</td><td class="n">${s.notOuts}</td><td class="n"><b>${fmt(s.runs)}</b></td><td class="n">${hs(s.highScore, s.highScoreNotOut)}</td><td class="n">${dec(s.average)}</td><td class="n">${dec(s.strikeRate)}</td><td class="n">${s.hundreds}</td><td class="n">${s.fifties}</td></tr>`).join('')}</tbody></table>` : emptyBox('Has not batted in a Championship innings held here.'));
+  $('#pbowl').innerHTML = `<h2><small>Bowling</small>Season by season</h2>` + (bowl.rows.length ? columns(bowl.rows, { value: 'wickets', cls: 'ball', label: s => s.season, tip: s => `${s.season} · ${s.teams.join(', ')}\n${s.wickets} wkts at ${dec(s.average)} · econ ${dec(s.economy)}\n${s.overs} ov, ${s.maidens} mdns, ${s.runs} runs · best ${figs(s.bestWickets, s.bestRuns)}` }) +
+    `<table style="margin-top:12px"><thead><tr><th>Season</th><th>County</th><th class="n">M</th><th class="n">Overs</th><th class="n">Mdns</th><th class="n">Runs</th><th class="n">Wkts</th><th class="n">BB</th><th class="n">Avg</th><th class="n">Econ</th><th class="n">5w</th></tr></thead><tbody>
+    ${bowl.rows.map(s => `<tr data-bowl-season="${s.season}"><td class="num">${s.season}</td><td class="team">${esc(s.teams.join(', '))}</td><td class="n">${s.matches}</td><td class="n">${s.overs}</td><td class="n">${s.maidens}</td><td class="n">${fmt(s.runs)}</td><td class="n"><b>${s.wickets}</b></td><td class="n">${figs(s.bestWickets, s.bestRuns)}</td><td class="n">${dec(s.average)}</td><td class="n">${dec(s.economy)}</td><td class="n">${s.fiveFors}</td></tr>`).join('')}</tbody></table>` : emptyBox('Has not bowled in a Championship innings held here.'));
+  const chron = inns.rows.slice().reverse();
+  $('#pinns').innerHTML = `<h2><small>Every innings</small>${inns.rows.length} innings, oldest to newest</h2><p class="sub">Each bar is one innings; hover for the detail. Click a heading to sort the list; a date opens the scorecard.</p>` + (inns.rows.length ? strip(chron) + '<div data-innings-table style="margin-top:14px"></div>' : emptyBox('No innings held.'));
+  if (inns.rows.length) sortable($('[data-innings-table]'), inns.rows, rows => `<table><thead><tr><th data-sort="date" data-dir="desc">Date</th><th data-sort="opponent" data-dir="asc">Against</th><th>For</th><th>Venue</th><th class="n" data-sort="position">Pos</th><th class="n" data-sort="runs">Runs</th><th class="n" data-sort="balls">Balls</th><th class="n" data-sort="fours">4s</th><th class="n" data-sort="sixes">6s</th><th>How out</th><th>Match</th></tr></thead><tbody>
+    ${rows.map(b => `<tr class="${b.runs >= 100 ? 'hl' : ''}" data-innings-row="${esc(b.matchId)}-${b.inningsNo}"><td class="nowrap">${matchLink(b.matchId, dateFmt(b.date))}</td><td class="who">${teamLink(b.opponent)}</td><td class="team">${esc(b.team)}</td><td class="dim">${esc(b.venue)}</td><td class="n dim">${b.position}</td><td class="n"><b>${hs(b.runs, b.notOut)}</b></td><td class="n">${b.balls}</td><td class="n">${b.fours}</td><td class="n">${b.sixes}</td><td class="dim">${esc(dismissalText(b))}</td><td class="dim">${b.winner ? `${esc(b.winner)} by ${esc(b.margin)}` : (b.result === 'tie' ? 'tied' : 'drawn')}</td></tr>`).join('')}</tbody></table>`, 'date');
+  $('#pspells').innerHTML = `<h2><small>Every spell</small>${spells.rows.length} innings bowled</h2>` + (spells.rows.length ? '<div data-spells-table></div>' : emptyBox('No bowling held.'));
+  if (spells.rows.length) sortable($('[data-spells-table]'), spells.rows, rows => `<table><thead><tr><th data-sort="date" data-dir="desc">Date</th><th data-sort="opponent" data-dir="asc">Against</th><th>Venue</th><th class="n" data-sort="balls">Overs</th><th class="n" data-sort="maidens">Mdns</th><th class="n" data-sort="runs" data-dir="asc">Runs</th><th class="n" data-sort="wickets">Wkts</th><th class="n" data-sort="dots">Dots</th><th>Match</th></tr></thead><tbody>
+    ${rows.map(s => `<tr class="${s.wickets >= 5 ? 'hl' : ''}" data-spell-row="${esc(s.matchId)}-${s.inningsNo}"><td class="nowrap">${matchLink(s.matchId, dateFmt(s.date))}</td><td class="who">${teamLink(s.opponent)}</td><td class="dim">${esc(s.venue)}</td><td class="n">${s.overs}</td><td class="n">${s.maidens}</td><td class="n">${s.runs}</td><td class="n"><b>${s.wickets}</b></td><td class="n dim">${s.dots}</td><td class="dim">${s.winner ? `${esc(s.winner)} by ${esc(s.margin)}` : (s.result === 'tie' ? 'tied' : 'drawn')}</td></tr>`).join('')}</tbody></table>`, 'date');
+}
+
+async function pageRecords(r, { alive, signal }) {
+  const season = r.season;
+  const label = season ? String(season) : 'all seasons since 2014';
+  main.innerHTML = `<div class="controls"><label>Season<select data-records-season><option value="0">All seasons</option>${app.seasons.map(s => `<option value="${s.season}" ${s.season === season ? 'selected' : ''}>${s.season}</option>`).join('')}</select></label></div>
+    <div class="grid two"><div class="card" id="rhs"><h2><small>Batting · ${esc(label)}</small>Highest scores</h2>${loadingBox('the highest scores')}</div><div class="card" id="rbb"><h2><small>Bowling · ${esc(label)}</small>Best figures in an innings</h2>${loadingBox('the best bowling')}</div></div>`;
+  $('[data-records-season]').addEventListener('change', e => { location.hash = `#/records/${e.target.value === '0' ? '' : e.target.value}`; });
+  await Promise.all([
+    view('HighestScores', { season, limit: 25 }, { signal }).catch(e => ({ error: e })).then(res => { if (!alive()) return; if (res.error) { $('#rhs').innerHTML = errorBox(res.error); return; } $('#rhs').innerHTML = `<h2><small>Batting · ${esc(label)}</small>Highest scores</h2>${warnBox(res.warnings)}` + (res.rows.length ? `<table><thead><tr><th></th><th>Batter</th><th>For</th><th>Against</th><th class="n">Runs</th><th class="n">Balls</th><th class="n">4s/6s</th><th>Date</th></tr></thead><tbody>${res.rows.map((b, i) => `<tr data-record-hs="${esc(b.matchId)}"><td class="rank">${i + 1}</td><td class="who">${playerLink(b.playerId, b.player)}</td><td class="team">${esc(b.team)}</td><td class="team">${esc(b.opponent)}</td><td class="n"><b>${hs(b.runs, b.notOut)}</b></td><td class="n">${b.balls}</td><td class="n dim">${b.fours}/${b.sixes}</td><td class="nowrap dim">${matchLink(b.matchId, dateFmt(b.date))}</td></tr>`).join('')}</tbody></table>` : emptyBox(`No innings are held for ${label}.`)); }),
+    view('BestBowling', { season, limit: 25 }, { signal }).catch(e => ({ error: e })).then(res => { if (!alive()) return; if (res.error) { $('#rbb').innerHTML = errorBox(res.error); return; } $('#rbb').innerHTML = `<h2><small>Bowling · ${esc(label)}</small>Best figures in an innings</h2>${warnBox(res.warnings)}` + (res.rows.length ? `<table><thead><tr><th></th><th>Bowler</th><th>For</th><th>Against</th><th class="n">Figures</th><th class="n">Overs</th><th class="n">Mdns</th><th>Date</th></tr></thead><tbody>${res.rows.map((b, i) => `<tr data-record-bb="${esc(b.matchId)}"><td class="rank">${i + 1}</td><td class="who">${playerLink(b.playerId, b.player)}</td><td class="team">${esc(b.team)}</td><td class="team">${esc(b.opponent)}</td><td class="n"><b>${b.wickets}-${b.runs}</b></td><td class="n">${b.overs}</td><td class="n dim">${b.maidens}</td><td class="nowrap dim">${matchLink(b.matchId, dateFmt(b.date))}</td></tr>`).join('')}</tbody></table>` : emptyBox(`No bowling is held for ${label}.`)); }),
+  ]);
+}
+
+async function pageMatch(r, { alive, signal }) {
+  main.innerHTML = `<div class="card" id="match">${loadingBox('the scorecard')}</div>`;
+  const [sum, inns, bat, bowl] = await Promise.all(['MatchSummary', 'MatchInnings', 'MatchBatting', 'MatchBowling'].map(v => view(v, { matchId: r.id }, { signal })));
+  if (!alive()) return;
+  const m = sum.rows[0];
+  if (!m) { $('#match').innerHTML = emptyBox(`No match with id "${r.id}" is held. Ids are ESPNcricinfo's, e.g. 947089.`); return; }
+  const resultLine = m.result === 'won' ? `${m.winner} won by ${m.margin}` : m.result === 'tie' ? 'Match tied' : 'Match drawn';
+  const innsHtml = inns.rows.map(t => `<div class="inn" data-innings-summary="${t.inningsNo}"><small>${t.inningsNo}${['st', 'nd', 'rd', 'th'][t.inningsNo - 1]} innings · ${esc(t.team)}</small><b>${t.forfeited ? 'forfeited' : `${t.runs}${t.allOut ? '' : '-' + t.wickets}${t.declared ? ' dec' : ''}`}</b><span>${t.forfeited ? '' : `${t.allOut ? 'all out, ' : ''}${t.overs} overs · extras ${t.extras}`}</span></div>`).join('');
+  const byInns = (rows) => { const g = new Map(); rows.forEach(x => { if (!g.has(x.inningsNo)) g.set(x.inningsNo, []); g.get(x.inningsNo).push(x); }); return g; };
+  const batBy = byInns(bat.rows), bowlBy = byInns(bowl.rows);
+  const cards = inns.rows.map(t => {
+    const b = batBy.get(t.inningsNo) || [], w = bowlBy.get(t.inningsNo) || [];
+    if (t.forfeited) return `<div class="sc" data-scorecard-innings="${t.inningsNo}"><h3><span>${esc(t.team)} ${t.inningsNo}${['st', 'nd', 'rd', 'th'][t.inningsNo - 1]} innings</span><b>forfeited</b></h3></div>`;
+    return `<div class="sc" data-scorecard-innings="${t.inningsNo}"><h3><span>${esc(t.team)} ${t.inningsNo}${['st', 'nd', 'rd', 'th'][t.inningsNo - 1]} innings</span><b>${t.runs}${t.allOut ? '' : '-' + t.wickets}${t.declared ? ' dec' : ''} <span class="dim" style="font-size:13px">(${t.overs} ov)</span></b></h3>
+      <table><thead><tr><th>Batter</th><th></th><th class="n">R</th><th class="n">B</th><th class="n">4s</th><th class="n">6s</th><th class="n">SR</th></tr></thead><tbody>
+      ${b.map(x => `<tr class="${x.runs >= 100 ? 'hl' : ''}" data-bat-line="${x.position}"><td class="who">${playerLink(x.playerId, x.player)}</td><td class="how">${esc(dismissalText(x))}</td><td class="n"><b>${x.runs}${x.notOut ? '*' : ''}</b></td><td class="n">${x.balls}</td><td class="n">${x.fours}</td><td class="n">${x.sixes}</td><td class="n dim">${x.balls ? dec(100 * x.runs / x.balls, 1) : '—'}</td></tr>`).join('')}
+      <tr class="ext"><td>Extras</td><td class="how">b ${t.byes}, lb ${t.legbyes}, w ${t.wides}, nb ${t.noballs}${t.penalty ? ', pen ' + t.penalty : ''}</td><td class="n">${t.extras}</td><td colspan="4"></td></tr>
+      <tr class="tot"><td>Total</td><td class="how">${t.wickets} wicket${t.wickets === 1 ? '' : 's'}${t.declared ? ', declared' : t.allOut ? ', all out' : ''}, ${t.overs} overs</td><td class="n">${t.runs}</td><td colspan="4"></td></tr></tbody></table>
+      <table style="margin-top:10px"><thead><tr><th>Bowler</th><th class="n">O</th><th class="n">M</th><th class="n">R</th><th class="n">W</th><th class="n">Econ</th><th class="n">Dots</th></tr></thead><tbody>
+      ${w.map(x => `<tr class="${x.wickets >= 5 ? 'hl' : ''}" data-bowl-line="${esc(x.playerId)}"><td class="who">${playerLink(x.playerId, x.player)}</td><td class="n">${x.overs}</td><td class="n">${x.maidens}</td><td class="n">${x.runs}</td><td class="n"><b>${x.wickets}</b></td><td class="n dim">${x.balls ? dec(6 * x.runs / x.balls) : '—'}</td><td class="n dim">${x.dots}</td></tr>`).join('')}</tbody></table></div>`;
+  }).join('');
+  $('#match').innerHTML = `<div class="mh"><div><h2>${teamLink(m.team1)} v ${teamLink(m.team2)}</h2><p class="sub" style="margin:6px 0 0">${esc(m.competition)} ${m.season}, ${esc(m.stageName)} · ${esc(m.venue)} · ${dateFmt(m.startDate)}${m.endDate !== m.startDate ? ' to ' + dateFmt(m.endDate) : ''} · Toss: ${esc(m.tossWinner)}, ${esc(m.tossDecision)}${m.tossUncontested ? ' (uncontested)' : ''} · <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">ESPNcricinfo</a></p></div><div class="res" data-result>${esc(resultLine)}</div></div>
+    ${warnBox([...sum.warnings, ...inns.warnings, ...bat.warnings, ...bowl.warnings])}
+    <div class="inns">${innsHtml || emptyBox('No innings are held for this match.')}</div>${cards}`;
+}
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip');
+document.addEventListener('mouseover', e => { const t = e.target.closest('[data-tip]'); if (!t || !t.dataset.tip) { tip.style.display = 'none'; return; } tip.textContent = t.dataset.tip; tip.style.display = 'block'; });
+document.addEventListener('mousemove', e => { if (tip.style.display !== 'block') return; const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 10), y = Math.min(e.clientY + 14, window.innerHeight - tip.offsetHeight - 10); tip.style.left = x + 'px'; tip.style.top = y + 'px'; });
+document.addEventListener('mouseout', e => { if (e.target.closest && e.target.closest('[data-tip]')) tip.style.display = 'none'; });
+
+/* ---------- boot ---------- */
+async function boot() {
+  if (!window.embabel || !embabel.views) { main.innerHTML = `<div class="banner-miss" data-state="error">The Embabel app runtime did not load, so this page cannot ask the world for anything. Open it from your world at /apps/county-cricket/county-cricket.html.</div>`; return; }
+  try {
+    const ready = embabel.manifest && embabel.manifest.ready ? await embabel.manifest.ready : { ok: true };
+    if (ready && ready.ok === false) { main.innerHTML = `<div class="banner-miss" data-state="error">This world is missing what the app needs: ${esc((ready.missing || []).map(m => typeof m === 'string' ? m : JSON.stringify(m)).join(', ') || 'the county-cricket realm')}. Install the county-cricket realm and reload.</div>`; return; }
+  } catch (e) { /* preflight unavailable: carry on and let the first view say so */ }
+  main.innerHTML = loadingBox('the seasons');
+  try {
+    const res = await view('CountySeasons', {});
+    app.seasons = res.rows.slice().sort((a, b) => b.season - a.season);
+    if (!app.seasons.length) { main.innerHTML = warnBox(res.warnings) + emptyBox('The county-cricket realm holds no seasons yet: its reference data has not been seeded.'); return; }
+    app.latest = app.seasons[0].season;
+  } catch (e) { main.innerHTML = errorBox(e); return; }
+  window.addEventListener('hashchange', nav);
+  nav();
+}
+boot();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1841 @@
+{
+ "matches": 1483,
+ "matchesBySeason": {
+  "2014": 127,
+  "2015": 135,
+  "2016": 134,
+  "2017": 112,
+  "2018": 111,
+  "2019": 114,
+  "2021": 123,
+  "2022": 126,
+  "2023": 125,
+  "2024": 124,
+  "2025": 126,
+  "2026": 126
+ },
+ "results": {
+  "won": 896,
+  "draw": 585,
+  "tie": 2
+ },
+ "teams": 18,
+ "teamMatches": {
+  "Yorkshire": 166,
+  "Hampshire": 167,
+  "Surrey": 160,
+  "Warwickshire": 171,
+  "Lancashire": 162,
+  "Essex": 165,
+  "Somerset": 164,
+  "Middlesex": 166,
+  "Glamorgan": 162,
+  "Northamptonshire": 166,
+  "Kent": 162,
+  "Gloucestershire": 168,
+  "Leicestershire": 161,
+  "Nottinghamshire": 167,
+  "Sussex": 167,
+  "Worcestershire": 166,
+  "Derbyshire": 161,
+  "Durham": 165
+ },
+ "table": {
+  "2017-1": {
+   "Yorkshire": {
+    "played": 13,
+    "lost": 5,
+    "won": 3,
+    "drawn": 5
+   },
+   "Hampshire": {
+    "played": 13,
+    "won": 2,
+    "drawn": 8,
+    "lost": 3
+   },
+   "Surrey": {
+    "played": 12,
+    "won": 1,
+    "drawn": 9,
+    "lost": 2
+   },
+   "Warwickshire": {
+    "played": 13,
+    "lost": 9,
+    "drawn": 3,
+    "won": 1
+   },
+   "Lancashire": {
+    "played": 13,
+    "drawn": 5,
+    "won": 5,
+    "lost": 3
+   },
+   "Essex": {
+    "played": 14,
+    "drawn": 4,
+    "won": 10
+   },
+   "Somerset": {
+    "played": 10,
+    "lost": 3,
+    "drawn": 3,
+    "won": 4
+   },
+   "Middlesex": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 4,
+    "won": 3
+   }
+  },
+  "2017-2": {
+   "Glamorgan": {
+    "played": 14,
+    "lost": 7,
+    "drawn": 4,
+    "won": 3
+   },
+   "Northamptonshire": {
+    "played": 13,
+    "won": 9,
+    "lost": 2,
+    "drawn": 2
+   },
+   "Kent": {
+    "played": 10,
+    "won": 2,
+    "drawn": 6,
+    "lost": 2
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "lost": 4,
+    "won": 3,
+    "drawn": 7
+   },
+   "Leicestershire": {
+    "played": 11,
+    "lost": 8,
+    "drawn": 3
+   },
+   "Nottinghamshire": {
+    "played": 13,
+    "won": 6,
+    "drawn": 5,
+    "lost": 2
+   },
+   "Sussex": {
+    "played": 12,
+    "lost": 4,
+    "won": 6,
+    "drawn": 2
+   },
+   "Worcestershire": {
+    "played": 12,
+    "won": 7,
+    "lost": 3,
+    "drawn": 2
+   },
+   "Derbyshire": {
+    "played": 10,
+    "lost": 5,
+    "drawn": 2,
+    "won": 3
+   },
+   "Durham": {
+    "played": 13,
+    "drawn": 5,
+    "lost": 5,
+    "won": 3
+   }
+  },
+  "2018-1": {
+   "Hampshire": {
+    "played": 13,
+    "won": 4,
+    "lost": 4,
+    "drawn": 5
+   },
+   "Worcestershire": {
+    "played": 13,
+    "lost": 10,
+    "drawn": 2,
+    "won": 1
+   },
+   "Lancashire": {
+    "played": 12,
+    "lost": 6,
+    "drawn": 3,
+    "won": 2,
+    "tied": 1
+   },
+   "Nottinghamshire": {
+    "played": 13,
+    "won": 4,
+    "lost": 7,
+    "drawn": 2
+   },
+   "Essex": {
+    "played": 12,
+    "won": 6,
+    "drawn": 2,
+    "lost": 4
+   },
+   "Yorkshire": {
+    "played": 13,
+    "won": 5,
+    "lost": 5,
+    "drawn": 3
+   },
+   "Surrey": {
+    "played": 12,
+    "won": 9,
+    "drawn": 3
+   },
+   "Somerset": {
+    "played": 14,
+    "won": 7,
+    "drawn": 4,
+    "lost": 2,
+    "tied": 1
+   }
+  },
+  "2018-2": {
+   "Kent": {
+    "played": 11,
+    "lost": 3,
+    "won": 7,
+    "drawn": 1
+   },
+   "Gloucestershire": {
+    "played": 13,
+    "won": 5,
+    "lost": 4,
+    "drawn": 4
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 3,
+    "won": 9,
+    "lost": 2
+   },
+   "Sussex": {
+    "played": 13,
+    "drawn": 4,
+    "won": 5,
+    "lost": 4
+   },
+   "Middlesex": {
+    "played": 12,
+    "won": 6,
+    "lost": 4,
+    "drawn": 2
+   },
+   "Northamptonshire": {
+    "played": 12,
+    "lost": 7,
+    "won": 4,
+    "drawn": 1
+   },
+   "Durham": {
+    "played": 12,
+    "lost": 6,
+    "won": 4,
+    "drawn": 2
+   },
+   "Derbyshire": {
+    "played": 11,
+    "won": 4,
+    "drawn": 2,
+    "lost": 5
+   },
+   "Glamorgan": {
+    "played": 11,
+    "won": 2,
+    "drawn": 1,
+    "lost": 8
+   },
+   "Leicestershire": {
+    "played": 11,
+    "drawn": 2,
+    "lost": 6,
+    "won": 3
+   }
+  },
+  "2019-1": {
+   "Hampshire": {
+    "played": 11,
+    "won": 4,
+    "lost": 3,
+    "drawn": 4
+   },
+   "Essex": {
+    "played": 14,
+    "lost": 1,
+    "drawn": 4,
+    "won": 9
+   },
+   "Nottinghamshire": {
+    "played": 13,
+    "drawn": 4,
+    "lost": 9
+   },
+   "Yorkshire": {
+    "played": 14,
+    "drawn": 5,
+    "won": 5,
+    "lost": 4
+   },
+   "Somerset": {
+    "played": 12,
+    "won": 7,
+    "drawn": 2,
+    "lost": 3
+   },
+   "Kent": {
+    "played": 13,
+    "lost": 4,
+    "won": 5,
+    "drawn": 4
+   },
+   "Surrey": {
+    "played": 11,
+    "drawn": 5,
+    "lost": 4,
+    "won": 2
+   },
+   "Warwickshire": {
+    "played": 12,
+    "lost": 6,
+    "won": 2,
+    "drawn": 4
+   }
+  },
+  "2019-2": {
+   "Derbyshire": {
+    "played": 12,
+    "won": 3,
+    "drawn": 4,
+    "lost": 5
+   },
+   "Durham": {
+    "played": 14,
+    "lost": 5,
+    "won": 5,
+    "drawn": 4
+   },
+   "Northamptonshire": {
+    "played": 13,
+    "drawn": 7,
+    "lost": 1,
+    "won": 5
+   },
+   "Middlesex": {
+    "played": 13,
+    "drawn": 6,
+    "lost": 5,
+    "won": 2
+   },
+   "Sussex": {
+    "played": 14,
+    "lost": 5,
+    "won": 4,
+    "drawn": 5
+   },
+   "Leicestershire": {
+    "played": 12,
+    "won": 1,
+    "lost": 5,
+    "drawn": 6
+   },
+   "Glamorgan": {
+    "played": 11,
+    "drawn": 6,
+    "won": 3,
+    "lost": 2
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "drawn": 6,
+    "won": 5,
+    "lost": 3
+   },
+   "Worcestershire": {
+    "played": 13,
+    "won": 3,
+    "lost": 7,
+    "drawn": 3
+   },
+   "Lancashire": {
+    "played": 12,
+    "won": 7,
+    "drawn": 5
+   }
+  },
+  "2021-3": {
+   "Kent": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 3,
+    "won": 4
+   },
+   "Northamptonshire": {
+    "played": 10,
+    "drawn": 4,
+    "lost": 3,
+    "won": 3
+   },
+   "Sussex": {
+    "played": 14,
+    "drawn": 4,
+    "won": 1,
+    "lost": 9
+   },
+   "Lancashire": {
+    "played": 10,
+    "drawn": 5,
+    "won": 4,
+    "lost": 1
+   },
+   "Glamorgan": {
+    "played": 10,
+    "drawn": 6,
+    "lost": 2,
+    "won": 2
+   },
+   "Yorkshire": {
+    "played": 10,
+    "drawn": 4,
+    "won": 5,
+    "lost": 1
+   },
+   "Leicestershire": {
+    "played": 4,
+    "lost": 2,
+    "drawn": 1,
+    "won": 1
+   },
+   "Middlesex": {
+    "played": 4,
+    "won": 3,
+    "lost": 1
+   },
+   "Derbyshire": {
+    "played": 4,
+    "lost": 2,
+    "drawn": 1,
+    "won": 1
+   },
+   "Worcestershire": {
+    "played": 4,
+    "won": 2,
+    "lost": 2
+   }
+  },
+  "2021-1": {
+   "Essex": {
+    "played": 9,
+    "drawn": 4,
+    "won": 3,
+    "lost": 2
+   },
+   "Worcestershire": {
+    "played": 10,
+    "drawn": 6,
+    "lost": 3,
+    "won": 1
+   },
+   "Durham": {
+    "played": 10,
+    "drawn": 5,
+    "lost": 2,
+    "won": 3
+   },
+   "Nottinghamshire": {
+    "played": 13,
+    "drawn": 3,
+    "lost": 3,
+    "won": 7
+   },
+   "Derbyshire": {
+    "played": 10,
+    "drawn": 5,
+    "lost": 5
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 6,
+    "won": 6,
+    "lost": 2
+   },
+   "Yorkshire": {
+    "played": 4,
+    "drawn": 1,
+    "won": 1,
+    "lost": 2
+   },
+   "Hampshire": {
+    "played": 4,
+    "drawn": 1,
+    "won": 2,
+    "lost": 1
+   },
+   "Lancashire": {
+    "played": 4,
+    "drawn": 1,
+    "lost": 1,
+    "won": 2
+   },
+   "Somerset": {
+    "played": 4,
+    "lost": 4
+   }
+  },
+  "2021-2": {
+   "Middlesex": {
+    "played": 10,
+    "lost": 7,
+    "won": 2,
+    "drawn": 1
+   },
+   "Somerset": {
+    "played": 9,
+    "won": 3,
+    "lost": 1,
+    "drawn": 5
+   },
+   "Hampshire": {
+    "played": 10,
+    "won": 4,
+    "drawn": 4,
+    "lost": 2
+   },
+   "Leicestershire": {
+    "played": 9,
+    "lost": 3,
+    "drawn": 4,
+    "won": 2
+   },
+   "Surrey": {
+    "played": 13,
+    "lost": 3,
+    "drawn": 8,
+    "won": 2
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "won": 8,
+    "drawn": 2,
+    "lost": 4
+   },
+   "Glamorgan": {
+    "played": 4,
+    "lost": 3,
+    "drawn": 1
+   },
+   "Essex": {
+    "played": 4,
+    "won": 3,
+    "drawn": 1
+   },
+   "Northamptonshire": {
+    "played": 4,
+    "lost": 2,
+    "won": 1,
+    "drawn": 1
+   },
+   "Durham": {
+    "played": 3,
+    "won": 1,
+    "drawn": 1,
+    "lost": 1
+   }
+  },
+  "2022-1": {
+   "Somerset": {
+    "played": 14,
+    "lost": 6,
+    "won": 3,
+    "drawn": 5
+   },
+   "Hampshire": {
+    "played": 14,
+    "won": 9,
+    "lost": 4,
+    "drawn": 1
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "drawn": 4,
+    "lost": 8,
+    "won": 2
+   },
+   "Northamptonshire": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 5,
+    "won": 2
+   },
+   "Surrey": {
+    "played": 14,
+    "drawn": 5,
+    "won": 8,
+    "lost": 1
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 6,
+    "won": 2,
+    "lost": 6
+   },
+   "Essex": {
+    "played": 14,
+    "drawn": 4,
+    "won": 7,
+    "lost": 3
+   },
+   "Kent": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 5,
+    "won": 4
+   },
+   "Lancashire": {
+    "played": 14,
+    "won": 7,
+    "drawn": 6,
+    "lost": 1
+   },
+   "Yorkshire": {
+    "played": 14,
+    "won": 1,
+    "drawn": 7,
+    "lost": 6
+   }
+  },
+  "2022-2": {
+   "Glamorgan": {
+    "played": 14,
+    "drawn": 5,
+    "won": 6,
+    "lost": 3
+   },
+   "Durham": {
+    "played": 14,
+    "drawn": 8,
+    "lost": 3,
+    "won": 3
+   },
+   "Worcestershire": {
+    "played": 14,
+    "drawn": 7,
+    "won": 4,
+    "lost": 3
+   },
+   "Leicestershire": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 9
+   },
+   "Middlesex": {
+    "played": 14,
+    "drawn": 6,
+    "won": 6,
+    "lost": 2
+   },
+   "Derbyshire": {
+    "played": 14,
+    "drawn": 8,
+    "won": 3,
+    "lost": 3
+   },
+   "Sussex": {
+    "played": 14,
+    "lost": 6,
+    "drawn": 7,
+    "won": 1
+   },
+   "Nottinghamshire": {
+    "played": 14,
+    "won": 8,
+    "lost": 2,
+    "drawn": 4
+   }
+  },
+  "2023-2": {
+   "Durham": {
+    "played": 14,
+    "lost": 1,
+    "won": 7,
+    "drawn": 6
+   },
+   "Sussex": {
+    "played": 14,
+    "won": 3,
+    "drawn": 10,
+    "lost": 1
+   },
+   "Gloucestershire": {
+    "played": 13,
+    "drawn": 7,
+    "lost": 6
+   },
+   "Glamorgan": {
+    "played": 14,
+    "drawn": 12,
+    "won": 1,
+    "lost": 1
+   },
+   "Derbyshire": {
+    "played": 14,
+    "lost": 4,
+    "drawn": 10
+   },
+   "Worcestershire": {
+    "played": 14,
+    "won": 5,
+    "lost": 3,
+    "drawn": 6
+   },
+   "Yorkshire": {
+    "played": 13,
+    "lost": 2,
+    "drawn": 8,
+    "won": 3
+   },
+   "Leicestershire": {
+    "played": 14,
+    "won": 3,
+    "drawn": 7,
+    "lost": 4
+   }
+  },
+  "2023-1": {
+   "Nottinghamshire": {
+    "played": 14,
+    "lost": 4,
+    "won": 4,
+    "drawn": 6
+   },
+   "Hampshire": {
+    "played": 14,
+    "won": 8,
+    "lost": 4,
+    "drawn": 2
+   },
+   "Surrey": {
+    "played": 14,
+    "drawn": 4,
+    "won": 8,
+    "lost": 2
+   },
+   "Lancashire": {
+    "played": 14,
+    "drawn": 10,
+    "won": 3,
+    "lost": 1
+   },
+   "Somerset": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 4,
+    "won": 3
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 4,
+    "won": 6,
+    "lost": 4
+   },
+   "Essex": {
+    "played": 14,
+    "won": 7,
+    "drawn": 4,
+    "lost": 3
+   },
+   "Middlesex": {
+    "played": 14,
+    "lost": 9,
+    "won": 3,
+    "drawn": 2
+   },
+   "Northamptonshire": {
+    "played": 14,
+    "lost": 8,
+    "won": 2,
+    "drawn": 4
+   },
+   "Kent": {
+    "played": 14,
+    "won": 2,
+    "lost": 7,
+    "drawn": 5
+   }
+  },
+  "2024-1": {
+   "Kent": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 8,
+    "won": 1
+   },
+   "Somerset": {
+    "played": 14,
+    "drawn": 6,
+    "won": 5,
+    "lost": 3
+   },
+   "Lancashire": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 6,
+    "won": 3
+   },
+   "Surrey": {
+    "played": 14,
+    "drawn": 4,
+    "won": 8,
+    "lost": 2
+   },
+   "Essex": {
+    "played": 14,
+    "won": 6,
+    "drawn": 5,
+    "lost": 3
+   },
+   "Nottinghamshire": {
+    "played": 14,
+    "lost": 4,
+    "drawn": 8,
+    "won": 2
+   },
+   "Worcestershire": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 4,
+    "won": 3
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 9,
+    "lost": 4,
+    "won": 1
+   },
+   "Hampshire": {
+    "played": 13,
+    "drawn": 6,
+    "lost": 1,
+    "won": 6
+   },
+   "Durham": {
+    "played": 13,
+    "drawn": 5,
+    "won": 4,
+    "lost": 4
+   }
+  },
+  "2024-2": {
+   "Glamorgan": {
+    "played": 14,
+    "drawn": 7,
+    "won": 2,
+    "lost": 4,
+    "tied": 1
+   },
+   "Middlesex": {
+    "played": 14,
+    "drawn": 7,
+    "won": 5,
+    "lost": 2
+   },
+   "Northamptonshire": {
+    "played": 14,
+    "drawn": 9,
+    "lost": 3,
+    "won": 2
+   },
+   "Sussex": {
+    "played": 14,
+    "drawn": 4,
+    "won": 8,
+    "lost": 2
+   },
+   "Leicestershire": {
+    "played": 14,
+    "drawn": 10,
+    "lost": 3,
+    "won": 1
+   },
+   "Yorkshire": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 2,
+    "won": 5
+   },
+   "Derbyshire": {
+    "played": 13,
+    "drawn": 6,
+    "lost": 6,
+    "won": 1
+   },
+   "Gloucestershire": {
+    "played": 13,
+    "drawn": 6,
+    "lost": 4,
+    "won": 2,
+    "tied": 1
+   }
+  },
+  "2025-1": {
+   "Essex": {
+    "played": 14,
+    "drawn": 8,
+    "won": 3,
+    "lost": 3
+   },
+   "Surrey": {
+    "played": 14,
+    "drawn": 8,
+    "won": 5,
+    "lost": 1
+   },
+   "Yorkshire": {
+    "played": 14,
+    "lost": 4,
+    "won": 4,
+    "drawn": 6
+   },
+   "Hampshire": {
+    "played": 14,
+    "won": 2,
+    "drawn": 9,
+    "lost": 3
+   },
+   "Worcestershire": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 8,
+    "won": 1
+   },
+   "Somerset": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 3,
+    "won": 4
+   },
+   "Sussex": {
+    "played": 14,
+    "drawn": 6,
+    "won": 4,
+    "lost": 4
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 9,
+    "won": 3,
+    "lost": 2
+   },
+   "Durham": {
+    "played": 14,
+    "lost": 6,
+    "drawn": 6,
+    "won": 2
+   },
+   "Nottinghamshire": {
+    "played": 14,
+    "won": 7,
+    "drawn": 6,
+    "lost": 1
+   }
+  },
+  "2025-2": {
+   "Kent": {
+    "played": 14,
+    "won": 2,
+    "drawn": 6,
+    "lost": 6
+   },
+   "Northamptonshire": {
+    "played": 14,
+    "lost": 6,
+    "drawn": 6,
+    "won": 2
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "lost": 4,
+    "drawn": 8,
+    "won": 2
+   },
+   "Derbyshire": {
+    "played": 14,
+    "won": 3,
+    "drawn": 9,
+    "lost": 2
+   },
+   "Middlesex": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 4,
+    "won": 5
+   },
+   "Lancashire": {
+    "played": 14,
+    "drawn": 8,
+    "lost": 3,
+    "won": 3
+   },
+   "Glamorgan": {
+    "played": 14,
+    "lost": 3,
+    "drawn": 6,
+    "won": 5
+   },
+   "Leicestershire": {
+    "played": 14,
+    "won": 7,
+    "drawn": 6,
+    "lost": 1
+   }
+  },
+  "2026-1": {
+   "Surrey": {
+    "played": 14,
+    "drawn": 8,
+    "won": 2,
+    "lost": 4
+   },
+   "Warwickshire": {
+    "played": 14,
+    "drawn": 6,
+    "lost": 1,
+    "won": 7
+   },
+   "Essex": {
+    "played": 14,
+    "won": 4,
+    "lost": 7,
+    "drawn": 3
+   },
+   "Hampshire": {
+    "played": 14,
+    "lost": 9,
+    "won": 2,
+    "drawn": 3
+   },
+   "Glamorgan": {
+    "played": 14,
+    "drawn": 5,
+    "lost": 5,
+    "won": 4
+   },
+   "Yorkshire": {
+    "played": 14,
+    "drawn": 4,
+    "lost": 4,
+    "won": 6
+   },
+   "Sussex": {
+    "played": 14,
+    "won": 7,
+    "drawn": 4,
+    "lost": 3
+   },
+   "Leicestershire": {
+    "played": 14,
+    "lost": 7,
+    "drawn": 4,
+    "won": 3
+   },
+   "Somerset": {
+    "played": 14,
+    "drawn": 5,
+    "won": 6,
+    "lost": 3
+   },
+   "Nottinghamshire": {
+    "played": 14,
+    "drawn": 6,
+    "won": 5,
+    "lost": 3
+   }
+  },
+  "2026-2": {
+   "Derbyshire": {
+    "played": 14,
+    "drawn": 3,
+    "lost": 7,
+    "won": 4
+   },
+   "Worcestershire": {
+    "played": 14,
+    "drawn": 4,
+    "won": 5,
+    "lost": 5
+   },
+   "Middlesex": {
+    "played": 14,
+    "won": 5,
+    "lost": 5,
+    "drawn": 4
+   },
+   "Gloucestershire": {
+    "played": 14,
+    "lost": 10,
+    "won": 3,
+    "drawn": 1
+   },
+   "Lancashire": {
+    "played": 14,
+    "drawn": 4,
+    "won": 2,
+    "lost": 8
+   },
+   "Northamptonshire": {
+    "played": 14,
+    "drawn": 5,
+    "won": 5,
+    "lost": 4
+   },
+   "Durham": {
+    "played": 14,
+    "drawn": 5,
+    "won": 9
+   },
+   "Kent": {
+    "played": 14,
+    "drawn": 4,
+    "lost": 2,
+    "won": 8
+   }
+  },
+  "2014-1": {
+   "Middlesex": {
+    "played": 11,
+    "lost": 5,
+    "won": 1,
+    "drawn": 5
+   },
+   "Sussex": {
+    "played": 14,
+    "won": 6,
+    "lost": 4,
+    "drawn": 4
+   },
+   "Yorkshire": {
+    "played": 13,
+    "drawn": 6,
+    "won": 7
+   },
+   "Somerset": {
+    "played": 14,
+    "drawn": 8,
+    "won": 4,
+    "lost": 2
+   },
+   "Durham": {
+    "played": 14,
+    "drawn": 6,
+    "lost": 3,
+    "won": 5
+   },
+   "Northamptonshire": {
+    "played": 15,
+    "drawn": 3,
+    "lost": 12
+   },
+   "Warwickshire": {
+    "played": 16,
+    "lost": 4,
+    "drawn": 4,
+    "won": 8
+   },
+   "Lancashire": {
+    "played": 12,
+    "drawn": 7,
+    "won": 2,
+    "lost": 3
+   },
+   "Nottinghamshire": {
+    "played": 13,
+    "lost": 5,
+    "drawn": 3,
+    "won": 5
+   }
+  },
+  "2014-2": {
+   "Leicestershire": {
+    "played": 14,
+    "lost": 10,
+    "drawn": 4
+   },
+   "Derbyshire": {
+    "played": 16,
+    "won": 6,
+    "lost": 5,
+    "drawn": 5
+   },
+   "Hampshire": {
+    "played": 16,
+    "drawn": 8,
+    "won": 7,
+    "lost": 1
+   },
+   "Worcestershire": {
+    "played": 16,
+    "drawn": 5,
+    "won": 8,
+    "lost": 3
+   },
+   "Kent": {
+    "played": 15,
+    "lost": 6,
+    "drawn": 6,
+    "won": 3
+   },
+   "Essex": {
+    "played": 13,
+    "won": 6,
+    "drawn": 5,
+    "lost": 2
+   },
+   "Gloucestershire": {
+    "played": 15,
+    "lost": 5,
+    "drawn": 6,
+    "won": 4
+   },
+   "Glamorgan": {
+    "played": 14,
+    "drawn": 7,
+    "lost": 5,
+    "won": 2
+   },
+   "Surrey": {
+    "played": 13,
+    "drawn": 6,
+    "won": 4,
+    "lost": 3
+   }
+  },
+  "2015-1": {
+   "Sussex": {
+    "played": 16,
+    "won": 4,
+    "lost": 8,
+    "drawn": 4
+   },
+   "Hampshire": {
+    "played": 16,
+    "lost": 6,
+    "drawn": 6,
+    "won": 4
+   },
+   "Nottinghamshire": {
+    "played": 16,
+    "drawn": 5,
+    "lost": 5,
+    "won": 6
+   },
+   "Middlesex": {
+    "played": 16,
+    "drawn": 7,
+    "won": 7,
+    "lost": 2
+   },
+   "Somerset": {
+    "played": 15,
+    "lost": 6,
+    "won": 4,
+    "drawn": 5
+   },
+   "Durham": {
+    "played": 15,
+    "won": 6,
+    "lost": 8,
+    "drawn": 1
+   },
+   "Yorkshire": {
+    "played": 14,
+    "drawn": 3,
+    "won": 10,
+    "lost": 1
+   },
+   "Worcestershire": {
+    "played": 14,
+    "lost": 8,
+    "won": 3,
+    "drawn": 3
+   },
+   "Warwickshire": {
+    "played": 16,
+    "drawn": 6,
+    "won": 5,
+    "lost": 5
+   }
+  },
+  "2015-2": {
+   "Glamorgan": {
+    "played": 15,
+    "drawn": 8,
+    "won": 4,
+    "lost": 3
+   },
+   "Leicestershire": {
+    "played": 15,
+    "drawn": 5,
+    "lost": 8,
+    "won": 2
+   },
+   "Northamptonshire": {
+    "played": 16,
+    "drawn": 10,
+    "won": 3,
+    "lost": 3
+   },
+   "Gloucestershire": {
+    "played": 16,
+    "drawn": 6,
+    "lost": 5,
+    "won": 5
+   },
+   "Lancashire": {
+    "played": 13,
+    "won": 5,
+    "drawn": 7,
+    "lost": 1
+   },
+   "Derbyshire": {
+    "played": 15,
+    "lost": 6,
+    "won": 3,
+    "drawn": 6
+   },
+   "Kent": {
+    "played": 14,
+    "lost": 6,
+    "drawn": 4,
+    "won": 4
+   },
+   "Essex": {
+    "played": 15,
+    "won": 6,
+    "drawn": 5,
+    "lost": 4
+   },
+   "Surrey": {
+    "played": 13,
+    "drawn": 7,
+    "won": 5,
+    "lost": 1
+   }
+  },
+  "2016-1": {
+   "Durham": {
+    "played": 15,
+    "drawn": 8,
+    "won": 4,
+    "lost": 3
+   },
+   "Somerset": {
+    "played": 16,
+    "drawn": 9,
+    "won": 6,
+    "lost": 1
+   },
+   "Nottinghamshire": {
+    "played": 16,
+    "won": 1,
+    "lost": 9,
+    "drawn": 6
+   },
+   "Surrey": {
+    "played": 16,
+    "lost": 6,
+    "drawn": 6,
+    "won": 4
+   },
+   "Hampshire": {
+    "played": 15,
+    "drawn": 10,
+    "lost": 3,
+    "won": 2
+   },
+   "Warwickshire": {
+    "played": 16,
+    "drawn": 9,
+    "won": 3,
+    "lost": 4
+   },
+   "Yorkshire": {
+    "played": 16,
+    "drawn": 8,
+    "won": 5,
+    "lost": 3
+   },
+   "Lancashire": {
+    "played": 16,
+    "won": 3,
+    "drawn": 8,
+    "lost": 5
+   },
+   "Middlesex": {
+    "played": 16,
+    "drawn": 10,
+    "won": 6
+   }
+  },
+  "2016-2": {
+   "Gloucestershire": {
+    "played": 14,
+    "lost": 5,
+    "drawn": 7,
+    "won": 2
+   },
+   "Essex": {
+    "played": 14,
+    "won": 6,
+    "drawn": 6,
+    "lost": 2
+   },
+   "Derbyshire": {
+    "played": 14,
+    "drawn": 10,
+    "lost": 4
+   },
+   "Sussex": {
+    "played": 14,
+    "drawn": 8,
+    "won": 4,
+    "lost": 2
+   },
+   "Glamorgan": {
+    "played": 13,
+    "lost": 5,
+    "drawn": 5,
+    "won": 3
+   },
+   "Leicestershire": {
+    "played": 15,
+    "won": 3,
+    "drawn": 8,
+    "lost": 4
+   },
+   "Kent": {
+    "played": 15,
+    "drawn": 8,
+    "won": 5,
+    "lost": 2
+   },
+   "Northamptonshire": {
+    "played": 13,
+    "lost": 3,
+    "drawn": 7,
+    "won": 3
+   },
+   "Worcestershire": {
+    "played": 14,
+    "drawn": 5,
+    "won": 5,
+    "lost": 4
+   }
+  }
+ },
+ "topRuns": {
+  "2017": [
+   {
+    "player": "LWP Wells",
+    "value": 1182
+   },
+   {
+    "player": "KC Sangakkara",
+    "value": 1117
+   },
+   {
+    "player": "PD Collingwood",
+    "value": 1039
+   }
+  ],
+  "2018": [
+   {
+    "player": "RJ Burns",
+    "value": 1309
+   },
+   {
+    "player": "JC Hildreth",
+    "value": 1089
+   },
+   {
+    "player": "IR Bell",
+    "value": 1027
+   }
+  ],
+  "2019": [
+   {
+    "player": "CDJ Dent",
+    "value": 1087
+   },
+   {
+    "player": "Hassan Azad",
+    "value": 1056
+   },
+   {
+    "player": "DP Sibley",
+    "value": 982
+   }
+  ],
+  "2021": [
+   {
+    "player": "TJ Haines",
+    "value": 1176
+   },
+   {
+    "player": "JD Libby",
+    "value": 1075
+   },
+   {
+    "player": "SD Robson",
+    "value": 1047
+   }
+  ],
+  "2022": [
+   {
+    "player": "WL Madsen",
+    "value": 1273
+   },
+   {
+    "player": "H Hameed",
+    "value": 1235
+   },
+   {
+    "player": "KK Jennings",
+    "value": 1233
+   }
+  ],
+  "2023": [
+   {
+    "player": "AZ Lees",
+    "value": 1347
+   },
+   {
+    "player": "JJ Bohannon",
+    "value": 1257
+   },
+   {
+    "player": "JL du Plooy",
+    "value": 1236
+   }
+  ],
+  "2024": [
+   {
+    "player": "CA Ingram",
+    "value": 1351
+   },
+   {
+    "player": "DG Bedingham",
+    "value": 1331
+   },
+   {
+    "player": "A Lyth",
+    "value": 1215
+   }
+  ],
+  "2025": [
+   {
+    "player": "SA Zaib",
+    "value": 1425
+   },
+   {
+    "player": "BG Compton",
+    "value": 1386
+   },
+   {
+    "player": "DP Sibley",
+    "value": 1274
+   }
+  ],
+  "2026": [
+   {
+    "player": "JM Clarke",
+    "value": 1288
+   },
+   {
+    "player": "TB Abell",
+    "value": 1287
+   },
+   {
+    "player": "R Vasconcelos",
+    "value": 1159
+   }
+  ],
+  "2014": [
+   {
+    "player": "JM Vince",
+    "value": 1525
+   },
+   {
+    "player": "DKH Mitchell",
+    "value": 1334
+   },
+   {
+    "player": "EC Joyce",
+    "value": 1234
+   }
+  ],
+  "2015": [
+   {
+    "player": "JC Hildreth",
+    "value": 1308
+   },
+   {
+    "player": "ME Trescothick",
+    "value": 1224
+   },
+   {
+    "player": "LJ Wright",
+    "value": 1210
+   }
+  ],
+  "2016": [
+   {
+    "player": "KK Jennings",
+    "value": 1522
+   },
+   {
+    "player": "NRT Gubbins",
+    "value": 1409
+   },
+   {
+    "player": "SA Northeast",
+    "value": 1337
+   }
+  ]
+ },
+ "topWickets": {
+  "2017": [
+   {
+    "player": "JA Porter",
+    "value": 75
+   },
+   {
+    "player": "SR Harmer",
+    "value": 72
+   },
+   {
+    "player": "LC Norwell",
+    "value": 59
+   }
+  ],
+  "2018": [
+   {
+    "player": "OE Robinson",
+    "value": 69
+   },
+   {
+    "player": "MJ Henry",
+    "value": 66
+   },
+   {
+    "player": "BW Sanderson",
+    "value": 57
+   }
+  ],
+  "2019": [
+   {
+    "player": "SR Harmer",
+    "value": 83
+   },
+   {
+    "player": "C Rushworth",
+    "value": 69
+   },
+   {
+    "player": "OE Robinson",
+    "value": 63
+   }
+  ],
+  "2021": [
+   {
+    "player": "LJ Fletcher",
+    "value": 64
+   },
+   {
+    "player": "C Rushworth",
+    "value": 59
+   },
+   {
+    "player": "TJ Murtagh",
+    "value": 58
+   }
+  ],
+  "2022": [
+   {
+    "player": "TS Roland-Jones",
+    "value": 67
+   },
+   {
+    "player": "SR Harmer",
+    "value": 59
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 58
+   }
+  ],
+  "2023": [
+   {
+    "player": "BA Hutton",
+    "value": 62
+   },
+   {
+    "player": "SR Harmer",
+    "value": 61
+   },
+   {
+    "player": "BA Raine",
+    "value": 60
+   }
+  ],
+  "2024": [
+   {
+    "player": "JA Porter",
+    "value": 56
+   },
+   {
+    "player": "BO Coad",
+    "value": 56
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 55
+   }
+  ],
+  "2025": [
+   {
+    "player": "TAI Taylor",
+    "value": 58
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 56
+   },
+   {
+    "player": "MJ Leach",
+    "value": 52
+   }
+  ],
+  "2026": [
+   {
+    "player": "ER Bamber",
+    "value": 69
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 64
+   },
+   {
+    "player": "MJ Potts",
+    "value": 60
+   }
+  ],
+  "2014": [
+   {
+    "player": "MHA Footitt",
+    "value": 82
+   },
+   {
+    "player": "SJ Magoffin",
+    "value": 68
+   },
+   {
+    "player": "Saeed Ajmal",
+    "value": 63
+   }
+  ],
+  "2015": [
+   {
+    "player": "C Rushworth",
+    "value": 78
+   },
+   {
+    "player": "MHA Footitt",
+    "value": 75
+   },
+   {
+    "player": "SJ Magoffin",
+    "value": 69
+   }
+  ],
+  "2016": [
+   {
+    "player": "JS Patel",
+    "value": 69
+   },
+   {
+    "player": "MJ Leach",
+    "value": 65
+   },
+   {
+    "player": "JA Brooks",
+    "value": 60
+   }
+  ]
+ },
+ "hundreds2025": [
+  {
+   "player": "SA Zaib",
+   "value": 6
+  },
+  {
+   "player": "BG Compton",
+   "value": 5
+  },
+  {
+   "player": "Rehan Ahmed",
+   "value": 5
+  }
+ ],
+ "highestScore": {
+  "player": "SA Northeast",
+  "match": "1297754",
+  "season": 2022,
+  "runs": 410
+ },
+ "bestBowling": {
+  "player": "JAR Harris",
+  "match": "804181",
+  "season": 2015,
+  "wickets": 9,
+  "runs": 34
+ },
+ "yorksVLancs": {
+  "draw": 6,
+  "Yorkshire": 4,
+  "Lancashire": 1
+ },
+ "sampleMatch947089": [
+  [
+   "Gloucestershire",
+   229,
+   10,
+   false,
+   false
+  ],
+  [
+   "Sussex",
+   435,
+   10,
+   false,
+   false
+  ],
+  [
+   "Gloucestershire",
+   337,
+   7,
+   true,
+   false
+  ]
+ ]
+}

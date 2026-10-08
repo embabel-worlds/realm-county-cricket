@@ -1,0 +1,480 @@
+# The realm's answer surface. Every view reads stored rows seeded from reference/ — nothing is
+# fetched, nothing calls a model — so each is one query and its cost is the engine's alone.
+#
+# Conventions the figures follow (see types/cricket.yml): a batting average divides runs by
+# dismissals (innings minus not outs), a bowling average divides runs conceded by wickets
+# credited, economy is runs per six legal balls, a strike rate is runs per hundred balls for a
+# batter and balls per wicket for a bowler. A season's defaults are the latest season held.
+
+- name: CountySeasons
+  description: >-
+    Every County Championship season the realm holds (2014 to 2026, no 2020), newest first, with
+    how many matches, teams and divisions (groups in 2021) each has, the date span, and how many
+    matches were decided or drawn. The first call an app makes, to know what can be asked.
+  cypher: |
+    MATCH (m:CountyMatch)
+    RETURN m.season AS season, count(m) AS matches, count(DISTINCT m.team1) AS teams,
+           count(DISTINCT m.stage) AS stages, min(m.startDate) AS firstMatch, max(m.endDate) AS lastMatch,
+           sum(CASE WHEN m.result = 'won' THEN 1 ELSE 0 END) AS decided,
+           sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn
+    ORDER BY season DESC
+
+- name: CountyTeams
+  description: >-
+    The 18 first-class counties with their all-time County Championship record in the data (2014
+    onwards) - matches, wins, draws, losses - and the seasons they span.
+  cypher: |
+    MATCH (t:CountyTeam)
+    OPTIONAL MATCH (m:CountyMatch)-[:TEAM]->(t)
+    WITH t, count(m) AS played,
+         sum(CASE WHEN m.winner = t.name THEN 1 ELSE 0 END) AS won,
+         sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn,
+         sum(CASE WHEN m.loser = t.name THEN 1 ELSE 0 END) AS lost
+    RETURN t.name AS team, t.firstSeason AS firstSeason, t.lastSeason AS lastSeason,
+           played, won, drawn, lost
+    ORDER BY team
+
+- name: CountyTable
+  description: >-
+    The County Championship table for one season and division (a group in 2021) as results -
+    played, won, drawn, lost, tied, wins by an innings - ordered by wins then draws. NOT the
+    official points table: no points, bonus points or deductions exist in this realm, so a
+    question about points has no answer here and must not be approximated from wins.
+  params:
+    season:
+      type: int
+      default: 2026
+      description: "Season year, 2014 to 2026 (not 2020)."
+    stage:
+      type: int
+      default: 1
+      description: "Division 1 or 2; in 2021 the group, 1 to 3."
+  cypher: |
+    MATCH (m:CountyMatch {season: $season, stage: $stage})
+    UNWIND [m.team1, m.team2] AS team
+    WITH team, m
+    WITH team, count(m) AS played,
+         sum(CASE WHEN m.winner = team THEN 1 ELSE 0 END) AS won,
+         sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn,
+         sum(CASE WHEN m.loser = team THEN 1 ELSE 0 END) AS lost,
+         sum(CASE WHEN m.result = 'tie' THEN 1 ELSE 0 END) AS tied,
+         sum(CASE WHEN m.winner = team AND m.byInnings THEN 1 ELSE 0 END) AS wonByInnings
+    RETURN team, played, won, drawn, lost, tied, wonByInnings
+    ORDER BY won DESC, drawn DESC, lost ASC, team
+
+- name: TeamSeasons
+  description: >-
+    One county's County Championship record season by season - which division (or 2021 group)
+    it was in and its played, won, drawn, lost - newest season first.
+  params:
+    team:
+      type: string
+      default: "Surrey"
+      description: "A county's name as Cricsheet spells it, e.g. Surrey, Nottinghamshire."
+  cypher: |
+    MATCH (m:CountyMatch)
+    WHERE m.team1 = $team OR m.team2 = $team
+    WITH m.season AS season, m.stage AS stage, m.stageName AS stageName, count(m) AS played,
+         sum(CASE WHEN m.winner = $team THEN 1 ELSE 0 END) AS won,
+         sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn,
+         sum(CASE WHEN m.loser = $team THEN 1 ELSE 0 END) AS lost,
+         sum(CASE WHEN m.result = 'tie' THEN 1 ELSE 0 END) AS tied
+    RETURN season, stage, stageName, played, won, drawn, lost, tied
+    ORDER BY season DESC
+
+- name: TeamResults
+  description: >-
+    One county's County Championship matches - opponent, venue, date, whether it won, lost, drew
+    or tied, and the margin - newest first, optionally for one season. Each row carries the match
+    id for the scorecard and a link to ESPNcricinfo.
+  params:
+    team:
+      type: string
+      default: "Surrey"
+      description: "A county's name, e.g. Surrey."
+    season:
+      type: int
+      default: 0
+      description: "Season year, or 0 for every season."
+    limit:
+      type: int
+      default: 200
+      description: "Most matches to return."
+  cypher: |
+    MATCH (m:CountyMatch)
+    WHERE (m.team1 = $team OR m.team2 = $team) AND ($season = 0 OR m.season = $season)
+    RETURN m.matchId AS matchId, m.season AS season, m.stageName AS stage, m.startDate AS date,
+           m.venue AS venue, m.city AS city,
+           CASE WHEN m.team1 = $team THEN m.team2 ELSE m.team1 END AS opponent,
+           m.team1 = $team AS listedFirst,
+           CASE WHEN m.winner = $team THEN 'won' WHEN m.loser = $team THEN 'lost'
+                WHEN m.result = 'tie' THEN 'tied' ELSE 'drawn' END AS outcome,
+           m.margin AS margin, m.winner AS winner, m.url AS url
+    ORDER BY date DESC
+    LIMIT $limit
+
+- name: HeadToHead
+  description: >-
+    Every County Championship match between two counties since 2014, newest first, with the
+    result and margin - for "how have Yorkshire done against Lancashire" questions. Tally the rows
+    for the head-to-head record.
+  params:
+    teamA:
+      type: string
+      default: "Yorkshire"
+      description: "One county."
+    teamB:
+      type: string
+      default: "Lancashire"
+      description: "The other county."
+  cypher: |
+    MATCH (m:CountyMatch)
+    WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
+    RETURN m.matchId AS matchId, m.season AS season, m.stageName AS stage, m.startDate AS date,
+           m.venue AS venue, m.city AS city, m.team1 AS team1, m.team2 AS team2,
+           m.result AS result, m.winner AS winner, m.margin AS margin, m.url AS url
+    ORDER BY date DESC
+    LIMIT 200
+
+- name: SeasonBatting
+  description: >-
+    The leading run-scorers of a County Championship season - matches, innings, not outs, runs,
+    highest score, average, balls faced, strike rate, fours, sixes, hundreds and fifties -
+    optionally within one division (2021 group) or one county, with a minimum innings. Answers
+    "who scored the most runs in 2025", "best batting average for Surrey", "most hundreds in
+    Division 2".
+  params:
+    season:
+      type: int
+      default: 2026
+      description: "Season year, 2014 to 2026 (not 2020)."
+    stage:
+      type: int
+      default: 0
+      description: "Division 1 or 2 (2021 group 1 to 3), or 0 for the whole season."
+    team:
+      type: string
+      default: ""
+      description: "A county, or empty for every county."
+    minInnings:
+      type: int
+      default: 1
+      description: "Fewest innings a batter needs to be listed; raise it when ranking by average."
+    limit:
+      type: int
+      default: 25
+      description: "How many batters."
+  cypher: |
+    MATCH (b:BattingInnings {season: $season})
+    WHERE ($stage = 0 OR b.stage = $stage) AND ($team = '' OR b.team = $team)
+    WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams,
+         count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+         sum(CASE WHEN b.notOut THEN 1 ELSE 0 END) AS notOuts,
+         sum(b.runs) AS runs, max(b.runs) AS highScore,
+         max(CASE WHEN b.notOut THEN b.runs ELSE -1 END) AS highNotOut,
+         sum(b.balls) AS balls, sum(b.fours) AS fours, sum(b.sixes) AS sixes,
+         sum(CASE WHEN b.runs >= 100 THEN 1 ELSE 0 END) AS hundreds,
+         sum(CASE WHEN b.runs >= 50 AND b.runs < 100 THEN 1 ELSE 0 END) AS fifties
+    WHERE innings >= $minInnings
+    RETURN playerId, player, teams, matches, innings, notOuts, runs, highScore,
+           highNotOut = highScore AS highScoreNotOut,
+           CASE WHEN innings - notOuts > 0 THEN round(100.0 * runs / (innings - notOuts)) / 100.0 ELSE null END AS average,
+           balls,
+           CASE WHEN balls > 0 THEN round(10000.0 * runs / balls) / 100.0 ELSE null END AS strikeRate,
+           fours, sixes, hundreds, fifties
+    ORDER BY runs DESC, average DESC
+    LIMIT $limit
+
+- name: SeasonBowling
+  description: >-
+    The leading wicket-takers of a County Championship season - matches, innings bowled, overs,
+    maidens, runs conceded, wickets, best figures, average, economy, strike rate and five-wicket
+    hauls - optionally within one division (2021 group) or one county, with a minimum wickets.
+    Answers "who took the most wickets in 2024", "best bowling average for Essex", "most
+    five-fors".
+  params:
+    season:
+      type: int
+      default: 2026
+      description: "Season year, 2014 to 2026 (not 2020)."
+    stage:
+      type: int
+      default: 0
+      description: "Division 1 or 2 (2021 group 1 to 3), or 0 for the whole season."
+    team:
+      type: string
+      default: ""
+      description: "A county, or empty for every county."
+    minWickets:
+      type: int
+      default: 1
+      description: "Fewest wickets a bowler needs to be listed; raise it when ranking by average."
+    limit:
+      type: int
+      default: 25
+      description: "How many bowlers."
+  cypher: |
+    MATCH (b:BowlingInnings {season: $season})
+    WHERE ($stage = 0 OR b.stage = $stage) AND ($team = '' OR b.team = $team)
+    WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams,
+         count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+         sum(b.balls) AS balls, sum(b.maidens) AS maidens, sum(b.runs) AS runs, sum(b.wickets) AS wickets,
+         sum(CASE WHEN b.wickets >= 5 THEN 1 ELSE 0 END) AS fiveFors,
+         max(b.wickets * 1000 - b.runs) AS bestCode
+    WHERE wickets >= $minWickets
+    WITH playerId, player, teams, matches, innings, balls, maidens, runs, wickets, fiveFors, bestCode,
+         toInteger(floor((bestCode + 999) / 1000.0)) AS bestWickets
+    RETURN playerId, player, teams, matches, innings, balls,
+           toString(balls / 6) + '.' + toString(balls % 6) AS overs,
+           maidens, runs, wickets, bestWickets, bestWickets * 1000 - bestCode AS bestRuns,
+           CASE WHEN wickets > 0 THEN round(100.0 * runs / wickets) / 100.0 ELSE null END AS average,
+           CASE WHEN balls > 0 THEN round(100.0 * runs * 6 / balls) / 100.0 ELSE null END AS economy,
+           CASE WHEN wickets > 0 THEN round(10.0 * balls / wickets) / 10.0 ELSE null END AS strikeRate,
+           fiveFors
+    ORDER BY wickets DESC, average ASC
+    LIMIT $limit
+
+- name: HighestScores
+  description: >-
+    The highest individual County Championship innings in the data - batter, team, opponent,
+    runs, balls, boundaries, whether not out, date and venue - for one season or all, optionally
+    for one county. Answers "highest score in 2023", "biggest innings for Kent".
+  params:
+    season:
+      type: int
+      default: 0
+      description: "Season year, or 0 for every season since 2014."
+    team:
+      type: string
+      default: ""
+      description: "The batter's county, or empty for all."
+    limit:
+      type: int
+      default: 25
+      description: "How many innings."
+  cypher: |
+    MATCH (b:BattingInnings)
+    WHERE ($season = 0 OR b.season = $season) AND ($team = '' OR b.team = $team)
+    RETURN b.player AS player, b.playerId AS playerId, b.team AS team, b.opponent AS opponent,
+           b.runs AS runs, b.balls AS balls, b.fours AS fours, b.sixes AS sixes, b.notOut AS notOut,
+           b.season AS season, b.date AS date, b.venue AS venue, b.matchId AS matchId
+    ORDER BY runs DESC, balls ASC
+    LIMIT $limit
+
+- name: BestBowling
+  description: >-
+    The best bowling figures in an innings in the data - bowler, team, opponent, overs, maidens,
+    runs, wickets, date and venue - for one season or all, optionally for one county. Answers
+    "best bowling figures in 2022", "most wickets in an innings for Durham".
+  params:
+    season:
+      type: int
+      default: 0
+      description: "Season year, or 0 for every season since 2014."
+    team:
+      type: string
+      default: ""
+      description: "The bowler's county, or empty for all."
+    limit:
+      type: int
+      default: 25
+      description: "How many spells."
+  cypher: |
+    MATCH (b:BowlingInnings)
+    WHERE ($season = 0 OR b.season = $season) AND ($team = '' OR b.team = $team)
+    RETURN b.player AS player, b.playerId AS playerId, b.team AS team, b.opponent AS opponent,
+           b.overs AS overs, b.maidens AS maidens, b.runs AS runs, b.wickets AS wickets,
+           b.season AS season, b.date AS date, b.venue AS venue, b.matchId AS matchId
+    ORDER BY wickets DESC, runs ASC
+    LIMIT $limit
+
+- name: PlayerSearch
+  description: >-
+    Find County Championship cricketers by part of a name (case-insensitive) - their Cricsheet
+    id, the counties they have played for, first and last seasons and matches. Names are as
+    printed in scorecards (JE Root), so search by surname.
+  params:
+    name:
+      type: string
+      default: "Root"
+      description: "Part of the name, usually the surname."
+  cypher: |
+    MATCH (p:CricketPlayer)
+    WHERE toLower(p.name) CONTAINS toLower($name)
+    RETURN p.playerId AS playerId, p.name AS name, p.teams AS teams, p.firstSeason AS firstSeason,
+           p.lastSeason AS lastSeason, p.matches AS matches
+    ORDER BY matches DESC, name
+    LIMIT 25
+
+- name: PlayerBatting
+  description: >-
+    One cricketer's County Championship batting season by season - matches, innings, not outs,
+    runs, highest score, average, strike rate, hundreds and fifties - by Cricsheet player id
+    (find it with PlayerSearch).
+  params:
+    playerId:
+      type: string
+      default: "86e0f3f0"
+      description: "Cricsheet's player id, from PlayerSearch."
+  cypher: |
+    MATCH (p:CricketPlayer {playerId: $playerId})<-[:BY]-(b:BattingInnings)
+    WITH p, b.season AS season, collect(DISTINCT b.team) AS teams,
+         count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+         sum(CASE WHEN b.notOut THEN 1 ELSE 0 END) AS notOuts,
+         sum(b.runs) AS runs, max(b.runs) AS highScore,
+         max(CASE WHEN b.notOut THEN b.runs ELSE -1 END) AS highNotOut,
+         sum(b.balls) AS balls, sum(b.fours) AS fours, sum(b.sixes) AS sixes,
+         sum(CASE WHEN b.runs >= 100 THEN 1 ELSE 0 END) AS hundreds,
+         sum(CASE WHEN b.runs >= 50 AND b.runs < 100 THEN 1 ELSE 0 END) AS fifties
+    RETURN p.playerId AS playerId, p.name AS player, season, teams, matches, innings, notOuts, runs, highScore,
+           highNotOut = highScore AS highScoreNotOut,
+           CASE WHEN innings - notOuts > 0 THEN round(100.0 * runs / (innings - notOuts)) / 100.0 ELSE null END AS average,
+           balls,
+           CASE WHEN balls > 0 THEN round(10000.0 * runs / balls) / 100.0 ELSE null END AS strikeRate,
+           fours, sixes, hundreds, fifties
+    ORDER BY season
+
+- name: PlayerBowling
+  description: >-
+    One cricketer's County Championship bowling season by season - matches, innings bowled,
+    overs, maidens, runs, wickets, best figures, average, economy, strike rate and five-fors - by
+    Cricsheet player id (find it with PlayerSearch).
+  params:
+    playerId:
+      type: string
+      default: "5b6d248a"
+      description: "Cricsheet's player id, from PlayerSearch."
+  cypher: |
+    MATCH (p:CricketPlayer {playerId: $playerId})<-[:BY]-(b:BowlingInnings)
+    WITH p, b.season AS season, collect(DISTINCT b.team) AS teams,
+         count(DISTINCT b.matchId) AS matches, count(b) AS innings,
+         sum(b.balls) AS balls, sum(b.maidens) AS maidens, sum(b.runs) AS runs, sum(b.wickets) AS wickets,
+         sum(CASE WHEN b.wickets >= 5 THEN 1 ELSE 0 END) AS fiveFors,
+         max(b.wickets * 1000 - b.runs) AS bestCode
+    WITH p, season, teams, matches, innings, balls, maidens, runs, wickets, fiveFors, bestCode,
+         toInteger(floor((bestCode + 999) / 1000.0)) AS bestWickets
+    RETURN p.playerId AS playerId, p.name AS player, season, teams, matches, innings, balls,
+           toString(balls / 6) + '.' + toString(balls % 6) AS overs,
+           maidens, runs, wickets, bestWickets, bestWickets * 1000 - bestCode AS bestRuns,
+           CASE WHEN wickets > 0 THEN round(100.0 * runs / wickets) / 100.0 ELSE null END AS average,
+           CASE WHEN balls > 0 THEN round(100.0 * runs * 6 / balls) / 100.0 ELSE null END AS economy,
+           CASE WHEN wickets > 0 THEN round(10.0 * balls / wickets) / 10.0 ELSE null END AS strikeRate,
+           fiveFors
+    ORDER BY season
+
+- name: PlayerInnings
+  description: >-
+    Every County Championship innings one cricketer has batted, newest first - date, opponent,
+    venue, runs, balls, how out and by whom, and the match's result - by Cricsheet player id.
+  params:
+    playerId:
+      type: string
+      default: "86e0f3f0"
+      description: "Cricsheet's player id, from PlayerSearch."
+    limit:
+      type: int
+      default: 300
+      description: "Most innings to return."
+  cypher: |
+    MATCH (p:CricketPlayer {playerId: $playerId})<-[:BY]-(b:BattingInnings)-[:IN_MATCH]->(m:CountyMatch)
+    RETURN b.date AS date, b.season AS season, b.team AS team, b.opponent AS opponent, b.venue AS venue,
+           b.inningsNo AS inningsNo, b.position AS position, b.runs AS runs, b.balls AS balls,
+           b.fours AS fours, b.sixes AS sixes, b.notOut AS notOut, b.dismissal AS dismissal,
+           b.bowler AS bowler, b.fielders AS fielders, m.matchId AS matchId, m.result AS result,
+           m.winner AS winner, m.margin AS margin, m.url AS url
+    ORDER BY date DESC, inningsNo DESC
+    LIMIT $limit
+
+- name: PlayerSpells
+  description: >-
+    Every County Championship innings one cricketer has bowled in, newest first - date, opponent,
+    venue, overs, maidens, runs, wickets, and the match's result - by Cricsheet player id.
+  params:
+    playerId:
+      type: string
+      default: "5b6d248a"
+      description: "Cricsheet's player id, from PlayerSearch."
+    limit:
+      type: int
+      default: 300
+      description: "Most spells to return."
+  cypher: |
+    MATCH (p:CricketPlayer {playerId: $playerId})<-[:BY]-(b:BowlingInnings)-[:IN_MATCH]->(m:CountyMatch)
+    RETURN b.date AS date, b.season AS season, b.team AS team, b.opponent AS opponent, b.venue AS venue,
+           b.inningsNo AS inningsNo, b.overs AS overs, b.maidens AS maidens, b.runs AS runs,
+           b.wickets AS wickets, b.dots AS dots, m.matchId AS matchId, m.result AS result,
+           m.winner AS winner, m.margin AS margin, m.url AS url
+    ORDER BY date DESC, inningsNo DESC
+    LIMIT $limit
+
+- name: MatchSummary
+  description: >-
+    One County Championship match by id - teams, season, division, dates, venue, toss, result,
+    winner and margin, with the ESPNcricinfo link.
+  params:
+    matchId:
+      type: string
+      default: "1513450"
+      description: "Cricsheet/ESPNcricinfo match id, e.g. 947089."
+  cypher: |
+    MATCH (m:CountyMatch {matchId: $matchId})
+    RETURN m.matchId AS matchId, m.season AS season, m.stage AS stage, m.stageName AS stageName,
+           m.competition AS competition, m.startDate AS startDate, m.endDate AS endDate, m.days AS days,
+           m.venue AS venue, m.city AS city, m.team1 AS team1, m.team2 AS team2,
+           m.tossWinner AS tossWinner, m.tossDecision AS tossDecision, m.tossUncontested AS tossUncontested,
+           m.result AS result, m.winner AS winner, m.loser AS loser, m.margin AS margin,
+           m.marginRuns AS marginRuns, m.marginWickets AS marginWickets, m.byInnings AS byInnings, m.url AS url
+    LIMIT 1
+
+- name: MatchInnings
+  description: >-
+    The four (or fewer) team innings of one County Championship match in order - team, total,
+    wickets, overs, declared or forfeited, extras.
+  params:
+    matchId:
+      type: string
+      default: "1513450"
+      description: "Match id."
+  cypher: |
+    MATCH (m:CountyMatch {matchId: $matchId})<-[:IN_MATCH]-(t:TeamInnings)
+    RETURN t.inningsNo AS inningsNo, t.team AS team, t.bowlingTeam AS bowlingTeam, t.runs AS runs,
+           t.wickets AS wickets, t.overs AS overs, t.balls AS balls, t.declared AS declared,
+           t.forfeited AS forfeited, t.allOut AS allOut, t.extras AS extras, t.byes AS byes,
+           t.legbyes AS legbyes, t.wides AS wides, t.noballs AS noballs, t.penalty AS penalty
+    ORDER BY inningsNo
+    LIMIT 4
+
+- name: MatchBatting
+  description: >-
+    The batting scorecard of one County Championship match - every batter of every innings in
+    batting order, with runs, balls, boundaries and dismissal.
+  params:
+    matchId:
+      type: string
+      default: "1513450"
+      description: "Match id."
+  cypher: |
+    MATCH (m:CountyMatch {matchId: $matchId})<-[:IN_MATCH]-(b:BattingInnings)
+    RETURN b.inningsNo AS inningsNo, b.team AS team, b.position AS position, b.playerId AS playerId,
+           b.player AS player, b.runs AS runs, b.balls AS balls, b.fours AS fours, b.sixes AS sixes,
+           b.notOut AS notOut, b.dismissal AS dismissal, b.bowler AS bowler, b.fielders AS fielders
+    ORDER BY inningsNo, position
+    LIMIT 100
+
+- name: MatchBowling
+  description: >-
+    The bowling scorecard of one County Championship match - every bowler of every innings in
+    bowling order, with overs, maidens, runs and wickets.
+  params:
+    matchId:
+      type: string
+      default: "1513450"
+      description: "Match id."
+  cypher: |
+    MATCH (m:CountyMatch {matchId: $matchId})<-[:IN_MATCH]-(b:BowlingInnings)
+    RETURN b.inningsNo AS inningsNo, b.team AS team, b.opponent AS opponent, b.bowlOrder AS bowlOrder,
+           b.playerId AS playerId, b.player AS player, b.overs AS overs, b.balls AS balls,
+           b.maidens AS maidens, b.runs AS runs, b.wickets AS wickets, b.dots AS dots,
+           b.wides AS wides, b.noballs AS noballs
+    ORDER BY inningsNo, bowlOrder
+    LIMIT 100

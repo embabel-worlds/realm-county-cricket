@@ -1,0 +1,64 @@
+# tests/questions.yml — the questions a person types at this realm, with what a correct answer must
+# satisfy. Run each through the ask surface (kg_ask / POST /api/v1/admin/kg/ask); money here is
+# runs and wickets, so each figure must EQUAL the named view's.
+#
+# The adversarial half asks what the data cannot carry — official points, pre-2014 seasons, 2020,
+# one-day or T20 cricket, fielding catches as a stat, a player's age — and passes only on a typed
+# refusal or an honestly qualified answer. Ask each several times: generation is stochastic.
+
+- question: "How many County Championship matches are in the data?"
+  expect:
+    matchesView: { name: CountySeasons, column: matches, aggregate: sum }
+- question: "Who scored the most runs in the 2025 County Championship?"
+  expect:
+    matchesView: { name: SeasonBatting, column: runs, args: { season: 2025 } }
+- question: "Who took the most wickets in the 2024 championship?"
+  expect:
+    matchesView: { name: SeasonBowling, column: wickets, args: { season: 2024 } }
+- question: "Which batter has the best average in Division 1 in 2026 with at least 10 innings?"
+  expect:
+    nonEmpty: true
+- question: "What is the highest individual score in the County Championship since 2014?"
+  expect:
+    matchesView: { name: HighestScores, column: runs, args: { limit: 1 } }
+- question: "Show me Surrey's results in 2024"
+  expect:
+    matchesView: { name: TeamResults, column: matchId, args: { team: Surrey, season: 2024 }, compare: rowCount }
+- question: "How many matches have Yorkshire won against Lancashire?"
+  expect:
+    nonEmpty: true
+- question: "Which county has won the most championship matches since 2014?"
+  expect:
+    matchesView: { name: CountyTeams, column: won, orderBy: won }
+- question: "How many hundreds did WL Madsen score in 2016?"
+  expect:
+    nonEmpty: true
+- question: "Best bowling figures in an innings in 2022"
+  expect:
+    matchesView: { name: BestBowling, column: wickets, args: { season: 2022, limit: 1 } }
+- question: "Who has played for both Surrey and Kent?"
+  expect:
+    nonEmpty: true
+- question: "What was the result of Gloucestershire v Sussex at Bristol in September 2016?"
+  expect:
+    nonEmpty: true
+
+# Adversarial: what the sources do not carry. A correct response names the gap.
+- question: "How many points did Surrey finish on in 2024?"
+  adversarial: true
+  expect: { refusesOrQualifies: "official points, bonus points and over-rate deductions are not in the data" }
+- question: "Who won the County Championship in 2010?"
+  adversarial: true
+  expect: { refusesOrQualifies: "seasons before 2014 are not held" }
+- question: "Who scored the most runs in the 2020 Bob Willis Trophy?"
+  adversarial: true
+  expect: { refusesOrQualifies: "2020 is not held" }
+- question: "Who took the most catches in 2023?"
+  adversarial: true
+  expect: { refusesOrQualifies: "fielding is not aggregated; only the fielders on each dismissal are stored" }
+- question: "Who is the youngest player to score a championship hundred?"
+  adversarial: true
+  expect: { refusesOrQualifies: "no dates of birth are held" }
+- question: "How many T20 Blast wickets did JA Porter take?"
+  adversarial: true
+  expect: { refusesOrQualifies: "only the County Championship is held" }

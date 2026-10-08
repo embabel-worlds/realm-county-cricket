@@ -1,0 +1,192 @@
+/*
+ * The County Cricket page, driven headless against envelopes captured from live view runs
+ * (tests/fixtures/envelopes.json — recapture with tests/fixtures/capture.mjs whenever a view or
+ * the app's arguments change). No network: the appliance runtime is a stub that resolves each
+ * call from the fixtures and THROWS on any call with no fixture, so a missing capture fails
+ * rather than passing as "no rows". What runs is the page's own bytes from apps/.
+ */
+import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const here = dirname(fileURLToPath(import.meta.url));
+const root = join(here, "..");
+const fixtures = JSON.parse(readFileSync(join(here, "fixtures/envelopes.json"), "utf8"));
+const key = (name, args) => `view:${name}:${JSON.stringify(Object.fromEntries(Object.entries(args).sort()))}`;
+const rowsOf = (name, args) => { const f = fixtures[key(name, args)]; if (!f) throw new Error("no fixture " + key(name, args)); return f.data; };
+const LATEST = rowsOf("CountySeasons", {}).map(s => s.season).sort((a, b) => b - a)[0];
+
+/* The runtime stub. `overrides` replaces envelopes; `delays` holds a call back, in ms. */
+function stub(overrides = {}, delays = {}) {
+  return `window.__calls = [];
+  window.embabel = (() => {
+    const fx = Object.assign(${JSON.stringify(fixtures)}, ${JSON.stringify(overrides)});
+    const delays = ${JSON.stringify(delays)};
+    const key = (kind, id, args) => kind + ':' + id + ':' + JSON.stringify(Object.fromEntries(Object.entries(args || {}).sort()));
+    const invoke = (kind) => async (id, args) => {
+      const k = key(kind, id, args);
+      window.__calls.push(k);
+      if (delays[k]) await new Promise((r) => setTimeout(r, delays[k]));
+      const env = fx[k];
+      if (!env) throw new Error('NO FIXTURE for ' + k);
+      if (env.status === 'FAILED') throw Object.assign(new Error((env.error && env.error.message) || 'failed'), env.error);
+      return env;
+    };
+    const esc = (v) => String(v ?? '').replace(/[&<>'"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    return { views: { invoke: invoke('view') }, lenses: { invoke: invoke('lens') }, html: { escape: esc },
+             manifest: { ready: Promise.resolve({ ok: true }), preflight: async () => ({ ok: true }) },
+             progress: { subscribe: () => () => {}, label() {} }, cache: { invalidate() {}, clear() {} }, EmbabelError: Error };
+  })();`;
+}
+
+async function open(page, hash = "", overrides = {}, delays = {}) {
+  const errors = [];
+  page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+  page.on("pageerror", (e) => errors.push(String(e)));
+  await page.route("**/*", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.host === "cricket.test") {
+      if (url.pathname.includes("/apps-runtime/")) {
+        return route.fulfill({ contentType: url.pathname.endsWith(".css") ? "text/css" : "text/javascript", body: url.pathname.endsWith("embabel.js") ? stub(overrides, delays) : "" });
+      }
+      return route.fulfill({ path: join(root, "apps", url.pathname.replace("/apps/county-cricket/", "")) });
+    }
+    return route.abort();
+  });
+  await page.goto(`http://cricket.test/apps/county-cricket/county-cricket.html${hash}`);
+  return errors;
+}
+
+test("the latest season renders its tables, leaders and highest scores from the fixtures", async ({ page }) => {
+  const errors = await open(page);
+  const t1 = rowsOf("CountyTable", { season: LATEST, stage: 1 }), t2 = rowsOf("CountyTable", { season: LATEST, stage: 2 });
+  await expect(page.locator('[data-table="1"] [data-table-row]')).toHaveCount(t1.length);
+  await expect(page.locator('[data-table="2"] [data-table-row]')).toHaveCount(t2.length);
+  await expect(page.locator('[data-table="1"] [data-table-row]').first()).toContainText(t1[0].team);
+  const bat = rowsOf("SeasonBatting", { season: LATEST, limit: 10 }), bowl = rowsOf("SeasonBowling", { season: LATEST, limit: 10 });
+  await expect(page.locator("#topbat .hb")).toHaveCount(bat.length);
+  await expect(page.locator("#topbowl .hb")).toHaveCount(bowl.length);
+  if (bat.length) {
+    await expect(page.locator("#topbat .hb").first()).toContainText(bat[0].player);
+    await expect(page.locator("#stats .stat").nth(1)).toContainText(String(bat[0].runs));
+  }
+  await expect(page.locator("#tophs [data-hs-row]")).toHaveCount(rowsOf("HighestScores", { season: LATEST, limit: 8 }).length);
+  await expect(page.locator(`[data-season-pill="${LATEST}"]`)).toHaveClass(/on/);
+  expect(errors).toEqual([]);
+});
+
+test("the Embabel badge is visible, attributed and linked; the how-it-works link reveals the page", async ({ page }) => {
+  await open(page);
+  const badge = page.locator("#embabel-badge");
+  await expect(badge).toBeInViewport();
+  await expect(badge).toContainText("Created with");
+  await expect(badge.locator("a")).toHaveAttribute("href", /embabel\.com/);
+  await page.click("#how-link");
+  await expect(page.locator("#how")).toBeVisible();
+  await expect(page.locator("#how [data-view]")).toHaveCount(19);
+  await expect(page.locator("#main")).toBeHidden();
+});
+
+test("the batting leaders page lists every row, sorts on a heading, and refetches on a filter", async ({ page }) => {
+  const errors = await open(page, `#/season/${LATEST}/batting`);
+  const rows = rowsOf("SeasonBatting", { season: LATEST, stage: 0, team: "", minInnings: 5, limit: 50 });
+  await expect(page.locator("[data-bat-row]")).toHaveCount(rows.length);
+  if (rows.length > 1) {
+    await page.click('th[data-sort="average"]');
+    const best = rows.filter(r => r.average != null).sort((a, b) => b.average - a.average)[0];
+    await expect(page.locator("[data-bat-row]").first()).toContainText(best.player);
+    await page.click('th[data-sort="average"]');
+    const worst = rows.filter(r => r.average != null).sort((a, b) => a.average - b.average)[0];
+    await expect(page.locator("[data-bat-row]").first()).toContainText(worst.player);
+  }
+  await page.selectOption('[data-filter="stage"]', "1");
+  const d1 = rowsOf("SeasonBatting", { season: LATEST, stage: 1, team: "", minInnings: 5, limit: 50 });
+  await expect(page.locator("[data-bat-row]")).toHaveCount(d1.length);
+  await page.selectOption('[data-filter="stage"]', "0");
+  await page.selectOption('[data-filter="team"]', "Surrey");
+  await expect(page.locator("[data-bat-row]")).toHaveCount(rowsOf("SeasonBatting", { season: LATEST, stage: 0, team: "Surrey", minInnings: 5, limit: 50 }).length);
+  expect(errors).toEqual([]);
+});
+
+test("a county page shows its seasons, its results for the latest season, and a head-to-head on choice", async ({ page }) => {
+  const errors = await open(page, "#/team/Surrey");
+  await expect(page.locator("[data-team-season]")).toHaveCount(rowsOf("TeamSeasons", { team: "Surrey" }).length);
+  const results = rowsOf("TeamResults", { team: "Surrey", season: LATEST, limit: 50 });
+  await expect(page.locator("[data-result-row]")).toHaveCount(results.length);
+  await expect(page.locator("[data-form] .chip")).toHaveCount(results.length);
+  await page.selectOption("[data-h2h-select]", "Kent");
+  await expect(page.locator("[data-h2h-row]")).toHaveCount(rowsOf("HeadToHead", { teamA: "Surrey", teamB: "Kent" }).length);
+  await page.click("[data-result-row]");
+  await expect(page).toHaveURL(new RegExp(`#/match/${results[0].matchId}$`));
+  expect(errors).toEqual([]);
+});
+
+test("player search finds people and a player page shows career, innings strip and spells", async ({ page }) => {
+  const errors = await open(page, "#/players");
+  await page.fill("[data-player-search]", "madsen");
+  const hits = rowsOf("PlayerSearch", { name: "madsen" });
+  await expect(page.locator("[data-player-hit]")).toHaveCount(hits.length);
+  await page.click('[data-player-hit="86e0f3f0"]');
+  const inns = rowsOf("PlayerInnings", { playerId: "86e0f3f0" });
+  await expect(page.locator("[data-innings-strip] i")).toHaveCount(inns.length);
+  await expect(page.locator("[data-innings-row]")).toHaveCount(inns.length);
+  await expect(page.locator("[data-bat-season]")).toHaveCount(rowsOf("PlayerBatting", { playerId: "86e0f3f0" }).length);
+  await expect(page.locator("[data-spell-row]")).toHaveCount(rowsOf("PlayerSpells", { playerId: "86e0f3f0" }).length);
+  const total = rowsOf("PlayerBatting", { playerId: "86e0f3f0" }).reduce((a, s) => a + s.runs, 0);
+  await expect(page.locator("#phead .stat").first()).toContainText(total.toLocaleString("en-GB"));
+  expect(errors).toEqual([]);
+});
+
+test("a scorecard renders every innings, batter and bowler the fixtures hold", async ({ page }) => {
+  const errors = await open(page, "#/match/947089");
+  const inns = rowsOf("MatchInnings", { matchId: "947089" });
+  await expect(page.locator("[data-scorecard-innings]")).toHaveCount(inns.length);
+  await expect(page.locator("[data-bat-line]")).toHaveCount(rowsOf("MatchBatting", { matchId: "947089" }).length);
+  await expect(page.locator("[data-bowl-line]")).toHaveCount(rowsOf("MatchBowling", { matchId: "947089" }).length);
+  await expect(page.locator("[data-result]")).toContainText("Match drawn");
+  await expect(page.locator('[data-innings-summary="3"] b')).toContainText("337-7 dec");
+  expect(errors).toEqual([]);
+});
+
+test("the records page lists the highest scores and best bowling", async ({ page }) => {
+  const errors = await open(page, "#/records");
+  await expect(page.locator("[data-record-hs]")).toHaveCount(rowsOf("HighestScores", { season: 0, limit: 25 }).length);
+  await expect(page.locator("[data-record-bb]")).toHaveCount(rowsOf("BestBowling", { season: 0, limit: 25 }).length);
+  expect(errors).toEqual([]);
+});
+
+test("empty and failed answers are said out loud, never shown as blank", async ({ page }) => {
+  const errors = await open(page, "", {
+    [key("SeasonBatting", { season: LATEST, limit: 10 })]: { status: "SUCCEEDED", data: [], warnings: ["SEEDING: still being written"] },
+    [key("CountyTable", { season: LATEST, stage: 2 })]: { status: "FAILED", error: { message: "engine refused the query" } },
+  });
+  await expect(page.locator('#topbat [data-state="empty"]')).toBeVisible();
+  await expect(page.locator('#topbat [data-state="warning"]')).toContainText("SEEDING");
+  await expect(page.locator('[data-table="2"] [data-state="error"]')).toContainText("engine refused");
+  await expect(page.locator('[data-table="1"] [data-table-row]')).toHaveCount(rowsOf("CountyTable", { season: LATEST, stage: 1 }).length);
+  expect(errors).toEqual([]);
+});
+
+test("an unknown player id and an unknown match are named, not blank", async ({ page }) => {
+  await open(page, "#/player/nobody", {
+    [key("PlayerBatting", { playerId: "nobody" })]: { status: "SUCCEEDED", data: [], warnings: [] },
+    [key("PlayerBowling", { playerId: "nobody" })]: { status: "SUCCEEDED", data: [], warnings: [] },
+    [key("PlayerInnings", { playerId: "nobody" })]: { status: "SUCCEEDED", data: [], warnings: [] },
+    [key("PlayerSpells", { playerId: "nobody" })]: { status: "SUCCEEDED", data: [], warnings: [] },
+  });
+  await expect(page.locator('#phead [data-state="empty"]')).toContainText("nobody");
+});
+
+test("a tab switch during a slow call responds at once and the slow answer never paints the new page", async ({ page }) => {
+  const errors = await open(page, "", {}, { [key("SeasonBowling", { season: LATEST, limit: 10 })]: 600 });
+  await expect(page.locator("#topbowl [data-state='loading']")).toBeVisible();
+  await page.click('[data-tab="teams"]');
+  await expect(page.locator("[data-team-card]")).toHaveCount(rowsOf("CountyTeams", {}).length);
+  await page.waitForTimeout(800);
+  await expect(page.locator("[data-team-card]")).toHaveCount(rowsOf("CountyTeams", {}).length);
+  await expect(page.locator("#topbowl")).toHaveCount(0);
+  await page.click('[data-tab="summary"]');
+  await expect(page.locator("#topbowl .hb")).toHaveCount(rowsOf("SeasonBowling", { season: LATEST, limit: 10 }).length);
+  expect(errors).toEqual([]);
+});
