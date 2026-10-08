@@ -3,3 +3,4 @@ data/source/
 node_modules/
 tests/fixtures/_page.html
 test-results/
+playwright-report/

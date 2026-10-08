@@ -121,8 +121,10 @@ def main():
         "teams": len(team_matches),
         "teamMatches": dict(team_matches),
         "table": {f"{s}-{st}": dict(ts) for s, stages in table.items() for st, ts in stages.items()},
-        "topRuns": {str(s): top(runs_by[s]) for s in runs_by},
-        "topWickets": {str(s): top(wkts_by[s]) for s in wkts_by},
+        # ten, not three: two players level on the third-place figure can legitimately come back in
+        # either order, so verify.py checks the view's top three against these by value.
+        "topRuns": {str(s): top(runs_by[s], 10) for s in runs_by},
+        "topWickets": {str(s): top(wkts_by[s], 10) for s in wkts_by},
         "hundreds2025": top(hundreds_by[2025], 3),
         "highestScore": highest[1] | {"runs": highest[0]},
         "bestBowling": best[2] | {"wickets": best[0], "runs": best[1]},

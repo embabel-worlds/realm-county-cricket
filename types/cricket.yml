@@ -108,6 +108,21 @@
     url:
       description: "The match on ESPNcricinfo."
 
+  # STEERING — pinned defects from the natural-language battery (tests/questions.yml), one
+  # placeholder example each. A county is team1 OR team2, so a head-to-head counts BOTH orders;
+  # and no points exist anywhere in this realm, so a points question is answered with no rows,
+  # never approximated from wins.
+  examples:
+    - q: "how many matches have Northshire won against Southshire"
+      cypher: |
+        MATCH (m:CountyMatch)
+        WHERE (m.team1 = 'Northshire' AND m.team2 = 'Southshire') OR (m.team1 = 'Southshire' AND m.team2 = 'Northshire')
+        RETURN sum(CASE WHEN m.winner = 'Northshire' THEN 1 ELSE 0 END) AS northshireWon,
+               sum(CASE WHEN m.winner = 'Southshire' THEN 1 ELSE 0 END) AS southshireWon,
+               sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn, count(m) AS played
+    - q: "how many points did Northshire finish on in 2024"
+      cypher: |
+        MATCH (m:CountyMatch) WHERE false RETURN m.matchId AS noPointsAreHeldInThisRealm LIMIT 1
 - name: TeamInnings
   description: "One team's innings in a County Championship match: total, wickets, overs, whether declared or forfeited, and the extras. A match has up to four; `inningsNo` orders them. Reaches its match via IN_MATCH."
   userAnchor: false
@@ -215,6 +230,18 @@
     fielders:
       description: "Fielders involved (catcher, stumper, or the run-out fielders), comma separated."
 
+  # STEERING — a pinned defect: "most runs" once grouped by county, and once filtered `stage` by
+  # the competition's name. Every row IS County Championship (no competition property, nothing to
+  # filter), a player's total groups by playerId, and `stage` is a small integer.
+  examples:
+    - q: "who scored the most runs in the 2016 County Championship"
+      cypher: |
+        MATCH (b:BattingInnings)
+        WHERE b.season = 2016
+        WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams, sum(b.runs) AS runs
+        RETURN player, teams, runs
+        ORDER BY runs DESC
+        LIMIT 1
 - name: BowlingInnings
   description: "One bowler's figures in one team innings: overs, maidens, runs conceded, wickets. Wickets are only those credited to the bowler (caught, bowled, lbw, stumped, hit wicket, caught and bowled); runs conceded exclude byes and leg byes. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the bowler's COUNTY, never a person. Reaches the player via BY and the match via IN_MATCH."
   userAnchor: false
@@ -275,3 +302,12 @@
       type: int
     noballs:
       type: int
+  examples:
+    - q: "who took the most wickets for Northshire in 2024"
+      cypher: |
+        MATCH (b:BowlingInnings)
+        WHERE b.season = 2024 AND b.team = 'Northshire'
+        WITH b.playerId AS playerId, max(b.player) AS player, sum(b.wickets) AS wickets, sum(b.runs) AS runs
+        RETURN player, wickets, runs
+        ORDER BY wickets DESC
+        LIMIT 1

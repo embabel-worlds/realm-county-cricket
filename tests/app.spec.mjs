@@ -198,6 +198,7 @@ test("the Ask tab answers a question with rows and the query it wrote, and says 
   const q = "Who scored the most runs for Kent in 2023?";
   const errors = await open(page, `#/ask/${encodeURIComponent(q)}`, {
     [`lens:cricket-ask:${JSON.stringify({ question: "nothing here" })}`]: { status: "SUCCEEDED", data: { kind: "cricket-ask", question: "nothing here", status: "EMPTY", warnings: [], rows: [], rowCount: 0, cypher: "MATCH (p:CricketPlayer) WHERE false RETURN p LIMIT 1", limits: [] } },
+    [`lens:cricket-ask:${JSON.stringify({ question: "how many points did Surrey get" })}`]: { status: "SUCCEEDED", data: { kind: "cricket-ask", question: "how many points did Surrey get", status: "EMPTY", reason: "NOT_HELD", hint: "No championship points, bonus points or deductions are held in this realm (they are not in the ball-by-ball record), so a points question has no answer here. Tables are wins, draws and losses.", warnings: [], rows: [], rowCount: 0, cypher: null, limits: [] } },
   });
   const d = fixtures[`lens:cricket-ask:${JSON.stringify({ question: q })}`].data;
   await expect(page.locator("[data-ask-rows] tbody tr")).toHaveCount(d.rows.length);
@@ -206,6 +207,9 @@ test("the Ask tab answers a question with rows and the query it wrote, and says 
   await page.fill("[data-ask-input]", "nothing here");
   await page.click("[data-ask-go]");
   await expect(page.locator('#askout [data-state="empty"]')).toContainText("matched nothing");
+  await page.fill("[data-ask-input]", "how many points did Surrey get");
+  await page.click("[data-ask-go]");
+  await expect(page.locator("#askout [data-not-held]")).toContainText("No championship points");
   expect(errors).toEqual([]);
 });
 

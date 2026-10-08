@@ -1456,6 +1456,34 @@
    {
     "player": "PD Collingwood",
     "value": 1039
+   },
+   {
+    "player": "MD Stoneman",
+    "value": 1014
+   },
+   {
+    "player": "JL Denly",
+    "value": 959
+   },
+   {
+    "player": "NLJ Browne",
+    "value": 952
+   },
+   {
+    "player": "DKH Mitchell",
+    "value": 907
+   },
+   {
+    "player": "CT Steel",
+    "value": 899
+   },
+   {
+    "player": "RI Newton",
+    "value": 894
+   },
+   {
+    "player": "CDJ Dent",
+    "value": 894
    }
   ],
   "2018": [
@@ -1470,6 +1498,34 @@
    {
     "player": "IR Bell",
     "value": 1027
+   },
+   {
+    "player": "WMH Rhodes",
+    "value": 972
+   },
+   {
+    "player": "IJL Trott",
+    "value": 935
+   },
+   {
+    "player": "JM Vince",
+    "value": 921
+   },
+   {
+    "player": "GS Ballance",
+    "value": 906
+   },
+   {
+    "player": "TB Abell",
+    "value": 883
+   },
+   {
+    "player": "BT Slater",
+    "value": 864
+   },
+   {
+    "player": "OJ Pope",
+    "value": 846
    }
   ],
   "2019": [
@@ -1484,6 +1540,34 @@
    {
     "player": "DP Sibley",
     "value": 982
+   },
+   {
+    "player": "GS Ballance",
+    "value": 975
+   },
+   {
+    "player": "DJ Vilas",
+    "value": 970
+   },
+   {
+    "player": "BA Godleman",
+    "value": 969
+   },
+   {
+    "player": "RF Higgins",
+    "value": 958
+   },
+   {
+    "player": "AN Cook",
+    "value": 913
+   },
+   {
+    "player": "AZ Lees",
+    "value": 899
+   },
+   {
+    "player": "DJ Bell-Drummond",
+    "value": 880
    }
   ],
   "2021": [
@@ -1498,6 +1582,34 @@
    {
     "player": "SD Robson",
     "value": 1047
+   },
+   {
+    "player": "DG Bedingham",
+    "value": 1029
+   },
+   {
+    "player": "MJJ Critchley",
+    "value": 1000
+   },
+   {
+    "player": "HM Amla",
+    "value": 994
+   },
+   {
+    "player": "BC Brown",
+    "value": 976
+   },
+   {
+    "player": "KS Carlson",
+    "value": 928
+   },
+   {
+    "player": "OJ Pope",
+    "value": 861
+   },
+   {
+    "player": "JJ Bohannon",
+    "value": 853
    }
   ],
   "2022": [
@@ -1512,6 +1624,34 @@
    {
     "player": "KK Jennings",
     "value": 1233
+   },
+   {
+    "player": "BG Compton",
+    "value": 1193
+   },
+   {
+    "player": "SA Northeast",
+    "value": 1189
+   },
+   {
+    "player": "SR Hain",
+    "value": 1137
+   },
+   {
+    "player": "CA Pujara",
+    "value": 1094
+   },
+   {
+    "player": "Shan Masood",
+    "value": 1074
+   },
+   {
+    "player": "AGH Orr",
+    "value": 1047
+   },
+   {
+    "player": "TB Abell",
+    "value": 1039
    }
   ],
   "2023": [
@@ -1526,6 +1666,34 @@
    {
     "player": "JL du Plooy",
     "value": 1236
+   },
+   {
+    "player": "JD Libby",
+    "value": 1153
+   },
+   {
+    "player": "T Westley",
+    "value": 1130
+   },
+   {
+    "player": "JEK Rew",
+    "value": 1086
+   },
+   {
+    "player": "RK Patel",
+    "value": 1075
+   },
+   {
+    "player": "KS Carlson",
+    "value": 1068
+   },
+   {
+    "player": "JM Clarke",
+    "value": 1053
+   },
+   {
+    "player": "LM Reece",
+    "value": 1048
    }
   ],
   "2024": [
@@ -1540,6 +1708,34 @@
    {
     "player": "A Lyth",
     "value": 1215
+   },
+   {
+    "player": "JA Simpson",
+    "value": 1197
+   },
+   {
+    "player": "D Elgar",
+    "value": 1144
+   },
+   {
+    "player": "RF Higgins",
+    "value": 1133
+   },
+   {
+    "player": "AL Davies",
+    "value": 1115
+   },
+   {
+    "player": "H Hameed",
+    "value": 1091
+   },
+   {
+    "player": "James Bracey",
+    "value": 1089
+   },
+   {
+    "player": "RJ Burns",
+    "value": 1073
    }
   ],
   "2025": [
@@ -1554,6 +1750,34 @@
    {
     "player": "DP Sibley",
     "value": 1274
+   },
+   {
+    "player": "H Hameed",
+    "value": 1258
+   },
+   {
+    "player": "A Lyth",
+    "value": 1173
+   },
+   {
+    "player": "WL Madsen",
+    "value": 1158
+   },
+   {
+    "player": "JA Simpson",
+    "value": 1086
+   },
+   {
+    "player": "CA Ingram",
+    "value": 1076
+   },
+   {
+    "player": "LWP Wells",
+    "value": 1074
+   },
+   {
+    "player": "JD Libby",
+    "value": 1060
    }
   ],
   "2026": [
@@ -1568,6 +1792,34 @@
    {
     "player": "R Vasconcelos",
     "value": 1159
+   },
+   {
+    "player": "James Bracey",
+    "value": 1096
+   },
+   {
+    "player": "SR Hain",
+    "value": 1048
+   },
+   {
+    "player": "BS McKinney",
+    "value": 1044
+   },
+   {
+    "player": "DG Bedingham",
+    "value": 1029
+   },
+   {
+    "player": "DW Lawrence",
+    "value": 982
+   },
+   {
+    "player": "JA Haynes",
+    "value": 975
+   },
+   {
+    "player": "JS Lehmann",
+    "value": 965
    }
   ],
   "2014": [
@@ -1582,6 +1834,34 @@
    {
     "player": "EC Joyce",
     "value": 1234
+   },
+   {
+    "player": "JHK Adams",
+    "value": 1215
+   },
+   {
+    "player": "WR Smith",
+    "value": 1187
+   },
+   {
+    "player": "SG Borthwick",
+    "value": 1101
+   },
+   {
+    "player": "A Lyth",
+    "value": 1046
+   },
+   {
+    "player": "WL Madsen",
+    "value": 1046
+   },
+   {
+    "player": "CJL Rogers",
+    "value": 1000
+   },
+   {
+    "player": "ME Trescothick",
+    "value": 978
    }
   ],
   "2015": [
@@ -1596,6 +1876,34 @@
    {
     "player": "LJ Wright",
     "value": 1210
+   },
+   {
+    "player": "SG Borthwick",
+    "value": 1179
+   },
+   {
+    "player": "MA Carberry",
+    "value": 1129
+   },
+   {
+    "player": "NRD Compton",
+    "value": 1123
+   },
+   {
+    "player": "CDJ Dent",
+    "value": 1062
+   },
+   {
+    "player": "MJ Cosgrove",
+    "value": 1049
+   },
+   {
+    "player": "MD Stoneman",
+    "value": 1039
+   },
+   {
+    "player": "MH Wessels",
+    "value": 1033
    }
   ],
   "2016": [
@@ -1610,6 +1918,34 @@
    {
     "player": "SA Northeast",
     "value": 1337
+   },
+   {
+    "player": "MJ Cosgrove",
+    "value": 1242
+   },
+   {
+    "player": "ME Trescothick",
+    "value": 1239
+   },
+   {
+    "player": "CD Nash",
+    "value": 1221
+   },
+   {
+    "player": "H Hameed",
+    "value": 1198
+   },
+   {
+    "player": "WL Madsen",
+    "value": 1187
+   },
+   {
+    "player": "AZ Lees",
+    "value": 1165
+   },
+   {
+    "player": "RJ Burns",
+    "value": 1144
    }
   ]
  },
@@ -1626,6 +1962,34 @@
    {
     "player": "LC Norwell",
     "value": 59
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 56
+   },
+   {
+    "player": "J Leach",
+    "value": 56
+   },
+   {
+    "player": "JC Archer",
+    "value": 53
+   },
+   {
+    "player": "BO Coad",
+    "value": 50
+   },
+   {
+    "player": "MG Hogan",
+    "value": 50
+   },
+   {
+    "player": "RK Kleinveldt",
+    "value": 46
+   },
+   {
+    "player": "DI Stevens",
+    "value": 45
    }
   ],
   "2018": [
@@ -1640,6 +2004,34 @@
    {
     "player": "BW Sanderson",
     "value": 57
+   },
+   {
+    "player": "JAR Harris",
+    "value": 57
+   },
+   {
+    "player": "C Rushworth",
+    "value": 57
+   },
+   {
+    "player": "G Onions",
+    "value": 56
+   },
+   {
+    "player": "SR Harmer",
+    "value": 56
+   },
+   {
+    "player": "JS Patel",
+    "value": 56
+   },
+   {
+    "player": "CN Miles",
+    "value": 54
+   },
+   {
+    "player": "TE Bailey",
+    "value": 52
    }
   ],
   "2019": [
@@ -1654,6 +2046,34 @@
    {
     "player": "OE Robinson",
     "value": 63
+   },
+   {
+    "player": "KJ Abbott",
+    "value": 58
+   },
+   {
+    "player": "JS Patel",
+    "value": 56
+   },
+   {
+    "player": "BW Sanderson",
+    "value": 56
+   },
+   {
+    "player": "BA Raine",
+    "value": 54
+   },
+   {
+    "player": "ME Milnes",
+    "value": 52
+   },
+   {
+    "player": "DI Stevens",
+    "value": 51
+   },
+   {
+    "player": "RF Higgins",
+    "value": 50
    }
   ],
   "2021": [
@@ -1668,6 +2088,34 @@
    {
     "player": "TJ Murtagh",
     "value": 58
+   },
+   {
+    "player": "SJ Cook",
+    "value": 57
+   },
+   {
+    "player": "D Paterson",
+    "value": 54
+   },
+   {
+    "player": "ER Bamber",
+    "value": 52
+   },
+   {
+    "player": "RF Higgins",
+    "value": 51
+   },
+   {
+    "player": "TE Bailey",
+    "value": 50
+   },
+   {
+    "player": "SR Harmer",
+    "value": 49
+   },
+   {
+    "player": "LC Norwell",
+    "value": 49
    }
   ],
   "2022": [
@@ -1682,6 +2130,34 @@
    {
     "player": "KJ Abbott",
     "value": 58
+   },
+   {
+    "player": "MJ Potts",
+    "value": 58
+   },
+   {
+    "player": "D Paterson",
+    "value": 56
+   },
+   {
+    "player": "OJ Hannon-Dalby",
+    "value": 53
+   },
+   {
+    "player": "KHD Barker",
+    "value": 52
+   },
+   {
+    "player": "TE Bailey",
+    "value": 52
+   },
+   {
+    "player": "SJ Cook",
+    "value": 51
+   },
+   {
+    "player": "Mohammad Abbas",
+    "value": 50
    }
   ],
   "2023": [
@@ -1696,6 +2172,34 @@
    {
     "player": "BA Raine",
     "value": 60
+   },
+   {
+    "player": "JA Porter",
+    "value": 57
+   },
+   {
+    "player": "MJ Potts",
+    "value": 54
+   },
+   {
+    "player": "OJ Hannon-Dalby",
+    "value": 54
+   },
+   {
+    "player": "Mohammad Abbas",
+    "value": 53
+   },
+   {
+    "player": "C Rushworth",
+    "value": 53
+   },
+   {
+    "player": "D Paterson",
+    "value": 50
+   },
+   {
+    "player": "TE Bailey",
+    "value": 50
    }
   ],
   "2024": [
@@ -1710,6 +2214,34 @@
    {
     "player": "KJ Abbott",
     "value": 55
+   },
+   {
+    "player": "LA Dawson",
+    "value": 54
+   },
+   {
+    "player": "DJ Worrall",
+    "value": 52
+   },
+   {
+    "player": "TS Roland-Jones",
+    "value": 52
+   },
+   {
+    "player": "OJ Hannon-Dalby",
+    "value": 50
+   },
+   {
+    "player": "JJ Carson",
+    "value": 50
+   },
+   {
+    "player": "SR Harmer",
+    "value": 45
+   },
+   {
+    "player": "MJ Leach",
+    "value": 45
    }
   ],
   "2025": [
@@ -1724,6 +2256,34 @@
    {
     "player": "MJ Leach",
     "value": 52
+   },
+   {
+    "player": "GCH Hill",
+    "value": 51
+   },
+   {
+    "player": "LM Reece",
+    "value": 50
+   },
+   {
+    "player": "JA Porter",
+    "value": 49
+   },
+   {
+    "player": "TS Roland-Jones",
+    "value": 45
+   },
+   {
+    "player": "BA Raine",
+    "value": 44
+   },
+   {
+    "player": "ER Bamber",
+    "value": 43
+   },
+   {
+    "player": "CJ White",
+    "value": 42
    }
   ],
   "2026": [
@@ -1738,6 +2298,34 @@
    {
     "player": "MJ Potts",
     "value": 60
+   },
+   {
+    "player": "BW Aitchison",
+    "value": 58
+   },
+   {
+    "player": "RF Higgins",
+    "value": 58
+   },
+   {
+    "player": "BW Sanderson",
+    "value": 58
+   },
+   {
+    "player": "ME Milnes",
+    "value": 54
+   },
+   {
+    "player": "C Overton",
+    "value": 53
+   },
+   {
+    "player": "GP Balderson",
+    "value": 53
+   },
+   {
+    "player": "OP Stone",
+    "value": 50
    }
   ],
   "2014": [
@@ -1752,6 +2340,34 @@
    {
     "player": "Saeed Ajmal",
     "value": 63
+   },
+   {
+    "player": "JS Patel",
+    "value": 59
+   },
+   {
+    "player": "JA Brooks",
+    "value": 57
+   },
+   {
+    "player": "C Rushworth",
+    "value": 57
+   },
+   {
+    "player": "JD Shantry",
+    "value": 56
+   },
+   {
+    "player": "DI Stevens",
+    "value": 54
+   },
+   {
+    "player": "CAJ Morris",
+    "value": 52
+   },
+   {
+    "player": "MG Hogan",
+    "value": 51
    }
   ],
   "2015": [
@@ -1766,6 +2382,34 @@
    {
     "player": "SJ Magoffin",
     "value": 69
+   },
+   {
+    "player": "JAR Harris",
+    "value": 69
+   },
+   {
+    "player": "TK Curran",
+    "value": 68
+   },
+   {
+    "player": "G Onions",
+    "value": 63
+   },
+   {
+    "player": "LC Norwell",
+    "value": 61
+   },
+   {
+    "player": "JS Patel",
+    "value": 58
+   },
+   {
+    "player": "RK Kleinveldt",
+    "value": 57
+   },
+   {
+    "player": "MT Coles",
+    "value": 57
    }
   ],
   "2016": [
@@ -1780,6 +2424,34 @@
    {
     "player": "JA Brooks",
     "value": 60
+   },
+   {
+    "player": "KHD Barker",
+    "value": 59
+   },
+   {
+    "player": "SJ Magoffin",
+    "value": 59
+   },
+   {
+    "player": "J Leach",
+    "value": 58
+   },
+   {
+    "player": "TS Roland-Jones",
+    "value": 54
+   },
+   {
+    "player": "GR Napier",
+    "value": 54
+   },
+   {
+    "player": "G Onions",
+    "value": 51
+   },
+   {
+    "player": "KM Jarvis",
+    "value": 51
    }
   ]
  },

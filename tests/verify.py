@@ -55,12 +55,18 @@ for key, want in EXPECTED["table"].items():
     got = {r["team"]: {k: r[k] for k in ("played", "won", "drawn", "lost", "tied") if r[k]} for r in rows}
     check(f"table {season} {stage}", got, {t: {k: v for k, v in rec.items() if v} for t, rec in want.items()})
 
+def top3(label, rows, column, want):
+    """The view's top three must carry the ground truth's top three VALUES, and each named player's
+    figure must equal the ground truth's figure for that player (ties may come back in either order)."""
+    truth = {w["player"]: w["value"] for w in want}
+    got = [(r["player"], r[column]) for r in rows]
+    check(f"{label} values", [v for _, v in got], [w["value"] for w in want[:3]])
+    check(f"{label} players", [(p, v) for p, v in got if truth.get(p) != v], [])
+
 for season, want in EXPECTED["topRuns"].items():
-    rows = invoke("SeasonBatting", {"season": int(season), "limit": 3})
-    check(f"top run-scorers {season}", [{"player": r["player"], "value": r["runs"]} for r in rows], want)
+    top3(f"top run-scorers {season}", invoke("SeasonBatting", {"season": int(season), "limit": 3}), "runs", want)
 for season, want in EXPECTED["topWickets"].items():
-    rows = invoke("SeasonBowling", {"season": int(season), "limit": 3})
-    check(f"top wicket-takers {season}", [{"player": r["player"], "value": r["wickets"]} for r in rows], want)
+    top3(f"top wicket-takers {season}", invoke("SeasonBowling", {"season": int(season), "limit": 3}), "wickets", want)
 
 rows = invoke("HighestScores", {"season": 0, "limit": 1})
 check("highest score", {"player": rows[0]["player"], "match": rows[0]["matchId"], "season": rows[0]["season"], "runs": rows[0]["runs"]}, EXPECTED["highestScore"])

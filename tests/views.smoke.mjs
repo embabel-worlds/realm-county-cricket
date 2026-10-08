@@ -29,7 +29,8 @@ const CASES = [
   ['SeasonBatting', { season: 2025, stage: 1, minInnings: 10, limit: 10 }, /average/],
   ['SeasonBatting', { season: 2016, team: 'Durham', limit: 5 }, /Jennings|Stoneman|Borthwick/],
   ['SeasonBowling', { season: 2024, minWickets: 30, limit: 10 }, /economy/],
-  ['SeasonBowling', { season: 2019, stage: 2, team: 'Essex', limit: 5 }, /"wickets":0|"wickets":[1-9]/],
+  ['SeasonBowling', { season: 2019, stage: 1, team: 'Essex', limit: 5 }, /Harmer/],
+  ['SeasonBowling', { season: 2019, stage: 2, team: 'Essex', limit: 5 }, null, 'empty'],   // Essex were in Division 1 that year: an empty answer is the right one
   ['HighestScores', { season: 2023, limit: 5 }, /notOut/],
   ['HighestScores', { team: 'Somerset', limit: 5 }, /Somerset/],
   ['BestBowling', { season: 2022, limit: 5 }, /"wickets":[6-9]|"wickets":10/],
@@ -78,11 +79,11 @@ for (const name of names) {
 }
 
 console.log(`\n== cases (${CASES.length})`);
-for (const [name, args, pattern] of CASES) {
+for (const [name, args, pattern, expectEmpty] of CASES) {
   const { http, ms, body } = await invoke(name, args);
   const rows = body.data ?? [];
   const text = JSON.stringify(rows);
-  const problem = problemOf(http, body) ?? (rows.length === 0 ? 'no rows' : pattern && !pattern.test(text) ? `rows lack ${pattern}` : null);
+  const problem = problemOf(http, body) ?? (expectEmpty ? (rows.length ? `${rows.length} rows where none were expected` : null) : rows.length === 0 ? 'no rows' : pattern && !pattern.test(text) ? `rows lack ${pattern}` : null);
   report(!problem, `${name.padEnd(18)} ${JSON.stringify(args).slice(0, 58).padEnd(58)} ${String(ms).padStart(6)}ms${ms > SLOW_MS ? ' SLOW' : ''}${problem ? '  ' + problem : ''}`);
 }
 

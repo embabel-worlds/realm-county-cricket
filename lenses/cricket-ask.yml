@@ -15,8 +15,22 @@ spec:
   kind: cypherscript
   script: |
     const question = String(lensArgs.question || "").trim();
+    // What the realm does not hold, refused BEFORE a model can guess at it: the battery showed the
+    // generator inventing a points total (148, then 20) for a question about championship points,
+    // which this data cannot answer. A deterministic refusal with the reason beats a flagged guess.
+    const gaps = [
+      [/\b(points?|bonus|deduction|deducted|penalt)/i, "No championship points, bonus points or deductions are held in this realm (they are not in the ball-by-ball record), so a points question has no answer here. Tables are wins, draws and losses."],
+      [/\b(t20|twenty20|blast|one.day|list a|royal london|metro bank|hundred)\b/i, "Only the County Championship is held; one-day, T20 and The Hundred are not in this realm."],
+      [/\b(2020|bob willis)\b/i, "2020 is not held: that season's Bob Willis Trophy is not in Cricsheet's County Championship archive."],
+      [/\b(20(0\d|1[0-3])|19\d\d)\b/, "Seasons before 2014 are not held; the realm runs 2014 to 2026."],
+      [/\b(catch(es)?|stumping|fielding|partnership|fall of wicket|age|born|birthday|youngest|oldest)\b/i, "Catches, partnerships, fall of wickets and players' ages are not aggregated in this realm; only the fielders named on each dismissal are stored."],
+    ];
+    const gap = gaps.find(([re]) => re.test(question));
     if (!question) {
       await gateway.lens.present({ content: JSON.stringify({ kind: "cricket-ask", status: "EMPTY", note: "Ask a question." }) });
+    } else if (gap) {
+      await gateway.lens.present({ content: JSON.stringify({ kind: "cricket-ask", question, status: "EMPTY", reason: "NOT_HELD", hint: gap[1], warnings: [], rows: [], rowCount: 0, cypher: null,
+        limits: ["The realm holds the County Championship 2014 to 2026 (no 2020), as scorecards: no points, no one-day or T20 cricket, no fielding, no ages."] }) });
     } else {
       // kg.ask writes the Cypher and runs it, returning the query beside the rows. The pairing is
       // the point: a generated answer whose query you cannot see is not auditable.

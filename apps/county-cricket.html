@@ -386,7 +386,7 @@ RETURN b.inningsNo AS inningsNo, b.team AS team, b.opponent AS opponent, b.bowlO
 ORDER BY inningsNo, bowlOrder
 LIMIT 100</pre></details>
 <!-- VIEWS:END -->
-    <details data-lens="cricket-ask"><summary><code>cricket-ask</code> (a lens, not a view) — the Ask tab. It hands your question to the platform's text-to-Cypher (<code>gateway.kg.ask</code>), which writes a query over the schema above, runs it, and returns the rows WITH the query; the page shows both. A generated query can misread a question, which is why the Cypher is on screen.</summary><p class="sub">Parameters: question: string</p></details>
+    <details data-lens="cricket-ask"><summary><code>cricket-ask</code> (a lens, not a view) — the Ask tab. It hands your question to the platform's text-to-Cypher (<code>gateway.kg.ask</code>), which writes a query over the schema above, runs it, and returns the rows WITH the query; the page shows both. A generated query can misread a question, which is why the Cypher is on screen. Questions about what the realm does not hold (points, 2020, pre-2014, one-day or T20, catches, ages) are refused by the lens before any query is generated, with the reason.</summary><p class="sub">Parameters: question: string</p></details>
     <p><b>The Twelfth Man</b> is the realm's agent (<code>agents/twelfth-man.yml</code>, persona <code>personalities/twelfth-man/</code>). The chat panel posts your messages to the host's agent endpoint, <code>/api/v1/agents/twelfth-man/v1/chat/completions</code>, with a conversation id of its own, so it is a private conversation that does not join your main assistant chat. His conversation reaches only this realm's views and the host's memory: every figure he quotes is a view call he has just made, and he is told to say so when the data does not hold something. An operator has to sign the agent and switch it on before it answers; until then the panel says so.</p>
     <h3>3. When it looks wrong</h3>
     <dl>
@@ -865,6 +865,7 @@ async function pageAsk(r, { alive, signal }) {
       + warnBox(d.warnings)
       + (rows.length ? `<div class="ask-table"><table data-ask-rows><thead><tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${cols.map(c => `<td>${cell(row[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${d.truncated ? `<div class="fine">Showing 50 of ${esc(d.rowCount)} rows.</div>` : ''}`
         : d.status === 'FAILED' ? `<div class="state error" data-state="error">The question could not be answered: ${esc((d.warnings || []).join(' ') || 'the query failed')}.</div>`
+        : d.reason === 'NOT_HELD' ? `<div class="state empty" data-state="empty" data-not-held>Not answerable from this realm: ${esc(d.hint || '')}</div>`
         : `<div class="state empty" data-state="empty">The query ran and matched nothing${d.hint ? '' : ' - which is not the same as nothing existing'}. ${esc(d.hint || '')}</div>`)
       + (d.note ? `<div class="fine">${esc(d.note)}</div>` : '')
       + (d.cypher ? `<div class="ask-status" style="margin-top:14px">The query it wrote</div><pre class="cy" data-ask-cypher>${esc(d.cypher)}</pre>` : '')

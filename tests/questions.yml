@@ -27,6 +27,9 @@
 - question: "How many matches have Yorkshire won against Lancashire?"
   expect:
     matchesView: { name: HeadToHeadRecord, column: teamAWon, args: { teamA: Yorkshire, teamB: Lancashire } }
+  # Pinned 2026-10-08: before the CountyMatch examples steer the generator counted one order of the
+  # fixture only (1 of 4); after it, 2 runs in 3 were right. Runs several times; a one-sided count fails.
+  repeat: 3
 - question: "Which county has won the most championship matches since 2014?"
   expect:
     matchesView: { name: CountyTeams, column: won, orderBy: won }
@@ -47,6 +50,9 @@
 - question: "How many points did Surrey finish on in 2024?"
   adversarial: true
   expect: { refusesOrQualifies: "official points, bonus points and over-rate deductions are not in the data" }
+  # Pinned 2026-10-08: the generator answered 0, then 148, then 20, each flagged by the host as a
+  # column claiming points nothing selects. The cricket-ask lens now refuses the question before
+  # generation; through raw kg.ask it is still a flagged guess.
 - question: "Who won the County Championship in 2010?"
   adversarial: true
   expect: { refusesOrQualifies: "seasons before 2014 are not held" }

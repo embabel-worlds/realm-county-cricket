@@ -123,11 +123,9 @@
     "drawn": 49
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 3219,
+   "ms": 56,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -298,11 +296,9 @@
     "lost": 39
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch, CountyTeam], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 61,
+   "ms": 47,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -401,11 +397,9 @@
     "wonByInnings": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 55,
+   "ms": 41,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -486,11 +480,9 @@
     "wonByInnings": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 88,
+   "ms": 41,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -699,11 +691,9 @@
     "fifties": 7
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 127,
+   "ms": 96,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -1712,11 +1702,9 @@
     "fifties": 2
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 127,
+   "ms": 96,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -2725,11 +2713,9 @@
     "fifties": 2
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 141,
+   "ms": 118,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -3078,35 +3064,1233 @@
     "fifties": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 127,
+   "ms": 112,
    "apiCalls": 0,
    "llmCalls": 0
   }
  },
  "view:SeasonBowling:{\"limit\":10,\"season\":2026}": {
   "status": "SUCCEEDED",
-  "data": [],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
+  "data": [
+   {
+    "playerId": "948beb1f",
+    "player": "ER Bamber",
+    "teams": [
+     "Warwickshire"
+    ],
+    "matches": 14,
+    "innings": 27,
+    "balls": 2673,
+    "overs": "445.3",
+    "maidens": 102,
+    "runs": 1338,
+    "wickets": 69,
+    "bestWickets": 6,
+    "bestRuns": 26,
+    "average": 19.39,
+    "economy": 3,
+    "strikeRate": 38.7,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "a9da7784",
+    "player": "KJ Abbott",
+    "teams": [
+     "Hampshire"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 2537,
+    "overs": "422.5",
+    "maidens": 130,
+    "runs": 1034,
+    "wickets": 64,
+    "bestWickets": 6,
+    "bestRuns": 21,
+    "average": 16.16,
+    "economy": 2.45,
+    "strikeRate": 39.6,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "894b2d25",
+    "player": "MJ Potts",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 2237,
+    "overs": "372.5",
+    "maidens": 81,
+    "runs": 1077,
+    "wickets": 60,
+    "bestWickets": 8,
+    "bestRuns": 66,
+    "average": 17.95,
+    "economy": 2.89,
+    "strikeRate": 37.3,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "ad212f96",
+    "player": "RF Higgins",
+    "teams": [
+     "Middlesex"
+    ],
+    "matches": 12,
+    "innings": 22,
+    "balls": 2415,
+    "overs": "402.3",
+    "maidens": 89,
+    "runs": 1135,
+    "wickets": 58,
+    "bestWickets": 4,
+    "bestRuns": 27,
+    "average": 19.57,
+    "economy": 2.82,
+    "strikeRate": 41.6,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "3a3e7d82",
+    "player": "BW Aitchison",
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 12,
+    "innings": 21,
+    "balls": 2588,
+    "overs": "431.2",
+    "maidens": 94,
+    "runs": 1182,
+    "wickets": 58,
+    "bestWickets": 5,
+    "bestRuns": 44,
+    "average": 20.38,
+    "economy": 2.74,
+    "strikeRate": 44.6,
+    "fiveFors": 5
+   },
+   {
+    "playerId": "e871a7a1",
+    "player": "BW Sanderson",
+    "teams": [
+     "Northamptonshire"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2637,
+    "overs": "439.3",
+    "maidens": 92,
+    "runs": 1251,
+    "wickets": 58,
+    "bestWickets": 7,
+    "bestRuns": 31,
+    "average": 21.57,
+    "economy": 2.85,
+    "strikeRate": 45.5,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "3dcd1e8d",
+    "player": "ME Milnes",
+    "teams": [
+     "Kent"
+    ],
+    "matches": 12,
+    "innings": 20,
+    "balls": 2123,
+    "overs": "353.5",
+    "maidens": 70,
+    "runs": 1082,
+    "wickets": 54,
+    "bestWickets": 6,
+    "bestRuns": 12,
+    "average": 20.04,
+    "economy": 3.06,
+    "strikeRate": 39.3,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "e9987a94",
+    "player": "C Overton",
+    "teams": [
+     "Somerset"
+    ],
+    "matches": 13,
+    "innings": 26,
+    "balls": 2388,
+    "overs": "398.0",
+    "maidens": 105,
+    "runs": 1017,
+    "wickets": 53,
+    "bestWickets": 5,
+    "bestRuns": 29,
+    "average": 19.19,
+    "economy": 2.56,
+    "strikeRate": 45.1,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "23dee937",
+    "player": "GP Balderson",
+    "teams": [
+     "Lancashire"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2248,
+    "overs": "374.4",
+    "maidens": 77,
+    "runs": 1160,
+    "wickets": 53,
+    "bestWickets": 5,
+    "bestRuns": 34,
+    "average": 21.89,
+    "economy": 3.1,
+    "strikeRate": 42.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "d12143bf",
+    "player": "JM Anderson",
+    "teams": [
+     "Lancashire"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 1933,
+    "overs": "322.1",
+    "maidens": 74,
+    "runs": 884,
+    "wickets": 50,
+    "bestWickets": 5,
+    "bestRuns": 66,
+    "average": 17.68,
+    "economy": 2.74,
+    "strikeRate": 38.7,
+    "fiveFors": 1
+   }
   ],
+  "warnings": [],
   "cost": {
-   "ms": 289,
+   "ms": 96,
    "apiCalls": 0,
    "llmCalls": 0
   }
  },
  "view:SeasonBowling:{\"limit\":50,\"minWickets\":5,\"season\":2026,\"stage\":0,\"team\":\"\"}": {
   "status": "SUCCEEDED",
-  "data": [],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
+  "data": [
+   {
+    "playerId": "948beb1f",
+    "player": "ER Bamber",
+    "teams": [
+     "Warwickshire"
+    ],
+    "matches": 14,
+    "innings": 27,
+    "balls": 2673,
+    "overs": "445.3",
+    "maidens": 102,
+    "runs": 1338,
+    "wickets": 69,
+    "bestWickets": 6,
+    "bestRuns": 26,
+    "average": 19.39,
+    "economy": 3,
+    "strikeRate": 38.7,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "a9da7784",
+    "player": "KJ Abbott",
+    "teams": [
+     "Hampshire"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 2537,
+    "overs": "422.5",
+    "maidens": 130,
+    "runs": 1034,
+    "wickets": 64,
+    "bestWickets": 6,
+    "bestRuns": 21,
+    "average": 16.16,
+    "economy": 2.45,
+    "strikeRate": 39.6,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "894b2d25",
+    "player": "MJ Potts",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 2237,
+    "overs": "372.5",
+    "maidens": 81,
+    "runs": 1077,
+    "wickets": 60,
+    "bestWickets": 8,
+    "bestRuns": 66,
+    "average": 17.95,
+    "economy": 2.89,
+    "strikeRate": 37.3,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "ad212f96",
+    "player": "RF Higgins",
+    "teams": [
+     "Middlesex"
+    ],
+    "matches": 12,
+    "innings": 22,
+    "balls": 2415,
+    "overs": "402.3",
+    "maidens": 89,
+    "runs": 1135,
+    "wickets": 58,
+    "bestWickets": 4,
+    "bestRuns": 27,
+    "average": 19.57,
+    "economy": 2.82,
+    "strikeRate": 41.6,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "3a3e7d82",
+    "player": "BW Aitchison",
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 12,
+    "innings": 21,
+    "balls": 2588,
+    "overs": "431.2",
+    "maidens": 94,
+    "runs": 1182,
+    "wickets": 58,
+    "bestWickets": 5,
+    "bestRuns": 44,
+    "average": 20.38,
+    "economy": 2.74,
+    "strikeRate": 44.6,
+    "fiveFors": 5
+   },
+   {
+    "playerId": "e871a7a1",
+    "player": "BW Sanderson",
+    "teams": [
+     "Northamptonshire"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2637,
+    "overs": "439.3",
+    "maidens": 92,
+    "runs": 1251,
+    "wickets": 58,
+    "bestWickets": 7,
+    "bestRuns": 31,
+    "average": 21.57,
+    "economy": 2.85,
+    "strikeRate": 45.5,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "3dcd1e8d",
+    "player": "ME Milnes",
+    "teams": [
+     "Kent"
+    ],
+    "matches": 12,
+    "innings": 20,
+    "balls": 2123,
+    "overs": "353.5",
+    "maidens": 70,
+    "runs": 1082,
+    "wickets": 54,
+    "bestWickets": 6,
+    "bestRuns": 12,
+    "average": 20.04,
+    "economy": 3.06,
+    "strikeRate": 39.3,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "e9987a94",
+    "player": "C Overton",
+    "teams": [
+     "Somerset"
+    ],
+    "matches": 13,
+    "innings": 26,
+    "balls": 2388,
+    "overs": "398.0",
+    "maidens": 105,
+    "runs": 1017,
+    "wickets": 53,
+    "bestWickets": 5,
+    "bestRuns": 29,
+    "average": 19.19,
+    "economy": 2.56,
+    "strikeRate": 45.1,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "23dee937",
+    "player": "GP Balderson",
+    "teams": [
+     "Lancashire"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2248,
+    "overs": "374.4",
+    "maidens": 77,
+    "runs": 1160,
+    "wickets": 53,
+    "bestWickets": 5,
+    "bestRuns": 34,
+    "average": 21.89,
+    "economy": 3.1,
+    "strikeRate": 42.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "d12143bf",
+    "player": "JM Anderson",
+    "teams": [
+     "Lancashire"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 1933,
+    "overs": "322.1",
+    "maidens": 74,
+    "runs": 884,
+    "wickets": 50,
+    "bestWickets": 5,
+    "bestRuns": 66,
+    "average": 17.68,
+    "economy": 2.74,
+    "strikeRate": 38.7,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "3f659464",
+    "player": "OP Stone",
+    "teams": [
+     "Nottinghamshire"
+    ],
+    "matches": 11,
+    "innings": 18,
+    "balls": 1881,
+    "overs": "313.3",
+    "maidens": 58,
+    "runs": 974,
+    "wickets": 50,
+    "bestWickets": 6,
+    "bestRuns": 28,
+    "average": 19.48,
+    "economy": 3.11,
+    "strikeRate": 37.6,
+    "fiveFors": 5
+   },
+   {
+    "playerId": "214f6461",
+    "player": "GCH Hill",
+    "teams": [
+     "Yorkshire"
+    ],
+    "matches": 14,
+    "innings": 26,
+    "balls": 2131,
+    "overs": "355.1",
+    "maidens": 108,
+    "runs": 883,
+    "wickets": 48,
+    "bestWickets": 5,
+    "bestRuns": 29,
+    "average": 18.4,
+    "economy": 2.49,
+    "strikeRate": 44.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "06c2de82",
+    "player": "L Gregory",
+    "teams": [
+     "Somerset"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 1790,
+    "overs": "298.2",
+    "maidens": 60,
+    "runs": 958,
+    "wickets": 48,
+    "bestWickets": 6,
+    "bestRuns": 43,
+    "average": 19.96,
+    "economy": 3.21,
+    "strikeRate": 37.3,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "4c0f3806",
+    "player": "BA Raine",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 10,
+    "innings": 19,
+    "balls": 2161,
+    "overs": "360.1",
+    "maidens": 78,
+    "runs": 944,
+    "wickets": 47,
+    "bestWickets": 5,
+    "bestRuns": 45,
+    "average": 20.09,
+    "economy": 2.62,
+    "strikeRate": 46,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "6c6aca89",
+    "player": "TS Roland-Jones",
+    "teams": [
+     "Middlesex"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2318,
+    "overs": "386.2",
+    "maidens": 97,
+    "runs": 1022,
+    "wickets": 45,
+    "bestWickets": 5,
+    "bestRuns": 37,
+    "average": 22.71,
+    "economy": 2.65,
+    "strikeRate": 51.5,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "867a45a7",
+    "player": "TAI Taylor",
+    "teams": [
+     "Worcestershire"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 2536,
+    "overs": "422.4",
+    "maidens": 91,
+    "runs": 1340,
+    "wickets": 45,
+    "bestWickets": 5,
+    "bestRuns": 56,
+    "average": 29.78,
+    "economy": 3.17,
+    "strikeRate": 56.4,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "272fc5ad",
+    "player": "HNA Conway",
+    "teams": [
+     "Northamptonshire"
+    ],
+    "matches": 11,
+    "innings": 21,
+    "balls": 2115,
+    "overs": "352.3",
+    "maidens": 55,
+    "runs": 1054,
+    "wickets": 44,
+    "bestWickets": 5,
+    "bestRuns": 36,
+    "average": 23.95,
+    "economy": 2.99,
+    "strikeRate": 48.1,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "d99cc23a",
+    "player": "T van der Gugten",
+    "teams": [
+     "Glamorgan"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 2599,
+    "overs": "433.1",
+    "maidens": 105,
+    "runs": 1213,
+    "wickets": 43,
+    "bestWickets": 4,
+    "bestRuns": 53,
+    "average": 28.21,
+    "economy": 2.8,
+    "strikeRate": 60.4,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "679cd31e",
+    "player": "SJ Cook",
+    "teams": [
+     "Essex"
+    ],
+    "matches": 11,
+    "innings": 19,
+    "balls": 1863,
+    "overs": "310.3",
+    "maidens": 82,
+    "runs": 872,
+    "wickets": 42,
+    "bestWickets": 5,
+    "bestRuns": 58,
+    "average": 20.76,
+    "economy": 2.81,
+    "strikeRate": 44.4,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "d48c0f40",
+    "player": "LA Patterson-White",
+    "teams": [
+     "Nottinghamshire"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 2621,
+    "overs": "436.5",
+    "maidens": 102,
+    "runs": 1055,
+    "wickets": 42,
+    "bestWickets": 6,
+    "bestRuns": 43,
+    "average": 25.12,
+    "economy": 2.42,
+    "strikeRate": 62.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "b8828a1b",
+    "player": "KJ Dudgeon",
+    "teams": [
+     "Kent"
+    ],
+    "matches": 13,
+    "innings": 22,
+    "balls": 2052,
+    "overs": "342.0",
+    "maidens": 42,
+    "runs": 1348,
+    "wickets": 42,
+    "bestWickets": 6,
+    "bestRuns": 21,
+    "average": 32.1,
+    "economy": 3.94,
+    "strikeRate": 48.9,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "a790df98",
+    "player": "S Snater",
+    "teams": [
+     "Essex"
+    ],
+    "matches": 13,
+    "innings": 20,
+    "balls": 1775,
+    "overs": "295.5",
+    "maidens": 70,
+    "runs": 847,
+    "wickets": 40,
+    "bestWickets": 4,
+    "bestRuns": 12,
+    "average": 21.18,
+    "economy": 2.86,
+    "strikeRate": 44.4,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "27fc5808",
+    "player": "HT Crocombe",
+    "teams": [
+     "Sussex"
+    ],
+    "matches": 10,
+    "innings": 16,
+    "balls": 1500,
+    "overs": "250.0",
+    "maidens": 33,
+    "runs": 941,
+    "wickets": 40,
+    "bestWickets": 5,
+    "bestRuns": 33,
+    "average": 23.53,
+    "economy": 3.76,
+    "strikeRate": 37.5,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "e0ac7144",
+    "player": "OJ Hannon-Dalby",
+    "teams": [
+     "Warwickshire",
+     "Worcestershire"
+    ],
+    "matches": 13,
+    "innings": 23,
+    "balls": 1807,
+    "overs": "301.1",
+    "maidens": 77,
+    "runs": 883,
+    "wickets": 39,
+    "bestWickets": 5,
+    "bestRuns": 53,
+    "average": 22.64,
+    "economy": 2.93,
+    "strikeRate": 46.3,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "74a274cc",
+    "player": "TG Helm",
+    "teams": [
+     "Middlesex",
+     "Leicestershire"
+    ],
+    "matches": 9,
+    "innings": 17,
+    "balls": 1745,
+    "overs": "290.5",
+    "maidens": 53,
+    "runs": 907,
+    "wickets": 39,
+    "bestWickets": 4,
+    "bestRuns": 36,
+    "average": 23.26,
+    "economy": 3.12,
+    "strikeRate": 44.7,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "4167f30b",
+    "player": "IG Holland",
+    "teams": [
+     "Leicestershire"
+    ],
+    "matches": 11,
+    "innings": 19,
+    "balls": 1884,
+    "overs": "314.0",
+    "maidens": 81,
+    "runs": 873,
+    "wickets": 37,
+    "bestWickets": 6,
+    "bestRuns": 38,
+    "average": 23.59,
+    "economy": 2.78,
+    "strikeRate": 50.9,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "8f2dfebf",
+    "player": "MD Fisher",
+    "teams": [
+     "Surrey"
+    ],
+    "matches": 11,
+    "innings": 17,
+    "balls": 1846,
+    "overs": "307.4",
+    "maidens": 62,
+    "runs": 981,
+    "wickets": 37,
+    "bestWickets": 6,
+    "bestRuns": 25,
+    "average": 26.51,
+    "economy": 3.19,
+    "strikeRate": 49.9,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "54c2b697",
+    "player": "M Pretorius",
+    "teams": [
+     "Somerset"
+    ],
+    "matches": 13,
+    "innings": 25,
+    "balls": 2037,
+    "overs": "339.3",
+    "maidens": 79,
+    "runs": 1067,
+    "wickets": 37,
+    "bestWickets": 4,
+    "bestRuns": 65,
+    "average": 28.84,
+    "economy": 3.14,
+    "strikeRate": 55.1,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "3987e390",
+    "player": "MJ Leach",
+    "teams": [
+     "Somerset"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 1907,
+    "overs": "317.5",
+    "maidens": 84,
+    "runs": 728,
+    "wickets": 36,
+    "bestWickets": 5,
+    "bestRuns": 81,
+    "average": 20.22,
+    "economy": 2.29,
+    "strikeRate": 53,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "39e2c0fd",
+    "player": "BMJ Allison",
+    "teams": [
+     "Worcestershire"
+    ],
+    "matches": 8,
+    "innings": 16,
+    "balls": 1537,
+    "overs": "256.1",
+    "maidens": 52,
+    "runs": 733,
+    "wickets": 36,
+    "bestWickets": 6,
+    "bestRuns": 42,
+    "average": 20.36,
+    "economy": 2.86,
+    "strikeRate": 42.7,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "764f35d8",
+    "player": "N Sharma",
+    "teams": [
+     "Middlesex"
+    ],
+    "matches": 9,
+    "innings": 17,
+    "balls": 1388,
+    "overs": "231.2",
+    "maidens": 49,
+    "runs": 746,
+    "wickets": 35,
+    "bestWickets": 4,
+    "bestRuns": 17,
+    "average": 21.31,
+    "economy": 3.22,
+    "strikeRate": 39.7,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "861eed37",
+    "player": "WSA Williams",
+    "teams": [
+     "Gloucestershire"
+    ],
+    "matches": 11,
+    "innings": 19,
+    "balls": 1993,
+    "overs": "332.1",
+    "maidens": 80,
+    "runs": 938,
+    "wickets": 35,
+    "bestWickets": 6,
+    "bestRuns": 24,
+    "average": 26.8,
+    "economy": 2.82,
+    "strikeRate": 56.9,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "23638956",
+    "player": "SR Harmer",
+    "teams": [
+     "Essex"
+    ],
+    "matches": 12,
+    "innings": 20,
+    "balls": 2523,
+    "overs": "420.3",
+    "maidens": 88,
+    "runs": 1270,
+    "wickets": 35,
+    "bestWickets": 5,
+    "bestRuns": 165,
+    "average": 36.29,
+    "economy": 3.02,
+    "strikeRate": 72.1,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "5a74e559",
+    "player": "CJ White",
+    "teams": [
+     "Yorkshire"
+    ],
+    "matches": 12,
+    "innings": 22,
+    "balls": 1915,
+    "overs": "319.1",
+    "maidens": 107,
+    "runs": 778,
+    "wickets": 34,
+    "bestWickets": 5,
+    "bestRuns": 23,
+    "average": 22.88,
+    "economy": 2.44,
+    "strikeRate": 56.3,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "b9877635",
+    "player": "TE Bailey",
+    "teams": [
+     "Lancashire"
+    ],
+    "matches": 11,
+    "innings": 20,
+    "balls": 1903,
+    "overs": "317.1",
+    "maidens": 61,
+    "runs": 1003,
+    "wickets": 34,
+    "bestWickets": 4,
+    "bestRuns": 51,
+    "average": 29.5,
+    "economy": 3.16,
+    "strikeRate": 56,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "f0a0204e",
+    "player": "MS Crane",
+    "teams": [
+     "Glamorgan"
+    ],
+    "matches": 14,
+    "innings": 20,
+    "balls": 1852,
+    "overs": "308.4",
+    "maidens": 36,
+    "runs": 1202,
+    "wickets": 34,
+    "bestWickets": 5,
+    "bestRuns": 55,
+    "average": 35.35,
+    "economy": 3.89,
+    "strikeRate": 54.5,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "34b37279",
+    "player": "BGF Green",
+    "teams": [
+     "Leicestershire"
+    ],
+    "matches": 10,
+    "innings": 19,
+    "balls": 1871,
+    "overs": "311.5",
+    "maidens": 67,
+    "runs": 920,
+    "wickets": 33,
+    "bestWickets": 7,
+    "bestRuns": 112,
+    "average": 27.88,
+    "economy": 2.95,
+    "strikeRate": 56.7,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "b7096165",
+    "player": "SHB Morgan",
+    "teams": [
+     "Middlesex"
+    ],
+    "matches": 8,
+    "innings": 15,
+    "balls": 1401,
+    "overs": "233.3",
+    "maidens": 39,
+    "runs": 895,
+    "wickets": 32,
+    "bestWickets": 5,
+    "bestRuns": 104,
+    "average": 27.97,
+    "economy": 3.83,
+    "strikeRate": 43.8,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "ad46c747",
+    "player": "DM Bess",
+    "teams": [
+     "Yorkshire"
+    ],
+    "matches": 11,
+    "innings": 19,
+    "balls": 2014,
+    "overs": "335.4",
+    "maidens": 51,
+    "runs": 983,
+    "wickets": 32,
+    "bestWickets": 5,
+    "bestRuns": 103,
+    "average": 30.72,
+    "economy": 2.93,
+    "strikeRate": 62.9,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "6e0a2209",
+    "player": "B Swanepoel",
+    "teams": [
+     "Worcestershire"
+    ],
+    "matches": 8,
+    "innings": 13,
+    "balls": 1354,
+    "overs": "225.4",
+    "maidens": 38,
+    "runs": 727,
+    "wickets": 31,
+    "bestWickets": 5,
+    "bestRuns": 65,
+    "average": 23.45,
+    "economy": 3.22,
+    "strikeRate": 43.7,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "5b6d248a",
+    "player": "JA Porter",
+    "teams": [
+     "Essex"
+    ],
+    "matches": 12,
+    "innings": 19,
+    "balls": 1907,
+    "overs": "317.5",
+    "maidens": 83,
+    "runs": 930,
+    "wickets": 31,
+    "bestWickets": 4,
+    "bestRuns": 44,
+    "average": 30,
+    "economy": 2.93,
+    "strikeRate": 61.5,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "a510bdd3",
+    "player": "EG Barnard",
+    "teams": [
+     "Warwickshire"
+    ],
+    "matches": 14,
+    "innings": 26,
+    "balls": 1589,
+    "overs": "264.5",
+    "maidens": 68,
+    "runs": 720,
+    "wickets": 30,
+    "bestWickets": 5,
+    "bestRuns": 13,
+    "average": 24,
+    "economy": 2.72,
+    "strikeRate": 53,
+    "fiveFors": 1
+   },
+   {
+    "playerId": "a4b810d0",
+    "player": "MJ Waite",
+    "teams": [
+     "Worcestershire"
+    ],
+    "matches": 13,
+    "innings": 21,
+    "balls": 1782,
+    "overs": "297.0",
+    "maidens": 59,
+    "runs": 851,
+    "wickets": 30,
+    "bestWickets": 3,
+    "bestRuns": 14,
+    "average": 28.37,
+    "economy": 2.87,
+    "strikeRate": 59.4,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "aa1210d8",
+    "player": "CF Parkinson",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 12,
+    "innings": 17,
+    "balls": 2128,
+    "overs": "354.4",
+    "maidens": 66,
+    "runs": 892,
+    "wickets": 30,
+    "bestWickets": 6,
+    "bestRuns": 20,
+    "average": 29.73,
+    "economy": 2.52,
+    "strikeRate": 70.9,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "31b01074",
+    "player": "Kasey Aldridge",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 13,
+    "innings": 22,
+    "balls": 1603,
+    "overs": "267.1",
+    "maidens": 38,
+    "runs": 953,
+    "wickets": 30,
+    "bestWickets": 5,
+    "bestRuns": 16,
+    "average": 31.77,
+    "economy": 3.57,
+    "strikeRate": 53.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "fbd4f01f",
+    "player": "AY Patel",
+    "teams": [
+     "Leicestershire"
+    ],
+    "matches": 10,
+    "innings": 19,
+    "balls": 2029,
+    "overs": "338.1",
+    "maidens": 49,
+    "runs": 1104,
+    "wickets": 30,
+    "bestWickets": 4,
+    "bestRuns": 103,
+    "average": 36.8,
+    "economy": 3.26,
+    "strikeRate": 67.6,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "78c12883",
+    "player": "S Baker",
+    "teams": [
+     "Hampshire"
+    ],
+    "matches": 8,
+    "innings": 13,
+    "balls": 1214,
+    "overs": "202.2",
+    "maidens": 29,
+    "runs": 704,
+    "wickets": 29,
+    "bestWickets": 5,
+    "bestRuns": 45,
+    "average": 24.28,
+    "economy": 3.48,
+    "strikeRate": 41.9,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "219cc59e",
+    "player": "DY Pennington",
+    "teams": [
+     "Nottinghamshire"
+    ],
+    "matches": 9,
+    "innings": 15,
+    "balls": 1667,
+    "overs": "277.5",
+    "maidens": 53,
+    "runs": 811,
+    "wickets": 29,
+    "bestWickets": 5,
+    "bestRuns": 49,
+    "average": 27.97,
+    "economy": 2.92,
+    "strikeRate": 57.5,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "344c6d55",
+    "player": "JJ Carson",
+    "teams": [
+     "Sussex"
+    ],
+    "matches": 14,
+    "innings": 22,
+    "balls": 2002,
+    "overs": "333.4",
+    "maidens": 34,
+    "runs": 1075,
+    "wickets": 29,
+    "bestWickets": 4,
+    "bestRuns": 40,
+    "average": 37.07,
+    "economy": 3.22,
+    "strikeRate": 69,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "1e66c162",
+    "player": "JD Unadkat",
+    "teams": [
+     "Sussex"
+    ],
+    "matches": 7,
+    "innings": 13,
+    "balls": 1358,
+    "overs": "226.2",
+    "maidens": 62,
+    "runs": 622,
+    "wickets": 28,
+    "bestWickets": 5,
+    "bestRuns": 32,
+    "average": 22.21,
+    "economy": 2.75,
+    "strikeRate": 48.5,
+    "fiveFors": 1
+   }
   ],
+  "warnings": [],
   "cost": {
-   "ms": 254,
+   "ms": 112,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -3235,11 +4419,9 @@
     "matchId": "1513343"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 82,
+   "ms": 69,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -3623,11 +4805,9 @@
     "matchId": "1068612"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 121,
+   "ms": 113,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -3664,18 +4844,18 @@
     "matchId": "946845"
    },
    {
-    "player": "C Rushworth",
-    "playerId": "e737a5fe",
-    "team": "Durham",
-    "opponent": "Northamptonshire",
-    "overs": "12.0",
-    "maidens": 2,
-    "runs": 52,
+    "player": "KJ Abbott",
+    "playerId": "a9da7784",
+    "team": "Hampshire",
+    "opponent": "Somerset",
+    "overs": "18.4",
+    "maidens": 9,
+    "runs": 40,
     "wickets": 9,
-    "season": 2014,
-    "date": "2014-09-15",
-    "venue": "Riverside Ground, Chester-le-Street",
-    "matchId": "692855"
+    "season": 2019,
+    "date": "2019-09-16",
+    "venue": "The Rose Bowl, Southampton",
+    "matchId": "1166962"
    },
    {
     "player": "RI Keogh",
@@ -3692,6 +4872,34 @@
     "matchId": "947061"
    },
    {
+    "player": "C Rushworth",
+    "playerId": "e737a5fe",
+    "team": "Durham",
+    "opponent": "Northamptonshire",
+    "overs": "12.0",
+    "maidens": 2,
+    "runs": 52,
+    "wickets": 9,
+    "season": 2014,
+    "date": "2014-09-15",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "matchId": "692855"
+   },
+   {
+    "player": "LC Norwell",
+    "playerId": "85ebf2be",
+    "team": "Warwickshire",
+    "opponent": "Hampshire",
+    "overs": "18.5",
+    "maidens": 3,
+    "runs": 62,
+    "wickets": 9,
+    "season": 2022,
+    "date": "2022-09-26",
+    "venue": "Edgbaston, Birmingham",
+    "matchId": "1297791"
+   },
+   {
     "player": "RK Kleinveldt",
     "playerId": "7955eb15",
     "team": "Northamptonshire",
@@ -3704,6 +4912,48 @@
     "date": "2017-09-19",
     "venue": "County Ground, Northampton",
     "matchId": "1068648"
+   },
+   {
+    "player": "MJ Potts",
+    "playerId": "894b2d25",
+    "team": "Durham",
+    "opponent": "Lancashire",
+    "overs": "24.2",
+    "maidens": 5,
+    "runs": 68,
+    "wickets": 9,
+    "season": 2024,
+    "date": "2024-09-09",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "matchId": "1410248"
+   },
+   {
+    "player": "OE Robinson",
+    "playerId": "0f3ee070",
+    "team": "Sussex",
+    "opponent": "Glamorgan",
+    "overs": "30.1",
+    "maidens": 10,
+    "runs": 78,
+    "wickets": 9,
+    "season": 2021,
+    "date": "2021-04-15",
+    "venue": "Sophia Gardens, Cardiff",
+    "matchId": "1244227"
+   },
+   {
+    "player": "SR Harmer",
+    "playerId": "23638956",
+    "team": "Essex",
+    "opponent": "Derbyshire",
+    "overs": "25.5",
+    "maidens": 9,
+    "runs": 80,
+    "wickets": 9,
+    "season": 2021,
+    "date": "2021-05-13",
+    "venue": "County Ground, Chelmsford",
+    "matchId": "1244259"
    },
    {
     "player": "SR Harmer",
@@ -3720,6 +4970,48 @@
     "matchId": "1068554"
    },
    {
+    "player": "TJ Price",
+    "playerId": "269ff06e",
+    "team": "Gloucestershire",
+    "opponent": "Warwickshire",
+    "overs": "13.5",
+    "maidens": 5,
+    "runs": 27,
+    "wickets": 8,
+    "season": 2022,
+    "date": "2022-09-20",
+    "venue": "County Ground, Bristol",
+    "matchId": "1297777"
+   },
+   {
+    "player": "OE Robinson",
+    "playerId": "0f3ee070",
+    "team": "Sussex",
+    "opponent": "Middlesex",
+    "overs": "11.0",
+    "maidens": 2,
+    "runs": 34,
+    "wickets": 8,
+    "season": 2019,
+    "date": "2019-08-18",
+    "venue": "County Ground, Hove",
+    "matchId": "1167023"
+   },
+   {
+    "player": "JS Patel",
+    "playerId": "f5821615",
+    "team": "Warwickshire",
+    "opponent": "Surrey",
+    "overs": "31.0",
+    "maidens": 18,
+    "runs": 36,
+    "wickets": 8,
+    "season": 2019,
+    "date": "2019-05-27",
+    "venue": "Edgbaston, Birmingham",
+    "matchId": "1166928"
+   },
+   {
     "player": "SR Harmer",
     "playerId": "23638956",
     "team": "Essex",
@@ -3732,6 +5024,20 @@
     "date": "2017-06-19",
     "venue": "County Ground, Chelmsford",
     "matchId": "1068553"
+   },
+   {
+    "player": "KAJ Roach",
+    "playerId": "78eb4223",
+    "team": "Surrey",
+    "opponent": "Hampshire",
+    "overs": "18.3",
+    "maidens": 7,
+    "runs": 40,
+    "wickets": 8,
+    "season": 2021,
+    "date": "2021-04-29",
+    "venue": "Kennington Oval, London",
+    "matchId": "1244250"
    },
    {
     "player": "LC Norwell",
@@ -3748,6 +5054,76 @@
     "matchId": "1068638"
    },
    {
+    "player": "KJ Abbott",
+    "playerId": "a9da7784",
+    "team": "Hampshire",
+    "opponent": "Somerset",
+    "overs": "17.4",
+    "maidens": 3,
+    "runs": 46,
+    "wickets": 8,
+    "season": 2019,
+    "date": "2019-09-16",
+    "venue": "The Rose Bowl, Southampton",
+    "matchId": "1166962"
+   },
+   {
+    "player": "SR Harmer",
+    "playerId": "23638956",
+    "team": "Essex",
+    "opponent": "Hampshire",
+    "overs": "14.2",
+    "maidens": 3,
+    "runs": 46,
+    "wickets": 8,
+    "season": 2022,
+    "date": "2022-06-26",
+    "venue": "County Ground, Chelmsford",
+    "matchId": "1297735"
+   },
+   {
+    "player": "RD Chahar",
+    "playerId": "2ed569a0",
+    "team": "Surrey",
+    "opponent": "Hampshire",
+    "overs": "24.0",
+    "maidens": 7,
+    "runs": 51,
+    "wickets": 8,
+    "season": 2025,
+    "date": "2025-09-24",
+    "venue": "The Rose Bowl, Southampton",
+    "matchId": "1461891"
+   },
+   {
+    "player": "C Rushworth",
+    "playerId": "e737a5fe",
+    "team": "Durham",
+    "opponent": "Sussex",
+    "overs": "13.0",
+    "maidens": 3,
+    "runs": 51,
+    "wickets": 8,
+    "season": 2018,
+    "date": "2018-09-10",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "matchId": "1127727"
+   },
+   {
+    "player": "D Paterson",
+    "playerId": "462d7c62",
+    "team": "Nottinghamshire",
+    "opponent": "Worcestershire",
+    "overs": "15.0",
+    "maidens": 6,
+    "runs": 52,
+    "wickets": 8,
+    "season": 2022,
+    "date": "2022-04-28",
+    "venue": "Trent Bridge, Nottingham",
+    "matchId": "1297692"
+   },
+   {
     "player": "BA Hutton",
     "playerId": "b3544c5d",
     "team": "Northamptonshire",
@@ -3762,235 +5138,37 @@
     "matchId": "1127698"
    },
    {
+    "player": "A Virdi",
+    "playerId": "ea3d687a",
+    "team": "Surrey",
+    "opponent": "Nottinghamshire",
+    "overs": "25.5",
+    "maidens": 6,
+    "runs": 61,
+    "wickets": 8,
+    "season": 2019,
+    "date": "2019-07-13",
+    "venue": "Trent Bridge, Nottingham",
+    "matchId": "1166950"
+   },
+   {
     "player": "GJ Batty",
     "playerId": "5ac8f17b",
     "team": "Surrey",
-    "opponent": "Essex",
-    "overs": "27.0",
-    "maidens": 6,
-    "runs": 68,
-    "wickets": 8,
-    "season": 2014,
-    "date": "2014-05-25",
-    "venue": "County Ground, Chelmsford",
-    "matchId": "692917"
-   },
-   {
-    "player": "BW Sanderson",
-    "playerId": "e871a7a1",
-    "team": "Northamptonshire",
-    "opponent": "Gloucestershire",
-    "overs": "29.5",
-    "maidens": 9,
-    "runs": 73,
-    "wickets": 8,
-    "season": 2016,
-    "date": "2016-09-12",
-    "venue": "County Ground, Northampton",
-    "matchId": "947077"
-   },
-   {
-    "player": "DI Stevens",
-    "playerId": "bca21d18",
-    "team": "Kent",
-    "opponent": "Leicestershire",
-    "overs": "25.4",
-    "maidens": 8,
-    "runs": 75,
-    "wickets": 8,
-    "season": 2017,
-    "date": "2017-08-28",
-    "venue": "St Lawrence Ground, Canterbury",
-    "matchId": "1068633"
-   },
-   {
-    "player": "ST Finn",
-    "playerId": "ccdd8308",
-    "team": "Middlesex",
-    "opponent": "Lancashire",
+    "opponent": "Warwickshire",
     "overs": "22.4",
-    "maidens": 4,
-    "runs": 79,
-    "wickets": 8,
-    "season": 2017,
-    "date": "2017-09-19",
-    "venue": "Lord's, London",
-    "matchId": "1068578"
-   },
-   {
-    "player": "OP Stone",
-    "playerId": "3f659464",
-    "team": "Warwickshire",
-    "opponent": "Sussex",
-    "overs": "22.5",
-    "maidens": 4,
-    "runs": 80,
-    "wickets": 8,
-    "season": 2018,
-    "date": "2018-04-13",
-    "venue": "Edgbaston, Birmingham",
-    "matchId": "1127673"
-   },
-   {
-    "player": "MJ Leach",
-    "playerId": "3987e390",
-    "team": "Somerset",
-    "opponent": "Essex",
-    "overs": "48.0",
-    "maidens": 16,
-    "runs": 85,
-    "wickets": 8,
-    "season": 2018,
-    "date": "2018-08-19",
-    "venue": "County Ground, Taunton",
-    "matchId": "1127652"
-   },
-   {
-    "player": "GC Viljoen",
-    "playerId": "a316d663",
-    "team": "Derbyshire",
-    "opponent": "Sussex",
-    "overs": "25.0",
     "maidens": 3,
-    "runs": 90,
+    "runs": 64,
     "wickets": 8,
-    "season": 2017,
-    "date": "2017-09-12",
-    "venue": "County Ground, Hove",
-    "matchId": "1068642"
-   },
-   {
-    "player": "CF Parkinson",
-    "playerId": "aa1210d8",
-    "team": "Leicestershire",
-    "opponent": "Worcestershire",
-    "overs": "45.0",
-    "maidens": 1,
-    "runs": 148,
-    "wickets": 8,
-    "season": 2017,
-    "date": "2017-09-12",
-    "venue": "County Ground, New Road, Worcester",
-    "matchId": "1068641"
-   },
-   {
-    "player": "JKH Naik",
-    "playerId": "9c7d7cda",
-    "team": "Leicestershire",
-    "opponent": "Lancashire",
-    "overs": "44.3",
-    "maidens": 7,
-    "runs": 179,
-    "wickets": 8,
-    "season": 2015,
-    "date": "2015-06-14",
-    "venue": "Old Trafford, Manchester",
-    "matchId": "804367"
-   },
-   {
-    "player": "Saeed Ajmal",
-    "playerId": "05d74535",
-    "team": "Worcestershire",
-    "opponent": "Essex",
-    "overs": "13.5",
-    "maidens": 6,
-    "runs": 19,
-    "wickets": 7,
-    "season": 2014,
-    "date": "2014-05-18",
-    "venue": "County Ground, New Road, Worcester",
-    "matchId": "692905"
-   },
-   {
-    "player": "TK Curran",
-    "playerId": "e86754b2",
-    "team": "Surrey",
-    "opponent": "Gloucestershire",
-    "overs": "15.0",
-    "maidens": 7,
-    "runs": 20,
-    "wickets": 7,
-    "season": 2015,
-    "date": "2015-06-27",
-    "venue": "Kennington Oval, London",
-    "matchId": "804379"
-   },
-   {
-    "player": "GJ Batty",
-    "playerId": "5ac8f17b",
-    "team": "Surrey",
-    "opponent": "Somerset",
-    "overs": "9.0",
-    "maidens": 0,
-    "runs": 32,
-    "wickets": 7,
-    "season": 2016,
-    "date": "2016-05-28",
-    "venue": "County Ground, Taunton",
-    "matchId": "946855"
-   },
-   {
-    "player": "WJ Weighell",
-    "playerId": "10f68de1",
-    "team": "Durham",
-    "opponent": "Leicestershire",
-    "overs": "9.5",
-    "maidens": 1,
-    "runs": 32,
-    "wickets": 7,
-    "season": 2018,
-    "date": "2018-05-04",
-    "venue": "Riverside Ground, Chester-le-Street",
-    "matchId": "1127685"
-   },
-   {
-    "player": "Saeed Ajmal",
-    "playerId": "05d74535",
-    "team": "Worcestershire",
-    "opponent": "Glamorgan",
-    "overs": "17.4",
-    "maidens": 4,
-    "runs": 34,
-    "wickets": 7,
-    "season": 2014,
-    "date": "2014-06-29",
-    "venue": "County Ground, New Road, Worcester",
-    "matchId": "692949"
-   },
-   {
-    "player": "TK Curran",
-    "playerId": "e86754b2",
-    "team": "Surrey",
-    "opponent": "Northamptonshire",
-    "overs": "13.5",
-    "maidens": 4,
-    "runs": 35,
-    "wickets": 7,
-    "season": 2015,
-    "date": "2015-09-22",
-    "venue": "Kennington Oval, London",
-    "matchId": "804445"
-   },
-   {
-    "player": "KA Maharaj",
-    "playerId": "0b60eb09",
-    "team": "Lancashire",
-    "opponent": "Somerset",
-    "overs": "13.4",
-    "maidens": 4,
-    "runs": 37,
-    "wickets": 7,
-    "season": 2018,
-    "date": "2018-09-04",
-    "venue": "County Ground, Taunton",
-    "matchId": "1127659"
+    "season": 2019,
+    "date": "2019-05-27",
+    "venue": "Edgbaston, Birmingham",
+    "matchId": "1166928"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 70,
+   "ms": 77,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4119,11 +5297,9 @@
     "tied": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 52,
+   "ms": 42,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4142,7 +5318,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513395.html"
    },
    {
@@ -4170,7 +5346,7 @@
     "listedFirst": false,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513384.html"
    },
    {
@@ -4198,7 +5374,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513372.html"
    },
    {
@@ -4240,7 +5416,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513356.html"
    },
    {
@@ -4268,7 +5444,7 @@
     "listedFirst": false,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513348.html"
    },
    {
@@ -4296,7 +5472,7 @@
     "listedFirst": false,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513340.html"
    },
    {
@@ -4310,7 +5486,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513334.html"
    },
    {
@@ -4324,15 +5500,13 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513326.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 54,
+   "ms": 41,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4392,7 +5566,7 @@
     "team1": "Surrey",
     "team2": "Kent",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297731.html"
    },
@@ -4406,7 +5580,7 @@
     "team1": "Surrey",
     "team2": "Kent",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297709.html"
    },
@@ -4434,7 +5608,7 @@
     "team1": "Surrey",
     "team2": "Kent",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166925.html"
    },
@@ -4467,11 +5641,9 @@
     "url": "https://www.espncricinfo.com/ci/engine/match/692967.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 49,
+   "ms": 38,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4491,11 +5663,9 @@
     "lastMeeting": "2024-04-19"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 55,
+   "ms": 39,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4514,11 +5684,9 @@
     "matches": 151
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CricketPlayer], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 46,
+   "ms": 36,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4779,11 +5947,9 @@
     "fifties": 2
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings, CricketPlayer], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 75,
+   "ms": 62,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4882,26 +6048,129 @@
     "teams": [
      "Derbyshire"
     ],
-    "matches": 4,
-    "innings": 4,
-    "balls": 118,
-    "overs": "19.4",
+    "matches": 6,
+    "innings": 8,
+    "balls": 184,
+    "overs": "30.4",
     "maidens": 7,
-    "runs": 53,
-    "wickets": 3,
+    "runs": 102,
+    "wickets": 4,
     "bestWickets": 1,
     "bestRuns": 9,
-    "average": 17.67,
-    "economy": 2.69,
-    "strikeRate": 39.3,
+    "average": 25.5,
+    "economy": 3.33,
+    "strikeRate": 46,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "86e0f3f0",
+    "player": "WL Madsen",
+    "season": 2019,
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 8,
+    "innings": 10,
+    "balls": 330,
+    "overs": "55.0",
+    "maidens": 12,
+    "runs": 176,
+    "wickets": 3,
+    "bestWickets": 1,
+    "bestRuns": 14,
+    "average": 58.67,
+    "economy": 3.2,
+    "strikeRate": 110,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "86e0f3f0",
+    "player": "WL Madsen",
+    "season": 2021,
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 6,
+    "innings": 7,
+    "balls": 263,
+    "overs": "43.5",
+    "maidens": 8,
+    "runs": 130,
+    "wickets": 4,
+    "bestWickets": 2,
+    "bestRuns": 8,
+    "average": 32.5,
+    "economy": 2.97,
+    "strikeRate": 65.8,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "86e0f3f0",
+    "player": "WL Madsen",
+    "season": 2022,
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 6,
+    "innings": 7,
+    "balls": 270,
+    "overs": "45.0",
+    "maidens": 18,
+    "runs": 102,
+    "wickets": 1,
+    "bestWickets": 1,
+    "bestRuns": 12,
+    "average": 102,
+    "economy": 2.27,
+    "strikeRate": 270,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "86e0f3f0",
+    "player": "WL Madsen",
+    "season": 2024,
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 1,
+    "innings": 1,
+    "balls": 18,
+    "overs": "3.0",
+    "maidens": 1,
+    "runs": 4,
+    "wickets": 0,
+    "bestWickets": 0,
+    "bestRuns": 4,
+    "average": null,
+    "economy": 1.33,
+    "strikeRate": null,
+    "fiveFors": 0
+   },
+   {
+    "playerId": "86e0f3f0",
+    "player": "WL Madsen",
+    "season": 2025,
+    "teams": [
+     "Derbyshire"
+    ],
+    "matches": 2,
+    "innings": 2,
+    "balls": 30,
+    "overs": "5.0",
+    "maidens": 0,
+    "runs": 34,
+    "wickets": 1,
+    "bestWickets": 1,
+    "bestRuns": 32,
+    "average": 34,
+    "economy": 6.8,
+    "strikeRate": 30,
     "fiveFors": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings, CricketPlayer], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 74,
+   "ms": 66,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -4971,7 +6240,7 @@
     "fielders": "R Vasconcelos",
     "matchId": "1513445",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513445.html"
    },
@@ -4993,7 +6262,7 @@
     "fielders": "GA Bartlett",
     "matchId": "1513445",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513445.html"
    },
@@ -5103,7 +6372,7 @@
     "fielders": null,
     "matchId": "1513432",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513432.html"
    },
@@ -5125,7 +6394,7 @@
     "fielders": null,
     "matchId": "1513432",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1513432.html"
    },
@@ -5433,7 +6702,7 @@
     "fielders": null,
     "matchId": "1461939",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461939.html"
    },
@@ -5455,7 +6724,7 @@
     "fielders": null,
     "matchId": "1461939",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461939.html"
    },
@@ -5477,7 +6746,7 @@
     "fielders": "J Broad",
     "matchId": "1461934",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461934.html"
    },
@@ -5499,7 +6768,7 @@
     "fielders": "LD McManus",
     "matchId": "1461934",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461934.html"
    },
@@ -5609,7 +6878,7 @@
     "fielders": "James Bracey",
     "matchId": "1461924",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461924.html"
    },
@@ -5631,7 +6900,7 @@
     "fielders": "BG Charlesworth",
     "matchId": "1461924",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461924.html"
    },
@@ -5675,7 +6944,7 @@
     "fielders": "MF Hurst",
     "matchId": "1461915",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461915.html"
    },
@@ -5697,7 +6966,7 @@
     "fielders": "MF Hurst",
     "matchId": "1461915",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461915.html"
    },
@@ -5719,7 +6988,7 @@
     "fielders": "AW Gorvin",
     "matchId": "1461911",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461911.html"
    },
@@ -5741,7 +7010,7 @@
     "fielders": "KS Carlson",
     "matchId": "1461911",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461911.html"
    },
@@ -5763,7 +7032,7 @@
     "fielders": null,
     "matchId": "1461907",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461907.html"
    },
@@ -5785,7 +7054,7 @@
     "fielders": null,
     "matchId": "1461905",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461905.html"
    },
@@ -5807,7 +7076,7 @@
     "fielders": "LD McManus",
     "matchId": "1461905",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461905.html"
    },
@@ -5829,7 +7098,7 @@
     "fielders": null,
     "matchId": "1461900",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461900.html"
    },
@@ -5851,7 +7120,7 @@
     "fielders": null,
     "matchId": "1461900",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1461900.html"
    },
@@ -5895,7 +7164,7 @@
     "fielders": null,
     "matchId": "1410316",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410316.html"
    },
@@ -6159,7 +7428,7 @@
     "fielders": "James Bracey",
     "matchId": "1410287",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410287.html"
    },
@@ -6181,7 +7450,7 @@
     "fielders": "James Bracey",
     "matchId": "1410287",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410287.html"
    },
@@ -6203,7 +7472,7 @@
     "fielders": "LA Patterson-White",
     "matchId": "1410283",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410283.html"
    },
@@ -6225,7 +7494,7 @@
     "fielders": null,
     "matchId": "1410283",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410283.html"
    },
@@ -6291,7 +7560,7 @@
     "fielders": "HC Brook",
     "matchId": "1410277",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410277.html"
    },
@@ -6313,7 +7582,7 @@
     "fielders": null,
     "matchId": "1410271",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410271.html"
    },
@@ -6335,7 +7604,7 @@
     "fielders": null,
     "matchId": "1410271",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410271.html"
    },
@@ -6357,7 +7626,7 @@
     "fielders": null,
     "matchId": "1410267",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410267.html"
    },
@@ -6379,7 +7648,7 @@
     "fielders": null,
     "matchId": "1410267",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1410267.html"
    },
@@ -6401,7 +7670,7 @@
     "fielders": null,
     "matchId": "1347198",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347198.html"
    },
@@ -6467,7 +7736,7 @@
     "fielders": "AZ Lees",
     "matchId": "1347186",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347186.html"
    },
@@ -6489,7 +7758,7 @@
     "fielders": null,
     "matchId": "1347182",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347182.html"
    },
@@ -6511,7 +7780,7 @@
     "fielders": "A Karvelas",
     "matchId": "1347182",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347182.html"
    },
@@ -6533,7 +7802,7 @@
     "fielders": null,
     "matchId": "1347179",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347179.html"
    },
@@ -6599,7 +7868,7 @@
     "fielders": null,
     "matchId": "1347167",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347167.html"
    },
@@ -6621,7 +7890,7 @@
     "fielders": "BG Charlesworth",
     "matchId": "1347167",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347167.html"
    },
@@ -6643,7 +7912,7 @@
     "fielders": "PSP Handscomb",
     "matchId": "1347164",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347164.html"
    },
@@ -6709,7 +7978,7 @@
     "fielders": null,
     "matchId": "1347156",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1347156.html"
    },
@@ -6775,7 +8044,7 @@
     "fielders": "HJ Swindells",
     "matchId": "1297789",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297789.html"
    },
@@ -6841,7 +8110,7 @@
     "fielders": "TSS Mackintosh",
     "matchId": "1297765",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297765.html"
    },
@@ -6863,7 +8132,7 @@
     "fielders": "TSS Mackintosh",
     "matchId": "1297765",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297765.html"
    },
@@ -6929,7 +8198,7 @@
     "fielders": null,
     "matchId": "1297751",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297751.html"
    },
@@ -6951,7 +8220,7 @@
     "fielders": "JM Clarke",
     "matchId": "1297751",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297751.html"
    },
@@ -6973,7 +8242,7 @@
     "fielders": null,
     "matchId": "1297742",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297742.html"
    },
@@ -6995,7 +8264,7 @@
     "fielders": "SG Borthwick",
     "matchId": "1297742",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297742.html"
    },
@@ -7149,7 +8418,7 @@
     "fielders": null,
     "matchId": "1297711",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297711.html"
    },
@@ -7171,7 +8440,7 @@
     "fielders": null,
     "matchId": "1297698",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297698.html"
    },
@@ -7193,7 +8462,7 @@
     "fielders": null,
     "matchId": "1297698",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297698.html"
    },
@@ -7237,7 +8506,7 @@
     "fielders": null,
     "matchId": "1297679",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297679.html"
    },
@@ -7259,7 +8528,7 @@
     "fielders": null,
     "matchId": "1297673",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297673.html"
    },
@@ -7281,7 +8550,7 @@
     "fielders": null,
     "matchId": "1297673",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1297673.html"
    },
@@ -7369,7 +8638,7 @@
     "fielders": "Hassan Azad",
     "matchId": "1271396",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1271396.html"
    },
@@ -7391,7 +8660,7 @@
     "fielders": "HJ Swindells",
     "matchId": "1271396",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1271396.html"
    },
@@ -7501,7 +8770,7 @@
     "fielders": null,
     "matchId": "1244267",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244267.html"
    },
@@ -7611,7 +8880,7 @@
     "fielders": "SW Poynter",
     "matchId": "1244234",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244234.html"
    },
@@ -7633,7 +8902,7 @@
     "fielders": "JTA Burnham",
     "matchId": "1244234",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244234.html"
    },
@@ -7655,7 +8924,7 @@
     "fielders": null,
     "matchId": "1244229",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244229.html"
    },
@@ -7677,7 +8946,7 @@
     "fielders": "DKH Mitchell",
     "matchId": "1244229",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244229.html"
    },
@@ -7699,7 +8968,7 @@
     "fielders": "RM Yates",
     "matchId": "1244223",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244223.html"
    },
@@ -7721,7 +8990,7 @@
     "fielders": "RM Yates",
     "matchId": "1244223",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1244223.html"
    },
@@ -7743,7 +9012,7 @@
     "fielders": null,
     "matchId": "1167037",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1167037.html"
    },
@@ -7985,7 +9254,7 @@
     "fielders": "DL Lloyd",
     "matchId": "1166994",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166994.html"
    },
@@ -8095,7 +9364,7 @@
     "fielders": null,
     "matchId": "1166974",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166974.html"
    },
@@ -8117,7 +9386,7 @@
     "fielders": null,
     "matchId": "1166974",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166974.html"
    },
@@ -8491,7 +9760,7 @@
     "fielders": "SW Poynter",
     "matchId": "1127691",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1127691.html"
    },
@@ -8513,7 +9782,7 @@
     "fielders": null,
     "matchId": "1127691",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1127691.html"
    },
@@ -8579,7 +9848,7 @@
     "fielders": null,
     "matchId": "1127683",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1127683.html"
    },
@@ -8711,7 +9980,7 @@
     "fielders": "KS Carlson",
     "matchId": "1068639",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1068639.html"
    },
@@ -8953,7 +10222,7 @@
     "fielders": "BA Hutton",
     "matchId": "1068606",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1068606.html"
    },
@@ -8975,7 +10244,7 @@
     "fielders": null,
     "matchId": "1068606",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1068606.html"
    },
@@ -9019,7 +10288,7 @@
     "fielders": null,
     "matchId": "947079",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947079.html"
    },
@@ -9041,7 +10310,7 @@
     "fielders": "EJH Eckersley",
     "matchId": "947079",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947079.html"
    },
@@ -9063,7 +10332,7 @@
     "fielders": "HJH Marshall",
     "matchId": "947063",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947063.html"
    },
@@ -9085,7 +10354,7 @@
     "fielders": "GT Hankins",
     "matchId": "947063",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947063.html"
    },
@@ -9151,7 +10420,7 @@
     "fielders": null,
     "matchId": "947041",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947041.html"
    },
@@ -9173,7 +10442,7 @@
     "fielders": "MJ Cosgrove",
     "matchId": "947041",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947041.html"
    },
@@ -9239,7 +10508,7 @@
     "fielders": null,
     "matchId": "947015",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947015.html"
    },
@@ -9261,7 +10530,7 @@
     "fielders": "OB Cox",
     "matchId": "947011",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947011.html"
    },
@@ -9371,7 +10640,7 @@
     "fielders": null,
     "matchId": "946983",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946983.html"
    },
@@ -9393,7 +10662,7 @@
     "fielders": "JS Foster",
     "matchId": "946983",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946983.html"
    },
@@ -9415,7 +10684,7 @@
     "fielders": null,
     "matchId": "946979",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946979.html"
    },
@@ -9437,7 +10706,7 @@
     "fielders": null,
     "matchId": "946979",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946979.html"
    },
@@ -9459,7 +10728,7 @@
     "fielders": null,
     "matchId": "946967",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946967.html"
    },
@@ -9481,7 +10750,7 @@
     "fielders": null,
     "matchId": "946959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946959.html"
    },
@@ -9503,7 +10772,7 @@
     "fielders": null,
     "matchId": "946953",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946953.html"
    },
@@ -9525,7 +10794,7 @@
     "fielders": "GH Roderick",
     "matchId": "946953",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946953.html"
    },
@@ -9547,7 +10816,7 @@
     "fielders": "NJ O'Brien",
     "matchId": "804439",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804439.html"
    },
@@ -9569,7 +10838,7 @@
     "fielders": null,
     "matchId": "804439",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804439.html"
    },
@@ -9679,7 +10948,7 @@
     "fielders": null,
     "matchId": "804411",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804411.html"
    },
@@ -9701,7 +10970,7 @@
     "fielders": null,
     "matchId": "804411",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804411.html"
    },
@@ -9811,7 +11080,7 @@
     "fielders": null,
     "matchId": "804385",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804385.html"
    },
@@ -9833,7 +11102,7 @@
     "fielders": "AHT Donald",
     "matchId": "804385",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804385.html"
    },
@@ -9943,7 +11212,7 @@
     "fielders": null,
     "matchId": "804329",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804329.html"
    },
@@ -9965,7 +11234,7 @@
     "fielders": "AM Rossington",
     "matchId": "804329",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804329.html"
    },
@@ -9987,7 +11256,7 @@
     "fielders": null,
     "matchId": "804323",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804323.html"
    },
@@ -10009,7 +11278,7 @@
     "fielders": null,
     "matchId": "804323",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804323.html"
    },
@@ -10383,7 +11652,7 @@
     "fielders": "MET Salisbury",
     "matchId": "692959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692959.html"
    },
@@ -10405,7 +11674,7 @@
     "fielders": "JS Foster",
     "matchId": "692959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692959.html"
    },
@@ -10559,7 +11828,7 @@
     "fielders": "WR Smith",
     "matchId": "692923",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692923.html"
    },
@@ -10581,7 +11850,7 @@
     "fielders": "WR Smith",
     "matchId": "692923",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692923.html"
    },
@@ -10603,7 +11872,7 @@
     "fielders": "GO Jones",
     "matchId": "692915",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692915.html"
    },
@@ -10625,7 +11894,7 @@
     "fielders": "BP Nash",
     "matchId": "692901",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692901.html"
    },
@@ -10691,7 +11960,7 @@
     "fielders": "MD Bates",
     "matchId": "692881",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692881.html"
    },
@@ -10740,11 +12009,9 @@
     "url": "https://www.espncricinfo.com/ci/engine/match/692873.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings, CountyMatch, CricketPlayer], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 72,
+   "ms": 47,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -10752,6 +12019,564 @@
  "view:PlayerSpells:{\"playerId\":\"86e0f3f0\"}": {
   "status": "SUCCEEDED",
   "data": [
+   {
+    "date": "2025-09-24",
+    "season": 2025,
+    "team": "Derbyshire",
+    "opponent": "Kent",
+    "venue": "St Lawrence Ground, Canterbury",
+    "inningsNo": 3,
+    "overs": "1.0",
+    "maidens": 0,
+    "runs": 2,
+    "wickets": 0,
+    "dots": 4,
+    "matchId": "1461947",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "an innings and 229 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1461947.html"
+   },
+   {
+    "date": "2025-04-18",
+    "season": 2025,
+    "team": "Derbyshire",
+    "opponent": "Northamptonshire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 2,
+    "overs": "4.0",
+    "maidens": 0,
+    "runs": 32,
+    "wickets": 1,
+    "dots": 6,
+    "matchId": "1461905",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1461905.html"
+   },
+   {
+    "date": "2024-05-17",
+    "season": 2024,
+    "team": "Derbyshire",
+    "opponent": "Northamptonshire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 1,
+    "overs": "3.0",
+    "maidens": 1,
+    "runs": 4,
+    "wickets": 0,
+    "dots": 15,
+    "matchId": "1410283",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1410283.html"
+   },
+   {
+    "date": "2022-05-19",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Nottinghamshire",
+    "venue": "Trent Bridge, Nottingham",
+    "inningsNo": 4,
+    "overs": "6.0",
+    "maidens": 2,
+    "runs": 16,
+    "wickets": 0,
+    "dots": 23,
+    "matchId": "1297720",
+    "result": "won",
+    "winner": "Nottinghamshire",
+    "margin": "10 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297720.html"
+   },
+   {
+    "date": "2022-05-19",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Nottinghamshire",
+    "venue": "Trent Bridge, Nottingham",
+    "inningsNo": 2,
+    "overs": "2.0",
+    "maidens": 0,
+    "runs": 10,
+    "wickets": 0,
+    "dots": 5,
+    "matchId": "1297720",
+    "result": "won",
+    "winner": "Nottinghamshire",
+    "margin": "10 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297720.html"
+   },
+   {
+    "date": "2022-05-12",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Worcestershire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 3,
+    "overs": "16.0",
+    "maidens": 10,
+    "runs": 8,
+    "wickets": 0,
+    "dots": 89,
+    "matchId": "1297711",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297711.html"
+   },
+   {
+    "date": "2022-04-28",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Glamorgan",
+    "venue": "County Ground, Derby",
+    "inningsNo": 2,
+    "overs": "2.0",
+    "maidens": 0,
+    "runs": 12,
+    "wickets": 1,
+    "dots": 7,
+    "matchId": "1297698",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297698.html"
+   },
+   {
+    "date": "2022-04-21",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Leicestershire",
+    "venue": "Grace Road, Leicester",
+    "inningsNo": 3,
+    "overs": "2.0",
+    "maidens": 0,
+    "runs": 12,
+    "wickets": 0,
+    "dots": 9,
+    "matchId": "1297686",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "an innings and 68 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297686.html"
+   },
+   {
+    "date": "2022-04-14",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Sussex",
+    "venue": "County Ground, Derby",
+    "inningsNo": 3,
+    "overs": "14.0",
+    "maidens": 6,
+    "runs": 27,
+    "wickets": 0,
+    "dots": 66,
+    "matchId": "1297679",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297679.html"
+   },
+   {
+    "date": "2022-04-07",
+    "season": 2022,
+    "team": "Derbyshire",
+    "opponent": "Middlesex",
+    "venue": "Lord's, London",
+    "inningsNo": 3,
+    "overs": "3.0",
+    "maidens": 0,
+    "runs": 17,
+    "wickets": 0,
+    "dots": 8,
+    "matchId": "1297673",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1297673.html"
+   },
+   {
+    "date": "2021-09-21",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Sussex",
+    "venue": "County Ground, Hove",
+    "inningsNo": 3,
+    "overs": "2.3",
+    "maidens": 0,
+    "runs": 8,
+    "wickets": 2,
+    "dots": 12,
+    "matchId": "1271415",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "9 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1271415.html"
+   },
+   {
+    "date": "2021-05-27",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Worcestershire",
+    "venue": "County Ground, New Road, Worcester",
+    "inningsNo": 1,
+    "overs": "5.0",
+    "maidens": 0,
+    "runs": 17,
+    "wickets": 0,
+    "dots": 16,
+    "matchId": "1244275",
+    "result": "won",
+    "winner": "Worcestershire",
+    "margin": "an innings and 23 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244275.html"
+   },
+   {
+    "date": "2021-05-13",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Essex",
+    "venue": "County Ground, Chelmsford",
+    "inningsNo": 1,
+    "overs": "3.0",
+    "maidens": 0,
+    "runs": 21,
+    "wickets": 0,
+    "dots": 8,
+    "matchId": "1244259",
+    "result": "won",
+    "winner": "Essex",
+    "margin": "an innings and 15 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244259.html"
+   },
+   {
+    "date": "2021-04-29",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Nottinghamshire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 3,
+    "overs": "6.0",
+    "maidens": 0,
+    "runs": 19,
+    "wickets": 2,
+    "dots": 18,
+    "matchId": "1244243",
+    "result": "won",
+    "winner": "Nottinghamshire",
+    "margin": "310 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244243.html"
+   },
+   {
+    "date": "2021-04-22",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Durham",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "inningsNo": 3,
+    "overs": "9.0",
+    "maidens": 1,
+    "runs": 37,
+    "wickets": 0,
+    "dots": 24,
+    "matchId": "1244234",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244234.html"
+   },
+   {
+    "date": "2021-04-22",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Durham",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "inningsNo": 1,
+    "overs": "12.2",
+    "maidens": 3,
+    "runs": 25,
+    "wickets": 0,
+    "dots": 52,
+    "matchId": "1244234",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244234.html"
+   },
+   {
+    "date": "2021-04-15",
+    "season": 2021,
+    "team": "Derbyshire",
+    "opponent": "Worcestershire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 2,
+    "overs": "6.0",
+    "maidens": 4,
+    "runs": 3,
+    "wickets": 0,
+    "dots": 33,
+    "matchId": "1244229",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1244229.html"
+   },
+   {
+    "date": "2019-09-16",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Sussex",
+    "venue": "County Ground, Derby",
+    "inningsNo": 4,
+    "overs": "3.0",
+    "maidens": 0,
+    "runs": 12,
+    "wickets": 0,
+    "dots": 9,
+    "matchId": "1167029",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "181 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1167029.html"
+   },
+   {
+    "date": "2019-09-16",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Sussex",
+    "venue": "County Ground, Derby",
+    "inningsNo": 2,
+    "overs": "5.0",
+    "maidens": 2,
+    "runs": 16,
+    "wickets": 1,
+    "dots": 23,
+    "matchId": "1167029",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "181 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1167029.html"
+   },
+   {
+    "date": "2019-08-18",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Gloucestershire",
+    "venue": "County Ground, Derby",
+    "inningsNo": 4,
+    "overs": "9.0",
+    "maidens": 1,
+    "runs": 33,
+    "wickets": 0,
+    "dots": 37,
+    "matchId": "1167019",
+    "result": "won",
+    "winner": "Gloucestershire",
+    "margin": "8 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1167019.html"
+   },
+   {
+    "date": "2019-07-07",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Worcestershire",
+    "venue": "Chester Road North Ground, Kidderminster",
+    "inningsNo": 4,
+    "overs": "4.0",
+    "maidens": 0,
+    "runs": 19,
+    "wickets": 0,
+    "dots": 17,
+    "matchId": "1167012",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "82 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1167012.html"
+   },
+   {
+    "date": "2019-06-11",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Glamorgan",
+    "venue": "St Helen's, Swansea",
+    "inningsNo": 3,
+    "overs": "3.0",
+    "maidens": 0,
+    "runs": 23,
+    "wickets": 0,
+    "dots": 7,
+    "matchId": "1166994",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166994.html"
+   },
+   {
+    "date": "2019-06-03",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Durham",
+    "venue": "Riverside Ground, Chester-le-Street",
+    "inningsNo": 1,
+    "overs": "4.0",
+    "maidens": 0,
+    "runs": 21,
+    "wickets": 0,
+    "dots": 15,
+    "matchId": "1166989",
+    "result": "won",
+    "winner": "Durham",
+    "margin": "29 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166989.html"
+   },
+   {
+    "date": "2019-05-19",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Glamorgan",
+    "venue": "County Ground, Derby",
+    "inningsNo": 4,
+    "overs": "8.0",
+    "maidens": 2,
+    "runs": 14,
+    "wickets": 1,
+    "dots": 39,
+    "matchId": "1166981",
+    "result": "won",
+    "winner": "Glamorgan",
+    "margin": "2 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166981.html"
+   },
+   {
+    "date": "2019-05-19",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Glamorgan",
+    "venue": "County Ground, Derby",
+    "inningsNo": 2,
+    "overs": "2.0",
+    "maidens": 0,
+    "runs": 3,
+    "wickets": 0,
+    "dots": 9,
+    "matchId": "1166981",
+    "result": "won",
+    "winner": "Glamorgan",
+    "margin": "2 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166981.html"
+   },
+   {
+    "date": "2019-04-11",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Gloucestershire",
+    "venue": "County Ground, Bristol",
+    "inningsNo": 2,
+    "overs": "3.0",
+    "maidens": 1,
+    "runs": 4,
+    "wickets": 0,
+    "dots": 15,
+    "matchId": "1166974",
+    "result": "draw",
+    "winner": "",
+    "margin": "",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166974.html"
+   },
+   {
+    "date": "2019-04-05",
+    "season": 2019,
+    "team": "Derbyshire",
+    "opponent": "Durham",
+    "venue": "County Ground, Derby",
+    "inningsNo": 4,
+    "overs": "14.0",
+    "maidens": 6,
+    "runs": 31,
+    "wickets": 1,
+    "dots": 67,
+    "matchId": "1166969",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "125 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1166969.html"
+   },
+   {
+    "date": "2018-09-18",
+    "season": 2018,
+    "team": "Derbyshire",
+    "opponent": "Middlesex",
+    "venue": "Lord's, London",
+    "inningsNo": 3,
+    "overs": "5.0",
+    "maidens": 0,
+    "runs": 23,
+    "wickets": 1,
+    "dots": 16,
+    "matchId": "1127733",
+    "result": "won",
+    "winner": "Middlesex",
+    "margin": "117 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1127733.html"
+   },
+   {
+    "date": "2018-09-18",
+    "season": 2018,
+    "team": "Derbyshire",
+    "opponent": "Middlesex",
+    "venue": "Lord's, London",
+    "inningsNo": 1,
+    "overs": "4.0",
+    "maidens": 0,
+    "runs": 16,
+    "wickets": 0,
+    "dots": 14,
+    "matchId": "1127733",
+    "result": "won",
+    "winner": "Middlesex",
+    "margin": "117 runs",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1127733.html"
+   },
+   {
+    "date": "2018-09-10",
+    "season": 2018,
+    "team": "Derbyshire",
+    "opponent": "Northamptonshire",
+    "venue": "County Ground, Northampton",
+    "inningsNo": 3,
+    "overs": "1.0",
+    "maidens": 0,
+    "runs": 1,
+    "wickets": 0,
+    "dots": 5,
+    "matchId": "1127729",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "1 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1127729.html"
+   },
+   {
+    "date": "2018-09-10",
+    "season": 2018,
+    "team": "Derbyshire",
+    "opponent": "Northamptonshire",
+    "venue": "County Ground, Northampton",
+    "inningsNo": 1,
+    "overs": "1.0",
+    "maidens": 0,
+    "runs": 9,
+    "wickets": 0,
+    "dots": 3,
+    "matchId": "1127729",
+    "result": "won",
+    "winner": "Derbyshire",
+    "margin": "1 wickets",
+    "url": "https://www.espncricinfo.com/ci/engine/match/1127729.html"
+   },
    {
     "date": "2018-06-09",
     "season": 2018,
@@ -10784,7 +12609,7 @@
     "dots": 8,
     "matchId": "1127691",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1127691.html"
    },
@@ -10982,7 +12807,7 @@
     "dots": 4,
     "matchId": "1068606",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1068606.html"
    },
@@ -11018,7 +12843,7 @@
     "dots": 23,
     "matchId": "947079",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947079.html"
    },
@@ -11036,7 +12861,7 @@
     "dots": 28,
     "matchId": "947063",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947063.html"
    },
@@ -11072,7 +12897,7 @@
     "dots": 74,
     "matchId": "947041",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947041.html"
    },
@@ -11090,7 +12915,7 @@
     "dots": 44,
     "matchId": "947041",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947041.html"
    },
@@ -11144,7 +12969,7 @@
     "dots": 74,
     "matchId": "947015",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947015.html"
    },
@@ -11162,7 +12987,7 @@
     "dots": 31,
     "matchId": "947015",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947015.html"
    },
@@ -11180,7 +13005,7 @@
     "dots": 49,
     "matchId": "947011",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947011.html"
    },
@@ -11198,7 +13023,7 @@
     "dots": 7,
     "matchId": "947011",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/947011.html"
    },
@@ -11270,7 +13095,7 @@
     "dots": 62,
     "matchId": "946983",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946983.html"
    },
@@ -11288,7 +13113,7 @@
     "dots": 36,
     "matchId": "946979",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946979.html"
    },
@@ -11306,7 +13131,7 @@
     "dots": 9,
     "matchId": "946967",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946967.html"
    },
@@ -11324,7 +13149,7 @@
     "dots": 8,
     "matchId": "946959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946959.html"
    },
@@ -11342,7 +13167,7 @@
     "dots": 9,
     "matchId": "946953",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/946953.html"
    },
@@ -11360,7 +13185,7 @@
     "dots": 37,
     "matchId": "804439",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/804439.html"
    },
@@ -11414,7 +13239,7 @@
     "dots": 7,
     "matchId": "692959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692959.html"
    },
@@ -11432,7 +13257,7 @@
     "dots": 12,
     "matchId": "692959",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692959.html"
    },
@@ -11450,16 +13275,14 @@
     "dots": 4,
     "matchId": "692881",
     "result": "draw",
-    "winner": null,
+    "winner": "",
     "margin": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/692881.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings, CountyMatch, CricketPlayer], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 61,
+   "ms": 45,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -11484,20 +13307,18 @@
     "tossDecision": "field",
     "tossUncontested": true,
     "result": "draw",
-    "winner": null,
-    "loser": null,
+    "winner": "",
+    "loser": "",
     "margin": "",
-    "marginRuns": null,
-    "marginWickets": null,
+    "marginRuns": 0,
+    "marginWickets": 0,
     "byInnings": false,
     "url": "https://www.espncricinfo.com/ci/engine/match/947089.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 58,
+   "ms": 43,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -11560,11 +13381,9 @@
     "penalty": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch, TeamInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 66,
+   "ms": 44,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -12038,11 +13857,9 @@
     "fielders": null
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings, CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 55,
+   "ms": 44,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -12339,11 +14156,9 @@
     "noballs": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings, CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 57,
+   "ms": 42,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -12424,11 +14239,9 @@
     "wonByInnings": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 78,
+   "ms": 43,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -12527,11 +14340,9 @@
     "wonByInnings": 0
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 83,
+   "ms": 51,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -12740,11 +14551,9 @@
     "fifties": 5
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 155,
+   "ms": 92,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -13754,23 +15563,220 @@
     "fifties": 3
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 146,
+   "ms": 93,
    "apiCalls": 0,
    "llmCalls": 0
   }
  },
  "view:SeasonBowling:{\"limit\":10,\"season\":2019}": {
   "status": "SUCCEEDED",
-  "data": [],
-  "warnings": [
-   "SEEDING: this view reads [BowlingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
+  "data": [
+   {
+    "playerId": "23638956",
+    "player": "SR Harmer",
+    "teams": [
+     "Essex"
+    ],
+    "matches": 14,
+    "innings": 24,
+    "balls": 3575,
+    "overs": "595.5",
+    "maidens": 175,
+    "runs": 1518,
+    "wickets": 83,
+    "bestWickets": 8,
+    "bestRuns": 98,
+    "average": 18.29,
+    "economy": 2.55,
+    "strikeRate": 43.1,
+    "fiveFors": 10
+   },
+   {
+    "playerId": "e737a5fe",
+    "player": "C Rushworth",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 13,
+    "innings": 25,
+    "balls": 2920,
+    "overs": "486.4",
+    "maidens": 127,
+    "runs": 1271,
+    "wickets": 69,
+    "bestWickets": 6,
+    "bestRuns": 39,
+    "average": 18.42,
+    "economy": 2.61,
+    "strikeRate": 42.3,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "0f3ee070",
+    "player": "OE Robinson",
+    "teams": [
+     "Sussex"
+    ],
+    "matches": 10,
+    "innings": 19,
+    "balls": 2283,
+    "overs": "380.3",
+    "maidens": 83,
+    "runs": 1036,
+    "wickets": 63,
+    "bestWickets": 8,
+    "bestRuns": 34,
+    "average": 16.44,
+    "economy": 2.72,
+    "strikeRate": 36.2,
+    "fiveFors": 6
+   },
+   {
+    "playerId": "a9da7784",
+    "player": "KJ Abbott",
+    "teams": [
+     "Hampshire"
+    ],
+    "matches": 10,
+    "innings": 16,
+    "balls": 1577,
+    "overs": "262.5",
+    "maidens": 56,
+    "runs": 828,
+    "wickets": 58,
+    "bestWickets": 9,
+    "bestRuns": 40,
+    "average": 14.28,
+    "economy": 3.15,
+    "strikeRate": 27.2,
+    "fiveFors": 5
+   },
+   {
+    "playerId": "e871a7a1",
+    "player": "BW Sanderson",
+    "teams": [
+     "Northamptonshire"
+    ],
+    "matches": 13,
+    "innings": 21,
+    "balls": 2516,
+    "overs": "419.2",
+    "maidens": 114,
+    "runs": 1052,
+    "wickets": 56,
+    "bestWickets": 6,
+    "bestRuns": 37,
+    "average": 18.79,
+    "economy": 2.51,
+    "strikeRate": 44.9,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "f5821615",
+    "player": "JS Patel",
+    "teams": [
+     "Warwickshire"
+    ],
+    "matches": 12,
+    "innings": 22,
+    "balls": 3325,
+    "overs": "554.1",
+    "maidens": 173,
+    "runs": 1345,
+    "wickets": 56,
+    "bestWickets": 8,
+    "bestRuns": 36,
+    "average": 24.02,
+    "economy": 2.43,
+    "strikeRate": 59.4,
+    "fiveFors": 4
+   },
+   {
+    "playerId": "4c0f3806",
+    "player": "BA Raine",
+    "teams": [
+     "Durham"
+    ],
+    "matches": 13,
+    "innings": 25,
+    "balls": 2782,
+    "overs": "463.4",
+    "maidens": 122,
+    "runs": 1179,
+    "wickets": 54,
+    "bestWickets": 6,
+    "bestRuns": 27,
+    "average": 21.83,
+    "economy": 2.54,
+    "strikeRate": 51.5,
+    "fiveFors": 3
+   },
+   {
+    "playerId": "3dcd1e8d",
+    "player": "ME Milnes",
+    "teams": [
+     "Kent"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2258,
+    "overs": "376.2",
+    "maidens": 67,
+    "runs": 1344,
+    "wickets": 52,
+    "bestWickets": 5,
+    "bestRuns": 68,
+    "average": 25.85,
+    "economy": 3.57,
+    "strikeRate": 43.4,
+    "fiveFors": 2
+   },
+   {
+    "playerId": "bca21d18",
+    "player": "DI Stevens",
+    "teams": [
+     "Kent"
+    ],
+    "matches": 11,
+    "innings": 20,
+    "balls": 2334,
+    "overs": "389.0",
+    "maidens": 121,
+    "runs": 869,
+    "wickets": 51,
+    "bestWickets": 5,
+    "bestRuns": 20,
+    "average": 17.04,
+    "economy": 2.23,
+    "strikeRate": 45.8,
+    "fiveFors": 5
+   },
+   {
+    "playerId": "ad212f96",
+    "player": "RF Higgins",
+    "teams": [
+     "Gloucestershire"
+    ],
+    "matches": 13,
+    "innings": 24,
+    "balls": 2722,
+    "overs": "453.4",
+    "maidens": 110,
+    "runs": 1182,
+    "wickets": 50,
+    "bestWickets": 5,
+    "bestRuns": 54,
+    "average": 23.64,
+    "economy": 2.61,
+    "strikeRate": 54.4,
+    "fiveFors": 2
+   }
   ],
+  "warnings": [],
   "cost": {
-   "ms": 345,
+   "ms": 85,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -13899,11 +15905,9 @@
     "matchId": "1167029"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [BattingInnings], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 93,
+   "ms": 67,
    "apiCalls": 0,
    "llmCalls": 0
   }
@@ -13922,7 +15926,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166967.html"
    },
    {
@@ -14006,7 +16010,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166935.html"
    },
    {
@@ -14034,7 +16038,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166925.html"
    },
    {
@@ -14048,7 +16052,7 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166922.html"
    },
    {
@@ -14062,15 +16066,13 @@
     "listedFirst": true,
     "outcome": "drawn",
     "margin": "",
-    "winner": null,
+    "winner": "",
     "url": "https://www.espncricinfo.com/ci/engine/match/1166918.html"
    }
   ],
-  "warnings": [
-   "SEEDING: this view reads [CountyMatch], whose reference data is still being written in the background — rows over it may be missing until the seed finishes. A short or empty result is NOT the full data; ask again once `realm_status` reports it seeded."
-  ],
+  "warnings": [],
   "cost": {
-   "ms": 63,
+   "ms": 42,
    "apiCalls": 0,
    "llmCalls": 0
   }
