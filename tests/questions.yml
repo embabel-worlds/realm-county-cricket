@@ -26,7 +26,7 @@
     matchesView: { name: TeamResults, column: matchId, args: { team: Surrey, season: 2024 }, compare: rowCount }
 - question: "How many matches have Yorkshire won against Lancashire?"
   expect:
-    nonEmpty: true
+    matchesView: { name: HeadToHeadRecord, column: teamAWon, args: { teamA: Yorkshire, teamB: Lancashire } }
 - question: "Which county has won the most championship matches since 2014?"
   expect:
     matchesView: { name: CountyTeams, column: won, orderBy: won }

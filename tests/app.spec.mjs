@@ -40,7 +40,7 @@ function stub(overrides = {}, delays = {}) {
   })();`;
 }
 
-async function open(page, hash = "", overrides = {}, delays = {}) {
+async function open(page, hash = "", overrides = {}, delays = {}, routes = []) {
   const errors = [];
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
   page.on("pageerror", (e) => errors.push(String(e)));
@@ -54,6 +54,7 @@ async function open(page, hash = "", overrides = {}, delays = {}) {
     }
     return route.abort();
   });
+  for (const [pattern, handler] of routes) await page.route(pattern, handler);   /* registered last, so they win over the catch-all */
   await page.goto(`http://cricket.test/apps/county-cricket/county-cricket.html${hash}`);
   return errors;
 }
@@ -69,7 +70,7 @@ test("the latest season renders its tables, leaders and highest scores from the 
   await expect(page.locator("#topbowl .hb")).toHaveCount(bowl.length);
   if (bat.length) {
     await expect(page.locator("#topbat .hb").first()).toContainText(bat[0].player);
-    await expect(page.locator("#stats .stat").nth(1)).toContainText(String(bat[0].runs));
+    await expect(page.locator("#stats .stat").nth(1)).toContainText(bat[0].runs.toLocaleString("en-GB"));
   }
   await expect(page.locator("#tophs [data-hs-row]")).toHaveCount(rowsOf("HighestScores", { season: LATEST, limit: 8 }).length);
   await expect(page.locator(`[data-season-pill="${LATEST}"]`)).toHaveClass(/on/);
@@ -83,8 +84,9 @@ test("the Embabel badge is visible, attributed and linked; the how-it-works link
   await expect(badge).toContainText("Created with");
   await expect(badge.locator("a")).toHaveAttribute("href", /embabel\.com/);
   await page.click("#how-link");
-  await expect(page.locator("#how")).toBeVisible();
-  await expect(page.locator("#how [data-view]")).toHaveCount(19);
+  await expect(page.locator("#how-it-works")).toBeVisible();
+  await expect(page.locator("#how-it-works [data-view]")).toHaveCount(20);
+  await expect(page.locator("#how-it-works [data-lens]")).toHaveCount(1);
   await expect(page.locator("#main")).toBeHidden();
 });
 
@@ -117,6 +119,7 @@ test("a county page shows its seasons, its results for the latest season, and a 
   await expect(page.locator("[data-form] .chip")).toHaveCount(results.length);
   await page.selectOption("[data-h2h-select]", "Kent");
   await expect(page.locator("[data-h2h-row]")).toHaveCount(rowsOf("HeadToHead", { teamA: "Surrey", teamB: "Kent" }).length);
+  await expect(page.locator("[data-h2h-record] .stat b").first()).toHaveText(String(rowsOf("HeadToHeadRecord", { teamA: "Surrey", teamB: "Kent" })[0].teamAWon));
   await page.click("[data-result-row]");
   await expect(page).toHaveURL(new RegExp(`#/match/${results[0].matchId}$`));
   expect(errors).toEqual([]);
@@ -189,4 +192,47 @@ test("a tab switch during a slow call responds at once and the slow answer never
   await page.click('[data-tab="summary"]');
   await expect(page.locator("#topbowl .hb")).toHaveCount(rowsOf("SeasonBowling", { season: LATEST, limit: 10 }).length);
   expect(errors).toEqual([]);
+});
+
+test("the Ask tab answers a question with rows and the query it wrote, and says when nothing matched", async ({ page }) => {
+  const q = "Who scored the most runs for Kent in 2023?";
+  const errors = await open(page, `#/ask/${encodeURIComponent(q)}`, {
+    [`lens:cricket-ask:${JSON.stringify({ question: "nothing here" })}`]: { status: "SUCCEEDED", data: { kind: "cricket-ask", question: "nothing here", status: "EMPTY", warnings: [], rows: [], rowCount: 0, cypher: "MATCH (p:CricketPlayer) WHERE false RETURN p LIMIT 1", limits: [] } },
+  });
+  const d = fixtures[`lens:cricket-ask:${JSON.stringify({ question: q })}`].data;
+  await expect(page.locator("[data-ask-rows] tbody tr")).toHaveCount(d.rows.length);
+  await expect(page.locator("[data-ask-rows]")).toContainText(d.rows[0].player);
+  await expect(page.locator("[data-ask-cypher]")).toContainText("MATCH");
+  await page.fill("[data-ask-input]", "nothing here");
+  await page.click("[data-ask-go]");
+  await expect(page.locator('#askout [data-state="empty"]')).toContainText("matched nothing");
+  expect(errors).toEqual([]);
+});
+
+test("the Twelfth Man answers through the agent endpoint, keeps the conversation, and says loudly when the agent is not there", async ({ page }) => {
+  let calls = 0;
+  const agent = async (route) => {
+    const body = route.request().postDataJSON();
+    calls++;
+    if (calls === 1) return route.fulfill({ status: 404, contentType: "application/json", body: JSON.stringify({ error: { message: "agent twelfth-man is not signed" } }) });
+    return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ id: "x", object: "chat.completion", created: 0, model: "twelfth-man",
+      choices: [{ index: 0, message: { role: "assistant", content: `You sent ${body.messages.length} message(s) on ${body.embabel_conversation}.\n\n| Player | Runs |\n|---|---|\n| SA Northeast | 410 |` }, finish_reason: "stop" }],
+      embabel: { calls: [{ name: "HighestScores" }] } }) });
+  };
+  const errors = await open(page, "#/ask", {}, {}, [["**/api/v1/agents/twelfth-man/v1/chat/completions", agent]]);
+  await expect(page.locator("#chatcard")).toContainText("Twelfth Man");
+  await page.fill("[data-chat-input]", "hello");
+  await page.click("[data-chat-form] button");
+  await expect(page.locator("[data-chat-error]")).toContainText("not signed");
+  await page.fill("[data-chat-input]", "fun fact please");
+  await page.click("[data-chat-form] button");
+  await expect(page.locator("[data-chat-tm]")).toHaveCount(1);
+  await expect(page.locator("[data-chat-tm] table")).toContainText("SA Northeast");
+  await expect(page.locator("[data-chat-tm] .ev")).toContainText("HighestScores");
+  await expect(page.locator("[data-chat-me]")).toHaveCount(2);
+  await page.click('[data-tab="teams"]');
+  await page.click('[data-tab="ask"]');
+  await expect(page.locator("[data-chat-tm]")).toHaveCount(1);
+  /* the browser logs the deliberate 404 as a failed resource; nothing else may be logged */
+  expect(errors.filter(e => !/404/.test(e))).toEqual([]);
 });

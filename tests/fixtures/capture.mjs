@@ -30,6 +30,7 @@ export const CALLS = [
   ['TeamSeasons', { team: 'Surrey' }],
   ['TeamResults', { team: 'Surrey', season: 2026, limit: 50 }],
   ['HeadToHead', { teamA: 'Surrey', teamB: 'Kent' }],
+  ['HeadToHeadRecord', { teamA: 'Surrey', teamB: 'Kent' }],
   ['PlayerSearch', { name: 'madsen' }],
   ['PlayerBatting', { playerId: '86e0f3f0' }],
   ['PlayerBowling', { playerId: '86e0f3f0' }],
@@ -51,6 +52,14 @@ for (const [name, args] of CALLS) {
   if (res.status !== 200 || env.status !== 'SUCCEEDED') { console.error(`${name} ${JSON.stringify(args)}: ${res.status} ${env.status} ${env.error?.message ?? ''}`); process.exit(1); }
   out[key(name, args)] = env;
   console.log(`${key(name, args)}  ${env.data.length} rows`);
+}
+// the ask lens, through the lens endpoint, with the question the app's example chip sends
+for (const question of ['Who scored the most runs for Kent in 2023?']) {
+  const res = await fetch(`${base}/api/v1/lenses/cricket-ask/invoke?waitSeconds=60`, { method: 'POST', headers: { Authorization: auth, 'Content-Type': 'application/json' }, body: JSON.stringify({ args: { question } }) });
+  const env = await res.json();
+  if (res.status !== 200 || env.status === 'FAILED') { console.error(`cricket-ask: ${res.status} ${env.status} ${env.error?.message ?? ''}`); process.exit(1); }
+  out[`lens:cricket-ask:${JSON.stringify({ question })}`] = env;
+  console.log(`lens:cricket-ask ${question}`);
 }
 writeFileSync(new URL('./envelopes.json', import.meta.url), JSON.stringify(out, null, 1));
 console.log(`wrote ${Object.keys(out).length} envelopes`);

@@ -25,6 +25,7 @@ const CASES = [
   ['TeamSeasons', { team: 'Yorkshire' }, /"season":2014/],
   ['TeamResults', { team: 'Kent', season: 2024, limit: 50 }, /opponent/],
   ['HeadToHead', { teamA: 'Lancashire', teamB: 'Yorkshire' }, /Old Trafford|Headingley/],
+  ['HeadToHeadRecord', { teamA: 'Lancashire', teamB: 'Yorkshire' }, /"teamBWon":4/],
   ['SeasonBatting', { season: 2025, stage: 1, minInnings: 10, limit: 10 }, /average/],
   ['SeasonBatting', { season: 2016, team: 'Durham', limit: 5 }, /Jennings|Stoneman|Borthwick/],
   ['SeasonBowling', { season: 2024, minWickets: 30, limit: 10 }, /economy/],
@@ -91,6 +92,21 @@ for (const [name, args] of EMPTY_CASES) {
   const rows = body.data ?? [];
   const problem = problemOf(http, body) ?? (rows.length !== 0 ? `${rows.length} rows where none were expected` : null);
   report(!problem, `${name.padEnd(18)} ${JSON.stringify(args).padEnd(58)} ${String(ms).padStart(6)}ms${problem ? '  ' + problem : ''}`);
+}
+
+console.log(`\n== the ask lens (plain English in, rows and the generated query out)`);
+{
+  const started = Date.now();
+  const res = await fetch(`${base}/api/v1/lenses/cricket-ask/invoke?waitSeconds=60`, {
+    method: 'POST', headers: { Authorization: auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ args: { question: 'Who scored the most runs for Kent in 2023?' } }),
+  });
+  const body = await res.json().catch(() => ({}));
+  let d = body.data; if (typeof d === 'string') { try { d = JSON.parse(d); } catch {} }
+  const rows = (d && d.rows) || [];
+  const problem = res.status !== 200 || body.status === 'FAILED' ? `${res.status} ${body.status ?? ''} ${body.error?.message?.slice(0, 160) ?? ''}`
+    : !rows.length ? `no rows (${d && d.status})` : !(d && d.cypher) ? 'no generated cypher in the answer' : null;
+  report(!problem, `cricket-ask          ${String(rows.length).padStart(4)} rows ${String(Date.now() - started).padStart(6)}ms${problem ? '  ' + problem : ''}`);
 }
 
 console.log(failures ? `\n${failures} check(s) failed` : '\nall passed');

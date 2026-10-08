@@ -1,0 +1,3 @@
+{"_captured":"gateway.kg.ask({question, explain:true}) run through code_mode on 2026-10-08 against the live realm; the lens wraps exactly this. Recapture with tests/fixtures/capture.mjs (REST) when the ask surface changes.",
+ "question":"Who scored the most runs for Kent in 2023?",
+ "result":{"rows":[{"player":"BG Compton","totalRuns":735}],"warnings":[],"cost":{"ms":8838,"apiCalls":0,"llmCalls":1},"cypher":"MATCH (b:BattingInnings)\nWHERE b.team = 'Kent' AND b.season = 2023\nWITH b.player AS player, sum(b.runs) AS totalRuns\nRETURN player, totalRuns\nORDER BY totalRuns DESC\nLIMIT 1"}}

@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>County Cricket</title>
-<meta name="description" content="County Championship stats since 2014 from Cricsheet's ball-by-ball record: season tables, leading run-scorers and wicket-takers, every county's results and head-to-heads, player careers innings by innings, records, and the full scorecard of any match.">
+<meta name="description" content="County Championship stats since 2014 from Cricsheet's ball-by-ball record: season tables, leading run-scorers and wicket-takers, every county's results and head-to-heads, player careers innings by innings, records, the full scorecard of any match, plain-English questions answered with the query shown, and the Twelfth Man, a cricket-mad chat companion.">
 <link rel="stylesheet" href="/api/v1/apps-runtime/v1/theme.css">
 <script src="/api/v1/apps-runtime/v1/embabel.js"></script>
 <script type="application/embabel-app+json">
-{"version":1,"name":"county-cricket","requires":{"lenses":[],"views":["CountySeasons","CountyTeams","CountyTable","TeamSeasons","TeamResults","HeadToHead","SeasonBatting","SeasonBowling","HighestScores","BestBowling","PlayerSearch","PlayerBatting","PlayerBowling","PlayerInnings","PlayerSpells","MatchSummary","MatchInnings","MatchBatting","MatchBowling"],"realms":["county-cricket"],"namespaces":[]}}
+{"version":1,"name":"county-cricket","requires":{"lenses":["cricket-ask"],"views":["CountySeasons","CountyTeams","CountyTable","TeamSeasons","TeamResults","HeadToHead","HeadToHeadRecord","SeasonBatting","SeasonBowling","HighestScores","BestBowling","PlayerSearch","PlayerBatting","PlayerBowling","PlayerInnings","PlayerSpells","MatchSummary","MatchInnings","MatchBatting","MatchBowling"],"realms":["county-cricket"],"namespaces":[]}}
 </script>
 <style>
 :root{
@@ -141,14 +141,33 @@ embabel-operation-state:empty{display:none}
 /* player hits */
 .hit{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line);color:var(--ink)}
 .hit:hover{text-decoration:none;background:rgba(95,214,138,.05)} .hit b{font-size:16px} .hit span{color:var(--muted);font-size:13px}
+/* ask + chat */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.chips button{font-size:12px;padding:5px 10px;border-radius:999px;color:var(--ink2)}
+.ask-status{font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.ask-table{overflow:auto;max-height:420px;border:1px solid var(--line);border-radius:8px}
+pre.cy{background:#070907;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font:12px/1.5 var(--mono);color:var(--ink2);margin:8px 0 0}
+.fine{color:var(--muted);font-size:12px;margin-top:8px}
+.chat{display:flex;flex-direction:column;min-height:520px}
+.chat .log{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:6px 2px;max-height:560px}
+.msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5}
+.msg.me{align-self:flex-end;background:rgba(95,214,138,.14);border:1px solid rgba(95,214,138,.35);border-bottom-right-radius:4px}
+.msg.tm{align-self:flex-start;background:var(--surface2);border:1px solid var(--line2);border-bottom-left-radius:4px}
+.msg.tm:before{content:"Twelfth Man";display:block;font:600 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.msg.sys{align-self:center;color:var(--muted);font-size:12px;text-align:center;background:none}
+.msg.err{align-self:stretch;color:var(--ball);border:1px solid rgba(239,106,90,.4);border-radius:8px;max-width:none}
+.msg table{font-size:13px;margin:6px 0} .msg td,.msg th{padding:4px 8px} .msg p{margin:0 0 8px} .msg p:last-child{margin:0}
+.msg .ev{font-size:11px;color:var(--muted);margin-top:8px}
+.chat form{display:flex;gap:8px;margin-top:12px} .chat input{flex:1;min-width:0}
+.typing{color:var(--muted);font-size:13px;font-style:italic}
 /* footer / how it works */
 footer{max-width:1240px;margin:0 auto;padding:0 20px 20px;color:var(--dim);font-size:12px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
 footer a{color:var(--muted)}
-#how{display:none} #how.show{display:block}
-#how pre{background:#070907;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font:12px/1.5 var(--mono);color:var(--ink2);max-height:360px}
-#how details{border-bottom:1px solid var(--line);padding:8px 0} #how summary{cursor:pointer;font-weight:600}
-#how summary code{color:var(--gold);font-family:var(--mono)} #how h3{font:400 22px/1.2 var(--serif);margin:22px 0 8px}
-#how dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px} #how dt{color:var(--gold);font-family:var(--mono)}
+#how-it-works{display:none} #how-it-works.show,#how-it-works:target{display:block}
+#how-it-works pre{background:#070907;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;font:12px/1.5 var(--mono);color:var(--ink2);max-height:360px}
+#how-it-works details{border-bottom:1px solid var(--line);padding:8px 0} #how-it-works summary{cursor:pointer;font-weight:600}
+#how-it-works summary code{color:var(--gold);font-family:var(--mono)} #how-it-works h3{font:400 22px/1.2 var(--serif);margin:22px 0 8px}
+#how-it-works dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px} #how-it-works dt{color:var(--gold);font-family:var(--mono)}
 #tip{position:fixed;z-index:50;pointer-events:none;background:#070907;border:1px solid var(--line2);color:var(--ink);font:12px/1.45 var(--sans);padding:8px 10px;border-radius:8px;white-space:pre;display:none;max-width:320px;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 .tr{text-align:right} .nowrap{white-space:nowrap}
 @media (max-width:640px){.mast h1{font-size:32px} .hb{grid-template-columns:minmax(120px,1.3fr) 1.6fr 54px} th,td{padding:6px 5px;font-size:13px}}
@@ -163,7 +182,7 @@ footer a{color:var(--muted)}
   <nav class="tabs" id="tabs" aria-label="Sections"></nav>
 </header>
 <main id="main"></main>
-<section id="how" class="mast">
+<section id="how-it-works" class="mast">
   <div class="card">
     <h2><small>Under the bonnet</small>How it works</h2>
     <h3>1. The data</h3>
@@ -225,6 +244,14 @@ RETURN m.matchId AS matchId, m.season AS season, m.stageName AS stage, m.startDa
        m.result AS result, m.winner AS winner, m.margin AS margin, m.url AS url
 ORDER BY date DESC
 LIMIT 200</pre></details>
+<details data-view="HeadToHeadRecord"><summary><code>HeadToHeadRecord</code> — The head-to-head RECORD between two counties in the County Championship since 2014, as one row: how many matches each has won, how many were drawn or tied, and how many were played. Answers &quot;how many matches have Yorkshire won against Lancashire&quot;, &quot;what is Surrey&#x27;s record against Kent&quot;, &quot;who has the upper hand between Somerset and Essex&quot;. A team is listed as team1 or team2 in either order; this view counts both.</summary><p class="sub">Parameters: teamA: string = &#x27;Yorkshire&#x27;, teamB: string = &#x27;Lancashire&#x27;</p><pre>MATCH (m:CountyMatch)
+WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
+RETURN $teamA AS teamA, $teamB AS teamB, count(m) AS played,
+       sum(CASE WHEN m.winner = $teamA THEN 1 ELSE 0 END) AS teamAWon,
+       sum(CASE WHEN m.winner = $teamB THEN 1 ELSE 0 END) AS teamBWon,
+       sum(CASE WHEN m.result = &#x27;draw&#x27; THEN 1 ELSE 0 END) AS drawn,
+       sum(CASE WHEN m.result = &#x27;tie&#x27; THEN 1 ELSE 0 END) AS tied,
+       min(m.startDate) AS firstMeeting, max(m.startDate) AS lastMeeting</pre></details>
 <details data-view="SeasonBatting"><summary><code>SeasonBatting</code> — The leading run-scorers of a County Championship season - matches, innings, not outs, runs, highest score, average, balls faced, strike rate, fours, sixes, hundreds and fifties - optionally within one division (2021 group) or one county, with a minimum innings. Answers &quot;who scored the most runs in 2025&quot;, &quot;best batting average for Surrey&quot;, &quot;most hundreds in Division 2&quot;.</summary><p class="sub">Parameters: season: int = 2026, stage: int = 0, team: string = &#x27;&#x27;, minInnings: int = 1, limit: int = 25</p><pre>MATCH (b:BattingInnings {season: $season})
 WHERE ($stage = 0 OR b.stage = $stage) AND ($team = &#x27;&#x27; OR b.team = $team)
 WITH b.playerId AS playerId, max(b.player) AS player, collect(DISTINCT b.team) AS teams,
@@ -359,6 +386,8 @@ RETURN b.inningsNo AS inningsNo, b.team AS team, b.opponent AS opponent, b.bowlO
 ORDER BY inningsNo, bowlOrder
 LIMIT 100</pre></details>
 <!-- VIEWS:END -->
+    <details data-lens="cricket-ask"><summary><code>cricket-ask</code> (a lens, not a view) — the Ask tab. It hands your question to the platform's text-to-Cypher (<code>gateway.kg.ask</code>), which writes a query over the schema above, runs it, and returns the rows WITH the query; the page shows both. A generated query can misread a question, which is why the Cypher is on screen.</summary><p class="sub">Parameters: question: string</p></details>
+    <p><b>The Twelfth Man</b> is the realm's agent (<code>agents/twelfth-man.yml</code>, persona <code>personalities/twelfth-man/</code>). The chat panel posts your messages to the host's agent endpoint, <code>/api/v1/agents/twelfth-man/v1/chat/completions</code>, with a conversation id of its own, so it is a private conversation that does not join your main assistant chat. His conversation reaches only this realm's views and the host's memory: every figure he quotes is a view call he has just made, and he is told to say so when the data does not hold something. An operator has to sign the agent and switch it on before it answers; until then the panel says so.</p>
     <h3>3. When it looks wrong</h3>
     <dl>
       <dt>A table is missing a team, or a county has played fewer matches than it should</dt><dd>Each division's table is built from the matches that season carries; a county appears once it has played. Cricsheet's archive is incomplete for 2014 to 2019 (see section 1), and early in a season the newest fixtures may not yet be in it, so a "played" column can be short of the fixture list.</dd>
@@ -366,16 +395,18 @@ LIMIT 100</pre></details>
       <dt>A leaders list is empty</dt><dd>The season has no innings matching the filters: the division or county chosen did not play that season (2021 had three groups, not two divisions), or the minimum innings is above what anyone reached.</dd>
       <dt>A player has two entries</dt><dd>Players are keyed by Cricsheet's registry id, not by name, so two entries are two people who share a printed name. Their county list and seasons tell them apart.</dd>
       <dt>An average shows a dash</dt><dd>No dismissals (batting) or no wickets (bowling): the average is undefined, not zero.</dd>
+      <dt>The Ask tab gives a confident wrong answer</dt><dd>Read the query under it: a generated query can group by the wrong thing (a county instead of a player) or test one side of a fixture. The named views on the other tabs are hand-written and tested; prefer them for anything that matters, and report the question so a view can claim it.</dd>
+      <dt>The Twelfth Man quotes a number</dt><dd>It came from a view call in that turn; ask "where did that come from" and he names the view. If he says the data does not hold something, it does not.</dd>
       <dt>A panel says it could not load</dt><dd>The view call failed or the realm is not installed; the message names which. A panel that is genuinely empty says "no" something, never a blank.</dd>
       <dt>The figures differ from ESPNcricinfo</dt><dd>Each match links to its ESPNcricinfo page. Cricsheet transcribes from the same scorecards, and a handful of innings in the archive are marked with miscounted overs or absent players; the realm's tests reconcile every season total against the raw files, not against the website.</dd>
     </dl>
     <h3>4. What made this possible</h3>
-    <p>The whole statistical layer is nineteen saved queries over records the realm seeds itself. There is no backend to deploy for this app, no database to administer and no nightly aggregation job: a season's leading run-scorers are summed from fifty thousand innings rows inside the query that fetches them (see <code>SeasonBatting</code> above), the same rows that feed a player's career and a match's scorecard, so a number shown twice is computed once. The page asks the world by view name when it loads; the same views answer the appliance's natural-language questions, which the realm's <code>tests/questions.yml</code> battery checks against these figures.</p>
+    <p>The whole statistical layer is twenty saved queries over records the realm seeds itself. There is no backend to deploy for this app, no database to administer and no nightly aggregation job: a season's leading run-scorers are summed from fifty thousand innings rows inside the query that fetches them (see <code>SeasonBatting</code> above), the same rows that feed a player's career and a match's scorecard, so a number shown twice is computed once. The page asks the world by view name when it loads; the same views answer the appliance's natural-language questions, which the realm's <code>tests/questions.yml</code> battery checks against these figures.</p>
   </div>
 </section>
 <footer>
   <span>Data: <a href="https://cricsheet.org/" target="_blank" rel="noopener noreferrer">Cricsheet</a> (ODC-By). Match pages link to <a href="https://www.espncricinfo.com/" target="_blank" rel="noopener noreferrer">ESPNcricinfo</a>. Championship points are not shown: bonus points and penalties are not in the record.</span>
-  <a href="#/how-it-works" id="how-link">How it works</a>
+  <a href="#how-it-works" id="how-link">How it works</a>
 </footer>
 <div id="tip" role="tooltip"></div>
 <div id="embabel-badge" style="position:fixed;bottom:0;left:0;right:0;text-align:center;padding:6px 0;background:rgba(10,10,15,0.9);border-top:1px solid rgba(99,192,245,0.2);font-size:0.75rem;color:#6b7280;z-index:9999;pointer-events:none;">
@@ -432,6 +463,7 @@ function route() {
   if (a === 'player' && idOk(b)) return { page: 'player', id: b };
   if (a === 'records') return { page: 'records', season: /^\d{4}$/.test(b || '') ? Number(b) : 0 };
   if (a === 'match' && idOk(b)) return { page: 'match', id: b };
+  if (a === 'ask') return { page: 'ask', q: (b || '').slice(0, 300) };
   if (a === 'how-it-works') return { page: 'how' };
   return { page: 'season', season: app.latest, sub: 'summary', unknown: true };
 }
@@ -443,12 +475,12 @@ function nav() {
   aborter = new AbortController();
   const signal = aborter.signal;
   const alive = () => my === gen;
-  $('#how').classList.toggle('show', r.page === 'how');
+  $('#how-it-works').classList.toggle('show', r.page === 'how');
   main.style.display = r.page === 'how' ? 'none' : '';
   paintSeasons(r);
   paintTabs(r);
   window.scrollTo(0, 0);
-  const pages = { season: pageSeason, teams: pageTeams, team: pageTeam, players: pagePlayers, player: pagePlayer, records: pageRecords, match: pageMatch, how: async () => {} };
+  const pages = { season: pageSeason, teams: pageTeams, team: pageTeam, players: pagePlayers, player: pagePlayer, records: pageRecords, match: pageMatch, ask: pageAsk, how: async () => {} };
   pages[r.page](r, { alive, signal }).catch(e => { if (alive()) main.innerHTML = errorBox(e); });
 }
 
@@ -466,6 +498,7 @@ function paintTabs(r) {
     ['teams', '#/teams', 'Counties'],
     ['players', '#/players', 'Players'],
     ['records', '#/records', 'Records'],
+    ['ask', '#/ask', 'Ask'],
   ];
   const on = r.page === 'season' ? r.sub : (r.page === 'team' ? 'teams' : r.page === 'player' ? 'players' : r.page);
   $('#tabs').innerHTML = tabs.map(([k, h, l]) => `<a href="${h}" data-tab="${k}" class="${k === on ? 'on' : ''}">${l}</a>`).join('');
@@ -679,11 +712,10 @@ async function pageTeam(r, { alive, signal }) {
   sel.addEventListener('change', () => { location.hash = '#/' + ['team', encodeURIComponent(team), r.season, sel.value ? encodeURIComponent(sel.value) : ''].filter(Boolean).join('/'); });
   if (r.opp) {
     $('#h2hbody').innerHTML = loadingBox('the head-to-head');
-    view('HeadToHead', { teamA: team, teamB: r.opp }, { signal }).then(res => {
+    Promise.all([view('HeadToHeadRecord', { teamA: team, teamB: r.opp }, { signal }), view('HeadToHead', { teamA: team, teamB: r.opp }, { signal })]).then(([rec, res]) => {
       if (!alive()) return;
-      const tally = { won: 0, lost: 0, drawn: 0, tied: 0 };
-      res.rows.forEach(m => { if (m.winner === team) tally.won++; else if (m.winner) tally.lost++; else if (m.result === 'tie') tally.tied++; else tally.drawn++; });
-      $('#h2hbody').innerHTML = warnBox(res.warnings) + (res.rows.length ? `<div class="stats" style="grid-template-columns:repeat(3,1fr)"><div class="stat"><small>${esc(team)} won</small><b>${tally.won}</b></div><div class="stat" style="--pitch:var(--draw)"><small>Drawn${tally.tied ? ' / tied' : ''}</small><b>${tally.drawn + tally.tied}</b></div><div class="stat ball"><small>${esc(r.opp)} won</small><b>${tally.lost}</b></div></div>
+      const tally = rec.rows[0] || { teamAWon: 0, teamBWon: 0, drawn: 0, tied: 0, played: 0 };
+      $('#h2hbody').innerHTML = warnBox([...rec.warnings, ...res.warnings]) + (res.rows.length ? `<div class="stats" style="grid-template-columns:repeat(3,1fr)" data-h2h-record><div class="stat"><small>${esc(team)} won</small><b>${tally.teamAWon}</b></div><div class="stat" style="--pitch:var(--draw)"><small>Drawn${tally.tied ? ' / tied' : ''}</small><b>${tally.drawn + tally.tied}</b></div><div class="stat ball"><small>${esc(r.opp)} won</small><b>${tally.teamBWon}</b></div></div>
         <table><thead><tr><th>Date</th><th>Venue</th><th>Result</th></tr></thead><tbody>${res.rows.map(m => `<tr data-h2h-row="${esc(m.matchId)}"><td class="nowrap">${matchLink(m.matchId, dateFmt(m.date))}</td><td class="dim">${esc(m.city)}</td><td>${m.winner ? `${esc(m.winner)} by ${esc(m.margin)}` : (m.result === 'tie' ? 'Tied' : 'Drawn')} ${extLink(m.url)}</td></tr>`).join('')}</tbody></table>` : emptyBox(`${team} and ${r.opp} have not met in the Championship since 2014 in the data: they were in different divisions.`));
     }).catch(e => { if (alive()) $('#h2hbody').innerHTML = errorBox(e); });
   }
@@ -788,6 +820,101 @@ async function pageMatch(r, { alive, signal }) {
   $('#match').innerHTML = `<div class="mh"><div><h2>${teamLink(m.team1)} v ${teamLink(m.team2)}</h2><p class="sub" style="margin:6px 0 0">${esc(m.competition)} ${m.season}, ${esc(m.stageName)} · ${esc(m.venue)} · ${dateFmt(m.startDate)}${m.endDate !== m.startDate ? ' to ' + dateFmt(m.endDate) : ''} · Toss: ${esc(m.tossWinner)}, ${esc(m.tossDecision)}${m.tossUncontested ? ' (uncontested)' : ''} · <a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">ESPNcricinfo</a></p></div><div class="res" data-result>${esc(resultLine)}</div></div>
     ${warnBox([...sum.warnings, ...inns.warnings, ...bat.warnings, ...bowl.warnings])}
     <div class="inns">${innsHtml || emptyBox('No innings are held for this match.')}</div>${cards}`;
+}
+
+/* ---------- ask: a plain-English question, answered with the query that produced the rows ---------- */
+const askCache = new Map();
+async function askLens(question, opts = {}) {
+  if (!askCache.has(question)) {
+    const p = (async () => {
+      const env = await embabel.lenses.invoke('cricket-ask', { question }, opts);
+      if (env && env.status === 'FAILED') throw new Error((env.error && env.error.message) || 'The ask failed.');
+      let d = env && env.data;
+      if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = { status: 'FAILED', warnings: [d] }; } }
+      if (d && d.content && !d.rows) { d = typeof d.content === 'string' ? JSON.parse(d.content) : d.content; }
+      return d || { status: 'EMPTY', rows: [] };
+    })();
+    askCache.set(question, p);
+    p.catch(() => askCache.delete(question));
+  }
+  return askCache.get(question);
+}
+const EXAMPLES = ['Who scored the most runs for Kent in 2023?', 'Which county drew the most matches in 2016?', 'How many five-wicket hauls did JA Porter take in 2019?', 'Highest score by a Glamorgan batter', 'Who has played for both Surrey and Kent?', 'How many matches did Lancashire win by an innings in 2019?'];
+async function pageAsk(r, { alive, signal }) {
+  main.innerHTML = `<div class="grid two">
+    <div class="card" id="askcard"><h2><small>Plain English</small>Ask the scorecards</h2>
+      <p class="sub">Type a question. The world writes a query over the realm's rows, runs it, and shows the query beside the answer, so you can see exactly what was counted. Counts and totals only; it knows nothing outside the County Championship since 2014.</p>
+      <form class="controls" onsubmit="return false" data-ask-form><label style="flex:1">Question<input type="search" data-ask-input placeholder="e.g. who took the most wickets for Essex in 2022?" value="${esc(r.q)}" autocomplete="off" style="width:100%"></label><button class="primary" type="submit" data-ask-go>Ask</button></form>
+      <div class="chips">${EXAMPLES.map(q => `<button type="button" data-ask-example="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+      <div id="askout">${r.q ? loadingBox('an answer') : emptyBox('Ask something, or try an example above.')}</div></div>
+    <div class="card chat" id="chatcard"></div></div>`;
+  const form = main.querySelector('[data-ask-form]'), input = main.querySelector('[data-ask-input]');
+  const go = () => { const q = input.value.trim(); if (q) location.hash = '#/ask/' + encodeURIComponent(q); };
+  form.addEventListener('submit', go);
+  main.querySelectorAll('[data-ask-example]').forEach(b => b.addEventListener('click', () => { input.value = b.dataset.askExample; go(); }));
+  paintChat();
+  if (!r.q) return;
+  const out = $('#askout');
+  try {
+    const d = await askLens(r.q, { signal });
+    if (!alive()) return;
+    const rows = d.rows || [];
+    const cols = rows.length ? Object.keys(rows[0]) : [];
+    const cell = (v) => v == null ? '<span class="dim">—</span>' : typeof v === 'object' ? esc(JSON.stringify(v)) : typeof v === 'number' ? `<span class="num">${esc(Number.isInteger(v) ? v.toLocaleString('en-GB') : v)}</span>` : esc(v);
+    out.innerHTML = `<div class="ask-status" data-ask-status="${esc(d.status || '')}">${esc(d.status === 'COMPLETE' ? `${d.rowCount} row${d.rowCount === 1 ? '' : 's'}` : d.status === 'EMPTY' ? 'No rows' : 'Failed')}</div>`
+      + warnBox(d.warnings)
+      + (rows.length ? `<div class="ask-table"><table data-ask-rows><thead><tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${rows.map(row => `<tr>${cols.map(c => `<td>${cell(row[c])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${d.truncated ? `<div class="fine">Showing 50 of ${esc(d.rowCount)} rows.</div>` : ''}`
+        : d.status === 'FAILED' ? `<div class="state error" data-state="error">The question could not be answered: ${esc((d.warnings || []).join(' ') || 'the query failed')}.</div>`
+        : `<div class="state empty" data-state="empty">The query ran and matched nothing${d.hint ? '' : ' - which is not the same as nothing existing'}. ${esc(d.hint || '')}</div>`)
+      + (d.note ? `<div class="fine">${esc(d.note)}</div>` : '')
+      + (d.cypher ? `<div class="ask-status" style="margin-top:14px">The query it wrote</div><pre class="cy" data-ask-cypher>${esc(d.cypher)}</pre>` : '')
+      + `<div class="fine">${(d.limits || []).map(esc).join(' ')}</div>`;
+  } catch (e) { if (alive()) out.innerHTML = errorBox(e); }
+}
+
+/* ---------- the Twelfth Man: a private conversation with the realm's agent, through the host's agent chat endpoint ---------- */
+const chat = { conv: 'cc-' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36), messages: [], busy: false, error: null };
+function md(text) {
+  const lines = esc(text).split('\n'); const out = []; let table = null;
+  const inline = (t) => t.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<code>$1</code>').replace(/\*(?!\s)(.+?)\*/g, '<i>$1</i>');
+  const flush = () => { if (table) { out.push(`<table><thead><tr>${table.head.map(h => `<th>${inline(h)}</th>`).join('')}</tr></thead><tbody>${table.rows.map(r => `<tr>${r.map(c => `<td>${inline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`); table = null; } };
+  for (const line of lines) {
+    if (/^\s*\|.*\|\s*$/.test(line)) {
+      const cells = line.trim().slice(1, -1).split('|').map(c => c.trim());
+      if (cells.every(c => /^:?-{2,}:?$/.test(c))) continue;
+      if (!table) table = { head: cells, rows: [] }; else table.rows.push(cells);
+      continue;
+    }
+    flush();
+    if (line.trim()) out.push(`<p>${inline(line)}</p>`);
+  }
+  flush();
+  return out.join('');
+}
+function paintChat() {
+  const card = $('#chatcard'); if (!card) return;
+  card.innerHTML = `<h2><small>Talk to the</small>Twelfth Man</h2><p class="sub">The club's perpetual twelfth man: never gets a game, carries the drinks, keeps the scorebook, knows every scorecard since 2014. An AI character speaking for the <b>county-cricket</b> realm; every figure he quotes is looked up in a view as he speaks. A private conversation with the agent, not your main assistant chat.</p>
+    <div class="log" data-chat-log>${chat.messages.length ? '' : '<div class="msg sys">Say hello, or ask for a fun fact. He will want to know which county you follow.</div>'}${chat.messages.map(m => m.role === 'user' ? `<div class="msg me" data-chat-me>${esc(m.content)}</div>` : `<div class="msg tm" data-chat-tm>${md(m.content)}${m.evidence ? `<div class="ev">${esc(m.evidence)}</div>` : ''}</div>`).join('')}${chat.busy ? '<div class="msg sys typing" data-chat-typing>The Twelfth Man is checking the scorebook…</div>' : ''}${chat.error ? `<div class="msg err" data-chat-error>${esc(chat.error)}</div>` : ''}</div>
+    <form onsubmit="return false" data-chat-form><input type="text" data-chat-input placeholder="Ask the Twelfth Man anything about county cricket…" autocomplete="off" maxlength="600" ${chat.busy ? 'disabled' : ''}><button class="primary" type="submit" ${chat.busy ? 'disabled' : ''}>Send</button></form>`;
+  const log = card.querySelector('[data-chat-log]'); log.scrollTop = log.scrollHeight;
+  card.querySelector('[data-chat-form]').addEventListener('submit', () => { const i = card.querySelector('[data-chat-input]'); const t = i.value.trim(); if (t && !chat.busy) sendToTwelfthMan(t); });
+  if (!chat.busy) { const i = card.querySelector('[data-chat-input]'); if (i && chat.messages.length) i.focus(); }
+}
+async function sendToTwelfthMan(text) {
+  chat.messages.push({ role: 'user', content: text }); chat.busy = true; chat.error = null; paintChat();
+  try {
+    const res = await fetch('/api/v1/agents/twelfth-man/v1/chat/completions', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'twelfth-man', messages: chat.messages.map(m => ({ role: m.role, content: m.content })), stream: false, embabel_conversation: chat.conv, embabel_evidence: true }) });
+    const body = await res.json().catch(() => ({}));
+    if (res.status === 404) throw new Error((body.error && body.error.message) || 'The Twelfth Man is not available in this world: the county-cricket realm’s agent has not been signed and switched on yet.');
+    if (res.status === 401) throw new Error('You are not signed in to this world, so the Twelfth Man cannot hear you.');
+    if (!res.ok) throw new Error((body.error && body.error.message) || `The host answered ${res.status}.`);
+    const reply = body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content;
+    if (!reply) throw new Error('The Twelfth Man sent an empty reply.');
+    const ev = body.embabel && Array.isArray(body.embabel.calls) ? body.embabel.calls.map(c => c.name || c.tool || '').filter(Boolean) : null;
+    chat.messages.push({ role: 'assistant', content: reply, evidence: ev && ev.length ? 'Looked up: ' + [...new Set(ev)].join(', ') : null });
+  } catch (e) { chat.error = e.message || String(e); }
+  chat.busy = false; paintChat();
 }
 
 /* ---------- tooltip ---------- */

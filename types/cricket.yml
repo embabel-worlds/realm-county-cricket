@@ -78,9 +78,9 @@
     city:
       description: "Town or city of the ground."
     team1:
-      description: "The team Cricsheet lists first (normally the home side)."
+      description: "The team Cricsheet lists first (normally the home side). A county's matches are those where it is team1 OR team2 - always test both."
     team2:
-      description: "The team Cricsheet lists second (normally the visitors)."
+      description: "The team Cricsheet lists second (normally the visitors). A county's matches are those where it is team1 OR team2 - always test both."
     tossWinner:
       description: "Who won the toss. Many Championship tosses are uncontested: the visitors may choose to bowl."
     tossDecision:
@@ -163,7 +163,7 @@
       description: "Penalty runs awarded to the batting side in this innings."
 
 - name: BattingInnings
-  description: "One batter's innings: runs, balls faced, boundaries, how out and by whom. A batter who did not come in has no row, so count(rows) is innings batted. `notOut` is true for not out, retired hurt and retired not out. Reaches the player via BY and the match via IN_MATCH; `season`, `team` and `opponent` are carried on the row so a season's leaders need no join."
+  description: "One batter's innings: runs, balls faced, boundaries, how out and by whom. A batter who did not come in has no row, so count(rows) is innings batted. `notOut` is true for not out, retired hurt and retired not out. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the batter's COUNTY, one of 18, never a person, so 'who scored the most runs' groups by playerId, not team. Reaches the player via BY and the match via IN_MATCH; `season`, `team` and `opponent` are carried on the row so a season's leaders need no join."
   userAnchor: false
   properties:
     key:
@@ -216,7 +216,7 @@
       description: "Fielders involved (catcher, stumper, or the run-out fielders), comma separated."
 
 - name: BowlingInnings
-  description: "One bowler's figures in one team innings: overs, maidens, runs conceded, wickets. Wickets are only those credited to the bowler (caught, bowled, lbw, stumped, hit wicket, caught and bowled); runs conceded exclude byes and leg byes. Reaches the player via BY and the match via IN_MATCH."
+  description: "One bowler's figures in one team innings: overs, maidens, runs conceded, wickets. Wickets are only those credited to the bowler (caught, bowled, lbw, stumped, hit wicket, caught and bowled); runs conceded exclude byes and leg byes. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the bowler's COUNTY, never a person. Reaches the player via BY and the match via IN_MATCH."
   userAnchor: false
   properties:
     key:

@@ -1,0 +1,53 @@
+id: cricket-ask
+name: Ask in plain English
+description: >-
+  Type a county cricket question in your own words — "who scored the most runs for Kent in
+  2023", "how many matches have Yorkshire drawn since 2014" — and the platform writes the Cypher
+  over this realm's scorecard rows, runs it, and shows BOTH the answer and the query it wrote,
+  so a wrong answer is a visible wrong query rather than a confident sentence.
+params:
+  - name: question
+    type: STRING
+    label: Your question
+    required: true
+    default: "who scored the most runs in the 2025 County Championship?"
+spec:
+  kind: cypherscript
+  script: |
+    const question = String(lensArgs.question || "").trim();
+    if (!question) {
+      await gateway.lens.present({ content: JSON.stringify({ kind: "cricket-ask", status: "EMPTY", note: "Ask a question." }) });
+    } else {
+      // kg.ask writes the Cypher and runs it, returning the query beside the rows. The pairing is
+      // the point: a generated answer whose query you cannot see is not auditable.
+      let out = null, error = null;
+      try {
+        out = await gateway.kg.ask({ question, explain: true });
+      } catch (e) {
+        error = String((e && e.message) || e);
+      }
+      let parsed = out;
+      if (typeof out === "string") { try { parsed = JSON.parse(out); } catch (e) { parsed = { rows: [], error: out }; } }
+      parsed = parsed || {};
+      const rows = parsed.rows || [];
+      await gateway.lens.present({ content: JSON.stringify({
+        kind: "cricket-ask",
+        question,
+        status: error || parsed.error ? "FAILED" : (rows.length ? "COMPLETE" : "EMPTY"),
+        warnings: [error, parsed.error].concat(parsed.warnings || []).filter(Boolean),
+        note: parsed.note || null,
+        hint: parsed.hint || null,
+        reason: parsed.reason || null,
+        cypher: parsed.cypher || null,
+        rowCount: rows.length,
+        rows: rows.slice(0, 50),
+        truncated: rows.length > 50,
+        limits: [
+          "A generated query can misread a question; the Cypher is shown so you can see what was counted.",
+          "The realm holds the County Championship 2014 to 2026 (no 2020), as scorecards: no points, no one-day or T20 cricket, no fielding, no ages.",
+          "Empty rows mean the query matched nothing, which is not the same as nothing existing.",
+        ],
+      }) });
+    }
+presentation:
+  href: /apps/county-cricket/county-cricket.html

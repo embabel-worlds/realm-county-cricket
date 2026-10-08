@@ -1,0 +1,12 @@
+# County cricket, with the Twelfth Man.
+#
+# A focus scopes the chat surface: the Twelfth Man reaches this realm's twenty views and the host's memory,
+# and nothing else in the world. Activate with `/focus cricket`; `/focus off` to leave.
+
+name: cricket
+displayName: County cricket
+description: "Talk county cricket with the Twelfth Man — tables, leaders, careers, scorecards and fun facts since 2014"
+icon: "🏏"
+defaultPersona: twelfth-man
+realms: [county-cricket]
+builtins: [memory, views]

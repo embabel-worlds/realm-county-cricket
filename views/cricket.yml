@@ -136,6 +136,32 @@
     ORDER BY date DESC
     LIMIT 200
 
+- name: HeadToHeadRecord
+  description: >-
+    The head-to-head RECORD between two counties in the County Championship since 2014, as one
+    row: how many matches each has won, how many were drawn or tied, and how many were played.
+    Answers "how many matches have Yorkshire won against Lancashire", "what is Surrey's record
+    against Kent", "who has the upper hand between Somerset and Essex". A team is listed as
+    team1 or team2 in either order; this view counts both.
+  params:
+    teamA:
+      type: string
+      default: "Yorkshire"
+      description: "One county."
+    teamB:
+      type: string
+      default: "Lancashire"
+      description: "The other county."
+  cypher: |
+    MATCH (m:CountyMatch)
+    WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
+    RETURN $teamA AS teamA, $teamB AS teamB, count(m) AS played,
+           sum(CASE WHEN m.winner = $teamA THEN 1 ELSE 0 END) AS teamAWon,
+           sum(CASE WHEN m.winner = $teamB THEN 1 ELSE 0 END) AS teamBWon,
+           sum(CASE WHEN m.result = 'draw' THEN 1 ELSE 0 END) AS drawn,
+           sum(CASE WHEN m.result = 'tie' THEN 1 ELSE 0 END) AS tied,
+           min(m.startDate) AS firstMeeting, max(m.startDate) AS lastMeeting
+
 - name: SeasonBatting
   description: >-
     The leading run-scorers of a County Championship season - matches, innings, not outs, runs,

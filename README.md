@@ -13,11 +13,23 @@ spell, seasons 2014 to 2026 (no 2020), all 18 first-class counties. Keyless; not
 | `BattingInnings` | 51,173 | One batter in one innings: runs, balls, 4s, 6s, how out. `-[:IN_MATCH]->`, `-[:BY]->CricketPlayer` |
 | `BowlingInnings` | 29,542 | One bowler in one innings: overs, maidens, runs, wickets. `-[:IN_MATCH]->`, `-[:BY]->CricketPlayer` |
 
-Nineteen views answer the questions people ask of it — `CountyTable`, `SeasonBatting`,
+Twenty views answer the questions people ask of it — `CountyTable`, `SeasonBatting`,
 `SeasonBowling`, `TeamResults`, `HeadToHead`, `PlayerBatting`, `PlayerInnings`, `MatchBatting` and
 the rest (`views/cricket.yml`) — and `apps/county-cricket.html` puts them on a page: season tables,
 leaders with filters, every county's results and head-to-heads, player careers innings by innings,
 records, and the full scorecard of any match.
+
+## Asking in words, and the Twelfth Man
+
+`lenses/cricket-ask.yml` is the plain-English surface: a question goes to the platform's
+text-to-Cypher, which writes a query over the types above, runs it, and returns the rows with the
+query, which the app's Ask tab shows beside the answer. `tests/questions.yml` is its battery.
+
+`agents/twelfth-man.yml` is the Twelfth Man, a cricket-mad character (`personalities/twelfth-man/`) whose conversation
+reaches this realm's views and the host's memory and nothing else, so every figure it quotes is a
+view call he has just made. The app's Ask tab carries a private chat with him through the host's
+agent endpoint; `/focus cricket` puts the main chat in his voice. An agent arrives proposed, so
+an operator signs it and switches it on before it answers.
 
 ## What it does not hold
 

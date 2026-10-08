@@ -16,6 +16,7 @@ description: |
   Trophy, and matches before 2014. Source: Cricsheet (ODC-By). Keyless.
 version: 0.1.0
 maturity: experimental
+url: https://github.com/embabel-worlds/realm-county-cricket
 author: Rod Johnson
 tags:
   - cricket

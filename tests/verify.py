@@ -73,6 +73,8 @@ for m in rows:
     k = m["winner"] or m["result"]
     tally[k] = tally.get(k, 0) + 1
 check("Yorkshire v Lancashire", tally, EXPECTED["yorksVLancs"])
+rec = invoke("HeadToHeadRecord", {"teamA": "Yorkshire", "teamB": "Lancashire"})[0]
+check("Yorkshire v Lancashire record view", {"Yorkshire": rec["teamAWon"], "Lancashire": rec["teamBWon"], "draw": rec["drawn"]}, EXPECTED["yorksVLancs"])
 
 rows = invoke("MatchInnings", {"matchId": "947089"})
 check("match 947089 innings", [[r["team"], r["runs"], r["wickets"], r["declared"], r["forfeited"]] for r in rows], EXPECTED["sampleMatch947089"])
