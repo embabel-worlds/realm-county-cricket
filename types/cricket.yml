@@ -50,7 +50,7 @@
       description: "Matches in which the player was in the eleven."
 
 - name: CountyMatch
-  description: "One County Championship match (four-day, first-class), 2014 to 2026. Two teams, a result, a margin, the venue and dates. NO championship points, bonus points or deductions are held anywhere in this realm: a question about points cannot be answered from it, and must not be approximated by counting wins. `stage` is the division (1 or 2) — except 2021, a conference season, where it is the group (1, 2 or 3); `stageName` says which. The winner is stored only when there was one; `result` is `won`, `draw` or `tie`."
+  description: "One County Championship match (four-day, first-class), 2014 to 2026, identified by `matchId` (Cricsheet's id, which is ESPNcricinfo's). Two teams, a result, a margin, the venue and dates. NO championship points, bonus points or deductions are held anywhere in this realm: a question about points cannot be answered from it, and must not be approximated by counting wins. `stage` is the division (1 or 2) — except 2021, a conference season, where it is the group (1, 2 or 3); `stageName` says which. The winner is stored only when there was one; `result` is `won`, `draw` or `tie`."
   userAnchor: false
   properties:
     matchId:
@@ -124,14 +124,14 @@
       cypher: |
         MATCH (m:CountyMatch) WHERE false RETURN m.matchId AS noPointsAreHeldInThisRealm LIMIT 1
 - name: TeamInnings
-  description: "One team's innings in a County Championship match: total, wickets, overs, whether declared or forfeited, and the extras. A match has up to four; `inningsNo` orders them. Reaches its match via IN_MATCH."
+  description: "One team's innings in a County Championship match, keyed `<matchId>-<inningsNo>`: total, wickets, overs, whether declared or forfeited, and the extras. A match has up to four; `inningsNo` orders them. Reaches its match via IN_MATCH."
   userAnchor: false
   properties:
     key:
       identity: true
       description: "`<matchId>-<inningsNo>`, e.g. `947089-3`. Identity."
     matchId:
-      description: "The match's id."
+      description: "The CountyMatch this row belongs to (Cricsheet/ESPNcricinfo match id, e.g. `947089`); equal to that match's matchId."
     inningsNo:
       type: int
       description: "1 to 4, in order played."
@@ -167,25 +167,29 @@
       description: "Byes + leg byes + wides + no balls + penalty runs conceded in the innings."
     byes:
       type: int
+      description: "Byes conceded in the innings: runs off a ball that missed the bat and the keeper, credited to no batter or bowler."
     legbyes:
       type: int
+      description: "Leg byes conceded in the innings: runs off the batter's body, credited to no batter or bowler."
     wides:
       type: int
+      description: "Runs from wides in the innings, the penalty run included; charged to the bowler."
     noballs:
       type: int
+      description: "Runs from no balls in the innings (the penalty runs, not runs off the bat); charged to the bowler."
     penalty:
       type: int
       description: "Penalty runs awarded to the batting side in this innings."
 
 - name: BattingInnings
-  description: "One batter's innings: runs, balls faced, boundaries, how out and by whom. A batter who did not come in has no row, so count(rows) is innings batted. `notOut` is true for not out, retired hurt and retired not out. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the batter's COUNTY, one of 18, never a person, so 'who scored the most runs' groups by playerId, not team. Reaches the player via BY and the match via IN_MATCH; `season`, `team` and `opponent` are carried on the row so a season's leaders need no join."
+  description: "One batter's innings in one team innings, keyed `<matchId>-<inningsNo>-<position>`: runs, balls faced, boundaries, how out and by whom. A batter who did not come in has no row, so count(rows) is innings batted. `notOut` is true for not out, retired hurt and retired not out. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the batter's COUNTY, one of 18, never a person, so 'who scored the most runs' groups by playerId, not team. Reaches the player via BY and the match via IN_MATCH; `season`, `team` and `opponent` are carried on the row so a season's leaders need no join."
   userAnchor: false
   properties:
     key:
       identity: true
       description: "`<matchId>-<inningsNo>-<position>`, e.g. `947089-1-4`. Identity."
     matchId:
-      description: "The match's id."
+      description: "The CountyMatch this row belongs to (Cricsheet/ESPNcricinfo match id, e.g. `947089`); equal to that match's matchId."
     inningsNo:
       type: int
       description: "Which team innings of the match, 1–4."
@@ -202,7 +206,7 @@
     opponent:
       description: "The bowling side."
     venue:
-      description: "Ground."
+      description: "The ground the match was played at, as Cricsheet names it, e.g. `County Ground, Bristol`."
     playerId:
       description: "The batter's Cricsheet id — the key for a career."
     player:
@@ -218,8 +222,10 @@
       description: "Balls faced (wides excluded, no balls included)."
     fours:
       type: int
+      description: "Boundary fours the batter hit in this innings (runs off the bat that reached the rope along the ground)."
     sixes:
       type: int
+      description: "Sixes the batter hit in this innings (cleared the rope on the full)."
     notOut:
       type: boolean
       description: "True if not dismissed (including retired hurt)."
@@ -243,14 +249,14 @@
         ORDER BY runs DESC
         LIMIT 1
 - name: BowlingInnings
-  description: "One bowler's figures in one team innings: overs, maidens, runs conceded, wickets. Wickets are only those credited to the bowler (caught, bowled, lbw, stumped, hit wicket, caught and bowled); runs conceded exclude byes and leg byes. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the bowler's COUNTY, never a person. Reaches the player via BY and the match via IN_MATCH."
+  description: "One bowler's figures in one team innings, keyed `<matchId>-<inningsNo>-<playerId>`: overs, maidens, runs conceded, wickets. Wickets are only those credited to the bowler (caught, bowled, lbw, stumped, hit wicket, caught and bowled); runs conceded exclude byes and leg byes. A PLAYER's total is grouped by `playerId` (with `player` for the name): `team` is the bowler's COUNTY, never a person. Reaches the player via BY and the match via IN_MATCH."
   userAnchor: false
   properties:
     key:
       identity: true
       description: "`<matchId>-<inningsNo>-<playerId>`. Identity."
     matchId:
-      description: "The match's id."
+      description: "The CountyMatch this row belongs to (Cricsheet/ESPNcricinfo match id, e.g. `947089`); equal to that match's matchId."
     inningsNo:
       type: int
       description: "Which team innings of the match, 1–4."
@@ -267,7 +273,7 @@
     opponent:
       description: "The batting side."
     venue:
-      description: "Ground."
+      description: "The ground the match was played at, as Cricsheet names it, e.g. `County Ground, Bristol`."
     playerId:
       description: "The bowler's Cricsheet id."
     player:
@@ -300,8 +306,10 @@
       description: "Sixes conceded off the bat."
     wides:
       type: int
+      description: "Runs from wides this bowler conceded in the innings, included in `runs`."
     noballs:
       type: int
+      description: "Runs from no balls this bowler conceded in the innings (the penalty runs), included in `runs`."
   examples:
     - q: "who took the most wickets for Northshire in 2024"
       cypher: |
