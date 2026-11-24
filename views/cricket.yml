@@ -8,9 +8,10 @@
 
 - name: CountySeasons
   description: >-
-    Every County Championship season the realm holds (2014 to 2026, no 2020), newest first, with
-    how many matches, teams and divisions (groups in 2021) each has, the date span, and how many
-    matches were decided or drawn. The first call an app makes, to know what can be asked.
+    Which County Championship seasons are held, with match and division counts. One row per season,
+    2014 to 2026 (no 2020), newest first: matches, teams, divisions (groups in 2021), the date span,
+    and how many matches were decided or drawn. The first call an app makes, to know what can be
+    asked. Season-level only: no team or player figures.
   cypher: |
     MATCH (m:CountyMatch)
     RETURN m.season AS season, count(m) AS matches, count(DISTINCT m.team1) AS teams,
@@ -21,8 +22,9 @@
 
 - name: CountyTeams
   description: >-
-    The 18 first-class counties with their all-time County Championship record in the data (2014
-    onwards) - matches, wins, draws, losses - and the seasons they span.
+    The 18 counties with their all-time Championship win, draw and loss record. Matches, wins, draws
+    and losses across every season held (2014 onwards, not 2020), and the first and last season each
+    county spans. Not split by season: TeamSeasons does that.
   cypher: |
     MATCH (t:CountyTeam)
     OPTIONAL MATCH (m:CountyMatch)-[:TEAM]->(t)
@@ -36,10 +38,10 @@
 
 - name: CountyTable
   description: >-
-    The County Championship table for one season and division (a group in 2021) as results -
-    played, won, drawn, lost, tied, wins by an innings - ordered by wins then draws. NOT the
-    official points table: no points, bonus points or deductions exist in this realm, so a
-    question about points has no answer here and must not be approximated from wins.
+    One season's County Championship table, by results rather than points. One division (a group in
+    2021): played, won, drawn, lost, tied, wins by an innings, ordered by wins then draws. NOT the
+    official points table: no points, bonus points or deductions exist in this realm, so a question
+    about points has no answer here and must not be approximated from wins.
   params:
     season:
       type: int
@@ -64,13 +66,14 @@
 
 - name: TeamSeasons
   description: >-
-    One county's County Championship record season by season - which division (or 2021 group)
-    it was in and its played, won, drawn, lost - newest season first.
+    One county's Championship record season by season. Which division (or 2021 group) it was in and
+    its played, won, drawn and lost, newest season first. The county name is matched exactly as
+    Cricsheet spells it; only seasons it played are listed.
   params:
     team:
       type: string
       default: "Surrey"
-      description: "A county's name as Cricsheet spells it, e.g. Surrey, Nottinghamshire."
+      description: "A county's name, matched exactly as Cricsheet spells it, e.g. Surrey, Nottinghamshire."
   cypher: |
     MATCH (m:CountyMatch)
     WHERE m.team1 = $team OR m.team2 = $team
@@ -84,14 +87,15 @@
 
 - name: TeamResults
   description: >-
-    One county's County Championship matches - opponent, venue, date, whether it won, lost, drew
-    or tied, and the margin - newest first, optionally for one season. Each row carries the match
-    id for the scorecard and a link to ESPNcricinfo.
+    One county's Championship matches with result and margin, newest first. Opponent, venue, date,
+    whether it won, lost, drew or tied, and the margin, optionally for one season. Each row carries
+    the match id for the scorecard and a link to ESPNcricinfo. Capped at `limit` matches; the county
+    name is matched exactly.
   params:
     team:
       type: string
       default: "Surrey"
-      description: "A county's name, e.g. Surrey."
+      description: "A county's name, matched exactly as Cricsheet spells it, e.g. Surrey."
     season:
       type: int
       default: 0
@@ -115,18 +119,18 @@
 
 - name: HeadToHead
   description: >-
-    Every County Championship match between two counties since 2014, newest first, with the
-    result and margin - for "how have Yorkshire done against Lancashire" questions. Tally the rows
-    for the head-to-head record.
+    Every Championship match between two counties, newest first. Since 2014, with the result and
+    margin, for "how have Yorkshire done against Lancashire" questions; both home and away orders
+    are included. At most 200 rows, and no tally: HeadToHeadRecord gives the tally in one row.
   params:
     teamA:
       type: string
       default: "Yorkshire"
-      description: "One county."
+      description: "One county, named exactly as Cricsheet spells it, e.g. Yorkshire."
     teamB:
       type: string
       default: "Lancashire"
-      description: "The other county."
+      description: "The other county, named exactly, e.g. Lancashire."
   cypher: |
     MATCH (m:CountyMatch)
     WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
@@ -138,20 +142,20 @@
 
 - name: HeadToHeadRecord
   description: >-
-    The head-to-head RECORD between two counties in the County Championship since 2014, as one
-    row: how many matches each has won, how many were drawn or tied, and how many were played.
-    Answers "how many matches have Yorkshire won against Lancashire", "what is Surrey's record
-    against Kent", "who has the upper hand between Somerset and Essex". A team is listed as
-    team1 or team2 in either order; this view counts both.
+    Two counties' head-to-head win, draw and tie tally, as one row. How many matches each has won,
+    how many were drawn or tied, and how many were played since 2014. Answers "how many matches have
+    Yorkshire won against Lancashire", "what is Surrey's record against Kent", "who has the upper
+    hand between Somerset and Essex". A team is listed as team1 or team2 in either order; this view
+    counts both. It does not list the matches: HeadToHead does.
   params:
     teamA:
       type: string
       default: "Yorkshire"
-      description: "One county."
+      description: "One county, named exactly as Cricsheet spells it, e.g. Yorkshire."
     teamB:
       type: string
       default: "Lancashire"
-      description: "The other county."
+      description: "The other county, named exactly, e.g. Lancashire."
   cypher: |
     MATCH (m:CountyMatch)
     WHERE (m.team1 = $teamA AND m.team2 = $teamB) OR (m.team1 = $teamB AND m.team2 = $teamA)
@@ -164,11 +168,11 @@
 
 - name: SeasonBatting
   description: >-
-    The leading run-scorers of a County Championship season - matches, innings, not outs, runs,
-    highest score, average, balls faced, strike rate, fours, sixes, hundreds and fifties -
-    optionally within one division (2021 group) or one county, with a minimum innings. Answers
-    "who scored the most runs in 2025", "best batting average for Surrey", "most hundreds in
-    Division 2".
+    A season's leading run-scorers, with averages, hundreds and fifties. Matches, innings, not outs,
+    runs, highest score, average, balls faced, strike rate, fours, sixes, hundreds and fifties,
+    optionally within one division (2021 group) or one county, with a minimum innings. Answers "who
+    scored the most runs in 2025", "best batting average for Surrey", "most hundreds in Division 2".
+    Top `limit` batters only, ranked by runs.
   params:
     season:
       type: int
@@ -181,7 +185,7 @@
     team:
       type: string
       default: ""
-      description: "A county, or empty for every county."
+      description: "A county, matched exactly (e.g. Surrey), or empty for every county."
     minInnings:
       type: int
       default: 1
@@ -213,11 +217,11 @@
 
 - name: SeasonBowling
   description: >-
-    The leading wicket-takers of a County Championship season - matches, innings bowled, overs,
-    maidens, runs conceded, wickets, best figures, average, economy, strike rate and five-wicket
-    hauls - optionally within one division (2021 group) or one county, with a minimum wickets.
-    Answers "who took the most wickets in 2024", "best bowling average for Essex", "most
-    five-fors".
+    A season's leading wicket-takers, with averages, economy and five-fors. Matches, innings bowled,
+    overs, maidens, runs conceded, wickets, best figures, average, economy, strike rate and
+    five-wicket hauls, optionally within one division (2021 group) or one county, with a minimum
+    wickets. Answers "who took the most wickets in 2024", "best bowling average for Essex", "most
+    five-fors". Top `limit` bowlers only, ranked by wickets.
   params:
     season:
       type: int
@@ -230,7 +234,7 @@
     team:
       type: string
       default: ""
-      description: "A county, or empty for every county."
+      description: "A county, matched exactly (e.g. Surrey), or empty for every county."
     minWickets:
       type: int
       default: 1
@@ -262,9 +266,9 @@
 
 - name: HighestScores
   description: >-
-    The highest individual County Championship innings in the data - batter, team, opponent,
-    runs, balls, boundaries, whether not out, date and venue - for one season or all, optionally
-    for one county. Answers "highest score in 2023", "biggest innings for Kent".
+    The highest individual Championship innings, for one season or all. Batter, team, opponent,
+    runs, balls, boundaries, whether not out, date and venue, optionally for one county. Answers
+    "highest score in 2023", "biggest innings for Kent". Top `limit` innings only.
   params:
     season:
       type: int
@@ -289,9 +293,10 @@
 
 - name: BestBowling
   description: >-
-    The best bowling figures in an innings in the data - bowler, team, opponent, overs, maidens,
-    runs, wickets, date and venue - for one season or all, optionally for one county. Answers
-    "best bowling figures in 2022", "most wickets in an innings for Durham".
+    The best bowling figures in an innings, for one season or all. Bowler, team, opponent, overs,
+    maidens, runs, wickets, date and venue, optionally for one county. Answers "best bowling figures
+    in 2022", "most wickets in an innings for Durham". Figures in one innings only, not match
+    figures; top `limit` spells.
   params:
     season:
       type: int
@@ -316,9 +321,10 @@
 
 - name: PlayerSearch
   description: >-
-    Find County Championship cricketers by part of a name (case-insensitive) - their Cricsheet
-    id, the counties they have played for, first and last seasons and matches. Names are as
-    printed in scorecards (JE Root), so search by surname.
+    Find Championship cricketers, and their Cricsheet id, by part of a name. Case-insensitive
+    partial match on the name as printed in scorecards (JE Root), so search by surname. At most 25,
+    most matches first, with the counties they have played for, first and last seasons and matches.
+    The id is what every other player view takes.
   params:
     name:
       type: string
@@ -334,9 +340,10 @@
 
 - name: PlayerBatting
   description: >-
-    One cricketer's County Championship batting season by season - matches, innings, not outs,
-    runs, highest score, average, strike rate, hundreds and fifties - by Cricsheet player id
-    (find it with PlayerSearch).
+    One cricketer's Championship batting, season by season. Matches, innings, not outs, runs,
+    highest score, average, strike rate, hundreds and fifties, by Cricsheet player id (find it with
+    PlayerSearch). Only seasons in which the player batted; no innings-level detail (PlayerInnings
+    has it).
   params:
     playerId:
       type: string
@@ -362,9 +369,10 @@
 
 - name: PlayerBowling
   description: >-
-    One cricketer's County Championship bowling season by season - matches, innings bowled,
-    overs, maidens, runs, wickets, best figures, average, economy, strike rate and five-fors - by
-    Cricsheet player id (find it with PlayerSearch).
+    One cricketer's Championship bowling, season by season. Matches, innings bowled, overs, maidens,
+    runs, wickets, best figures, average, economy, strike rate and five-fors, by Cricsheet player id
+    (find it with PlayerSearch). Only seasons in which the player bowled; no spell-level detail
+    (PlayerSpells has it).
   params:
     playerId:
       type: string
@@ -390,8 +398,9 @@
 
 - name: PlayerInnings
   description: >-
-    Every County Championship innings one cricketer has batted, newest first - date, opponent,
-    venue, runs, balls, how out and by whom, and the match's result - by Cricsheet player id.
+    Every Championship innings one cricketer has batted, newest first. Date, opponent, venue, runs,
+    balls, how out and by whom, and the match's result, by Cricsheet player id. Innings the player
+    did not bat in are not rows; capped at `limit`.
   params:
     playerId:
       type: string
@@ -413,8 +422,9 @@
 
 - name: PlayerSpells
   description: >-
-    Every County Championship innings one cricketer has bowled in, newest first - date, opponent,
-    venue, overs, maidens, runs, wickets, and the match's result - by Cricsheet player id.
+    Every Championship innings one cricketer has bowled in, newest first. Date, opponent, venue,
+    overs, maidens, runs, wickets, and the match's result, by Cricsheet player id. Innings in which
+    the player did not bowl are not rows; capped at `limit`.
   params:
     playerId:
       type: string
@@ -435,8 +445,9 @@
 
 - name: MatchSummary
   description: >-
-    One County Championship match by id - teams, season, division, dates, venue, toss, result,
-    winner and margin, with the ESPNcricinfo link.
+    One Championship match by id: teams, result, margin, venue and toss. Season, division, dates,
+    winner and the ESPNcricinfo link. One match only, and no scorecard: MatchInnings, MatchBatting
+    and MatchBowling hold that.
   params:
     matchId:
       type: string
@@ -454,8 +465,9 @@
 
 - name: MatchInnings
   description: >-
-    The four (or fewer) team innings of one County Championship match in order - team, total,
-    wickets, overs, declared or forfeited, extras.
+    The team innings of one Championship match, in order. Up to four rows: team, total, wickets,
+    overs, declared or forfeited, extras. Team totals only, not the individual scorecard
+    (MatchBatting, MatchBowling).
   params:
     matchId:
       type: string
@@ -472,8 +484,9 @@
 
 - name: MatchBatting
   description: >-
-    The batting scorecard of one County Championship match - every batter of every innings in
-    batting order, with runs, balls, boundaries and dismissal.
+    One Championship match's batting scorecard, innings by innings. Every batter of every innings in
+    batting order, with runs, balls, boundaries and dismissal. Only batters who came in; a batter
+    who did not bat has no row.
   params:
     matchId:
       type: string
@@ -489,8 +502,9 @@
 
 - name: MatchBowling
   description: >-
-    The bowling scorecard of one County Championship match - every bowler of every innings in
-    bowling order, with overs, maidens, runs and wickets.
+    One Championship match's bowling scorecard, innings by innings. Every bowler of every innings in
+    bowling order, with overs, maidens, runs and wickets. Only bowlers who bowled in that innings
+    are listed.
   params:
     matchId:
       type: string
