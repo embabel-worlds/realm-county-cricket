@@ -14,7 +14,7 @@ description: |
   What it does NOT carry: official championship points (bonus points and
   over-rate penalties are not in the ball-by-ball record), the 2020 Bob Willis
   Trophy, and matches before 2014. Source: Cricsheet (ODC-By). Keyless.
-version: 0.1.2
+version: 0.1.3
 maturity: experimental
 url: https://github.com/embabel-worlds/realm-county-cricket
 author: Rod Johnson
