@@ -1,6 +1,6 @@
 {
   "name": "realm-county-cricket",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "description": "The County Championship, ball by ball from Cricsheet, as an Embabel realm with a scoreboard app",
   "license": "GPL-3.0-only",
