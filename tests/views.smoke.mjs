@@ -51,6 +51,47 @@ const EMPTY_CASES = [
   ['MatchSummary', { matchId: '0' }],
 ];
 
+/*
+ * Whether an engine answer is the whole truth. A source that failed under load, a capped page or a
+ * refused hop leaves rows that look like an answer while the figure is short, and a check that reads
+ * only the rows reports drift that is not the realm's. Query answers (/admin/kg/execute, /kg/ask)
+ * carry `error`, `reason`, `run` and `warnings` as strings opening with the engine's code; a view
+ * envelope carries `status`, `outcome` and `warnings` as {code, message}. short(d) is null when
+ * whole, else the line to print in place of the figure: "REFUSED: <why>" or "PARTIAL <n>: <reason>".
+ */
+const SHORT_CODES = new Set(['PARTIAL_RESULT', 'PRODUCER_ERROR', 'NEEDS_FILTER', 'NEEDS_PRODUCER', 'FILTER_REJECTED',
+  'UNPUSHED_FILTER', 'AMBIGUOUS_LABEL', 'INCOMPLETE_TRAVERSAL', 'INCOMPLETE_RANKING', 'INCOMPLETE_AGGREGATE',
+  'INCOMPLETE_INPUT', 'MATERIALIZATION_FAILED', 'REDUCTION_FAILED', 'UNPARSEABLE_ANSWER', 'TERMS_UNAVAILABLE',
+  'COMPUTE_FAILED', 'PROPERTY_NOT_STORED', 'FOLLOW_CAPPED', 'UNLINKED_CHILDREN', 'RESOLUTION_DROPPED',
+  'AGENTIC_DEGRADED', 'SOURCE_UNANSWERED'])
+const SHORT_REASONS = new Set(['UNBOUNDED', 'PARTIAL_NOT_MATCHED', 'UNPUSHED_FILTER', 'DISCONNECTED',
+  'INTERNAL_ERROR', 'WRITE_IN_PROGRESS', 'KILLED', 'TOO_EXPENSIVE'])
+const SHORT_PUBLIC = new Set(['PARTIAL', 'REDUCTION_FAILED', 'COMPUTE_FAILED', 'PROPERTY_NOT_STORED',
+  'AGENTIC_DEGRADED', 'RATE_LIMITED', 'SOURCE_UNAVAILABLE', 'SOURCE_REJECTED', 'INVALID_FILTER',
+  'UNPUSHED_FILTER', 'TOO_BROAD', 'FETCH_CAPPED', 'INDEX_UNAVAILABLE', 'ARGUMENT_REFUSED'])
+
+function short(d, figure = null) {
+  const tag = figure === null ? 'PARTIAL' : `PARTIAL ${figure}`
+  if (!d || typeof d !== 'object') return `REFUSED: not an engine answer: ${String(d).slice(0, 160)}`
+  if ('outcome' in d || 'status' in d) {
+    if (d.status !== 'SUCCEEDED') {
+      const e = d.error || {}
+      return `REFUSED: ${d.status} ${`${e.code || ''} ${e.message || ''}`.trim().slice(0, 160)}`
+    }
+    const ws = (d.warnings || []).filter(w => w && SHORT_PUBLIC.has(w.code))
+    if (!['OK', 'EMPTY'].includes(d.outcome) || ws.length) {
+      return `${tag}: ${(ws.length ? `${ws[0].code}: ${ws[0].message || ''}` : `outcome ${d.outcome}`).slice(0, 200)}`
+    }
+    return null
+  }
+  if (d.error) return `REFUSED: ${String(d.error).slice(0, 160)}`
+  if (d.run) return `${tag}: the run had not finished (${JSON.stringify(d.run)})`
+  const ws = (d.warnings || []).filter(w => typeof w === 'string' && SHORT_CODES.has(w.split(':')[0].trim()))
+  if (ws.length) return `${tag}: ${ws[0].slice(0, 200)}`
+  if (SHORT_REASONS.has(d.reason)) return `${tag}: reason ${d.reason}`
+  return null
+}
+
 const auth = 'Basic ' + Buffer.from(`${user}:${password}`).toString('base64');
 async function invoke(name, args) {
   const started = Date.now();
@@ -67,8 +108,9 @@ const names = readdirSync(viewsDir).filter(f => f.endsWith('.yml')).sort()
 
 let failures = 0;
 const report = (ok, line) => { if (!ok) failures++; console.log(`${ok ? 'PASS' : 'FAIL'}  ${line}`); };
-const problemOf = (http, body) => http !== 200 || body.status !== 'SUCCEEDED'
-  ? `${http} ${body.status ?? ''} ${body.error?.message?.slice(0, 160) ?? ''}` : null;
+/* A short answer is a problem whatever its rows hold: "must be empty" passes only on a whole empty. */
+const problemOf = (http, body) => http !== 200
+  ? `${http} ${body.status ?? ''} ${body.error?.message?.slice(0, 160) ?? ''}` : short(body, body.data?.length ?? 0);
 
 console.log(`== every view, with its defaults (${names.length})`);
 for (const name of names) {
@@ -106,7 +148,10 @@ console.log(`\n== the ask lens (plain English in, rows and the generated query o
   let d = body.data; if (typeof d === 'string') { try { d = JSON.parse(d); } catch {} }
   const rows = (d && d.rows) || [];
   const problem = res.status !== 200 || body.status === 'FAILED' ? `${res.status} ${body.status ?? ''} ${body.error?.message?.slice(0, 160) ?? ''}`
-    : !rows.length ? `no rows (${d && d.status})` : !(d && d.cypher) ? 'no generated cypher in the answer' : null;
+    : short(body, rows.length)
+    /* The lens passes kg.ask's own warnings and reason through: a short ask is short here too. */
+    ?? (d && typeof d === 'object' ? short({ warnings: d.warnings, reason: d.reason }, rows.length) : null)
+    ?? (!rows.length ? `no rows (${d && d.status})` : !(d && d.cypher) ? 'no generated cypher in the answer' : null);
   report(!problem, `cricket-ask          ${String(rows.length).padStart(4)} rows ${String(Date.now() - started).padStart(6)}ms${problem ? '  ' + problem : ''}`);
 }
 
